@@ -1,8 +1,9 @@
 <html>
 
 	<head>
-	    <title>Carousel</title>
+	    <title>ChOrganize</title>
 
+	    <!-- include stylesheets and bootstrap -->
 	    <meta charset="utf-8">
 	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	     <!-- Optional theme -->
@@ -10,6 +11,44 @@
 
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
 	</head>
+
+<body>
+	<!-- wrapper around entire body -->
+	<div id="wrapper">
+
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+				<ul>
+				<li><a id="Title" href="#">ChOrganize</a></li>
+				<li style="padding-left:15%;">
+					<a href="#"><img class="titlePic" src="photos/orangeGear.png"></a>
+					<a href="#"><img class="titlePic" src="photos/profilePic.png"></a>
+				 </li>
+				</ul>
+				
+			</div>
+		</div>
+
+		<!-- main buttons -->
+		<div id="main">
+			<ul>
+				<!-- put a picture and a button in each 'list' item (row) -->
+				<li><img class = "buttonPic" src="photos/groupPic.jpg"><button class="btn-default btn">My Groups</button></li>
+				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn">My Chores</button></li>
+				<li><img class = "buttonPic" src="photos/infoSymbol.png"><button class="btn-default btn">Information</button></li>
+			</ul>
+
+
+		</div>
+
+	</div>
+
+
+</body>
 
 </html>

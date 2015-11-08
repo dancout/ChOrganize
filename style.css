@@ -1,0 +1,60 @@
+#wrapper {
+	padding: 20px;
+}
+
+#header {
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	background-color: orange;
+}
+
+#headerInner {
+	background-color: white;
+}
+
+#headerInner li {
+    display: inline;
+}
+
+#Title {
+	font-size: 100;
+	padding-left: 40px;
+	color: orange;
+	font-style: bold;
+}
+
+.titlePic {
+	width: 80px;
+	padding-bottom: 40px;
+}
+
+.buttonPic {
+	width: 80px;
+	padding-right: 15px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+	text-align: center;
+	padding-top: 25px;
+}
+
+#main button {
+	width: 30%;
+	height: 50px;
+	background-color: orange;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+}
+
+#main li {
+	padding-left: 10px;
+}
