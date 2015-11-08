@@ -22,11 +22,17 @@
 	font-size: 100;
 	padding-left: 40px;
 	color: orange;
+	font-style: bold;
 }
 
-#gear {
+.titlePic {
 	width: 80px;
 	padding-bottom: 40px;
+}
+
+.buttonPic {
+	width: 80px;
+	padding-right: 15px;
 }
 
 ul {
@@ -50,5 +56,5 @@ ul {
 }
 
 #main li {
-	padding: 5px;
+	padding-left: 10px;
 }
