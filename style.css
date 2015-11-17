@@ -1,13 +1,20 @@
 #wrapper {
-	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+hr.topline {
+	border: solid;
+	margin-top: 0px;
+	color: rgb(237,125,49);
 }
 
 #header {
-	padding-top: 20px;
+	padding-top: 0px;
 	padding-left: 20px;
 	padding-right: 20px;
-	padding-bottom: 20px;
-	background-color: orange;
+	padding-bottom: 0px;
+	background-color: white;
 }
 
 #headerInner {
@@ -19,10 +26,12 @@
 }
 
 #Title {
-	font-size: 100;
+	font-size: 80;
 	padding-left: 40px;
 	color: orange;
 	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+	color: rgb(237,125,49);
 }
 
 .titlePic {
@@ -49,10 +58,11 @@ ul {
 #main button {
 	width: 30%;
 	height: 50px;
-	background-color: orange;
+	background-color: rgb(237,125,49);
 	color: white;
 	font-size: 25;
 	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
 }
 
 #main li {
