@@ -15,6 +15,15 @@
 
 	</head>
 
+<script>
+  function addGroup() {
+    var img = document.createElement("img");
+    img.src = "photos/tennisChoreGroup.png";
+    img.setAttribute("class", "groupPic");
+    document.body.appendChild(img);
+  }
+</script>
+
 <body>
 	<!-- wrapper around entire body -->
 	<div id="wrapper">
@@ -70,16 +79,13 @@
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/groupPic.jpg"><button class="btn-default btn" onclick="window.open('groupspage.html','_blank','resizable=yes')">My Groups</button></li>
-				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="window.open('chorespage.html','_blank','resizable=yes')">My Chores</button></li>
-				<li><img class = "buttonPic" src="photos/infoSymbol.png"><button class="btn-default btn">Information</button></li>
+				<li><img class = "buttonPic" src="photos/addNewGroup.png"><button class="btn-default btn" onclick="addGroup()">Add a new group</button></li>
 			</ul>
 
 
 		</div>
 
 	</div>
-
 
 </body>
 
