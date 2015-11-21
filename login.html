@@ -30,6 +30,7 @@
 			}, function(error, authData) {
 			  if (error) {
 			    console.log("Login Failed!", error);
+			    alert("Login info incorrect, please try again!")
 			  } else {
 			    console.log("Authenticated successfully with payload:", authData);
 			    window.location.href="homepage.html";
