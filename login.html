@@ -1,0 +1,67 @@
+<html>
+
+	<head>
+	    <title>My Profile</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
+	   	<!-- firebase -->
+	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+
+	</head>
+
+	<body>
+	<!-- wrapper around entire body -->
+		<hr class="topline">
+		<div id="wrapper">
+			
+			<!-- title bar header -->
+			<div id="header">
+				<div id="headerInner">
+					<!-- makes a horizontal list hlding title and icons -->
+
+					<ul class="nav nav-pills">
+						<!-- Chorganize Title -->
+						<li><a id="Title" href="homepage.html">ChOrganize</a></li>
+				  	</ul>
+
+				</div>
+			</div>
+			
+			<hr>
+
+			<!-- Login Input -->
+			<div id="main">
+				<h3>Login</h3>
+
+				<form role="form" id="login">
+				  	<div class="form-group">
+				    	<label for="email">Username:</label>
+				    	<input type="email" class="form-control" placeholder="Username" id="username">
+				  	</div>
+				  	<div class="form-group">
+				    	<label for="pwd">Password:</label>
+				    	<input type="password" class="form-control" placeholder="Password" id="pwd">
+				  	</div>
+				  	<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+
+				<script>
+				    var myDataRef = new Firebase('flickering-inferno-1570.firebaseIO.com');\
+    			</script>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
