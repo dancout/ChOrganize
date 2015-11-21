@@ -40,18 +40,16 @@
     btn.appendChild(t);
     document.body.appendChild(btn);
 // adds script to button
-    document.getElementById(person).onclick = function() {window.open('chorespage.html','_blank','resizable=yes')};
-// onclick="window.open('chorespage.html','_blank','resizable=yes')"
+document.getElementById(person).onclick = function() {window.location.href = "chorespage.html";};
 
   }
 </script>
 
 <body>
-	<!-- wrapper around entire body -->
-	<div id="wrapper">
-
 		<!-- title bar header -->
 		<hr class="topline">
+		
+<!-- wrapper around entire body -->
 	<div id="wrapper">
 		
 		<!-- title bar header -->
@@ -62,7 +60,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><img class="title" src="photos/ChOrganizelogo.png"></li>
+				<li><a href="homepage.html"><img class="title" src="photos/ChOrganizelogo.png"></a></li>
 
 
 				<!-- Setting menu -->

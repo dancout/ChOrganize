@@ -23,6 +23,10 @@ hr.bottomline {
 	background-color: white;
 }
 
+#header a {
+	padding: 0px;
+}
+
 #headerInner {
 	background-color: white;
 }
@@ -34,13 +38,14 @@ hr.bottomline {
 .title {
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left: 20%;
+	padding-left: 100px;
 }
 
 .titlePic {
 	width: 60px;
-	padding-top: 10px;
+	padding-top: 33px;
 	padding-bottom: 0px;
+	padding-left: 10px;
 }
 
 .buttonPic {
@@ -84,4 +89,8 @@ button {
 
 #main li {
 	padding-left: 10px;
+}
+
+#header li {
+	padding-right: 10px;
 }
