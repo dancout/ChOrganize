@@ -19,33 +19,9 @@
 	</head>
 
 <script>
-	function dummy() {
-		window.location.href="choreItem.html";
+	function complete() {
+		alert("Chore completed!");
 	}
-</script>
-
-
-<script>
-  function addChore() {
-
- // declares the button
-   	var choreName = prompt("Please enter your chore name", "Chore X");
-   	var choreDesc = prompt("Please enter your chore description", "Description");
-   	var dueDate = prompt("Please enter your chore due date", "Due Date");
-    var btn = document.createElement("BUTTON");
-
-// adds attributes to the button
-    btn.setAttribute("id", choreName);
-    
-// adds the button onscreen
-    var t = document.createTextNode(choreName);
-    btn.appendChild(t);
-    document.body.appendChild(btn);
-// adds script to button
-    document.getElementById(choreName).onclick = function() {dummy();};
-
-
-  }
 </script>
 
 <body>
@@ -102,14 +78,20 @@
 		</div>
 
 		<hr class="bottomline">
-		<h3 style="text-align:center;">My Chore List</h1>
+		<h3 style="text-align:center;">Doing the Dishes</h1>
 
+
+		<!-- info about chore -->
+		<ul>
+			<li>Due Date: 12/01/15</li>
+			<li>Description: Clean each dish and put inside dishwasher. Unload any dishes that were previously there.</li>
+		</ul>
 
 		<!-- main buttons -->
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
+				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete()">Complete this Chore</button></li>
 			</ul>
 
 
