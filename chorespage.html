@@ -1,7 +1,7 @@
 <html>
 
 	<head>
-	    <title>My Chores</title>
+	    <title>My Groups</title>
 
 	    <!-- include stylesheets and bootstrap -->
 	    <meta charset="utf-8">
@@ -13,13 +13,42 @@
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	   	<link rel="stylesheet" type="text/css" href="style.css">
 
-	   	<!-- firebase -->
+	  	<!-- firebase -->
 	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 
 	</head>
 
+<script>
+	function dummy() {
+		alert("hello");
+	}
+</script>
+
+
+<script>
+  function addChore() {
+
+ // declares the button
+   	var person = prompt("Please enter your chore name", "Chore X");
+    var btn = document.createElement("BUTTON");
+
+// adds attributes to the button
+    btn.setAttribute("id", person);
+    
+// adds the button onscreen
+    var t = document.createTextNode(person);
+    btn.appendChild(t);
+    document.body.appendChild(btn);
+// adds script to button
+    document.getElementById(person).onclick = function() {dummy();};
+
+
+  }
+</script>
+
 <body>
 	<!-- wrapper around entire body -->
+	<hr class="topline">
 	<div id="wrapper">
 
 		<!-- title bar header -->
@@ -30,7 +59,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><a id="Title" href="https://www.google.com">My Chores</a></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png"></li>
 
 
 				<!-- Setting menu -->
@@ -56,7 +85,7 @@
 			    	</a>
 
 				    <ul class="dropdown-menu">
-				    	<li style="padding:15px;"><a>Profile</a></li>
+				    	<li style="padding:15px;"><a href="profilePage.html">Profile</a></li>
 				    	<li style="padding:15px;"><a>Friends</a></li>
 				    	<li role="separator" class="divider"></li>
 				    	<li style="padding:15px;"><a>Edit</a></li>
@@ -69,20 +98,21 @@
 			</div>
 		</div>
 
+		<hr class="bottomline">
+		<h3 style="text-align:center;">My Chore List</h1>
+
+
 		<!-- main buttons -->
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/groupPic.jpg"><button class="btn-default btn">My Groups</button></li>
-				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn">My Chores</button></li>
-				<li><img class = "buttonPic" src="photos/infoSymbol.png"><button class="btn-default btn">Information</button></li>
+				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
 			</ul>
 
 
 		</div>
 
 	</div>
-
 
 </body>
 
