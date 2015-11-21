@@ -5,14 +5,8 @@
 
 hr.topline {
 	border: solid;
-	margin: 0px;
-	padding: 0px;
-	color: #eb6d20;
-}
-
-hr.bottomline {
-	margin: 0px;
-	padding: 0px;
+	margin-top: 0px;
+	color: rgb(237,125,49);
 }
 
 #header {
@@ -31,16 +25,18 @@ hr.bottomline {
     display: inline;
 }
 
-.title {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 20%;
+#Title {
+	font-size: 80;
+	padding-left: 40px;
+	color: orange;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+	color: rgb(237,125,49);
 }
 
 .titlePic {
-	width: 60px;
-	padding-top: 10px;
-	padding-bottom: 0px;
+	width: 80px;
+	padding-bottom: 40px;
 }
 
 .buttonPic {
@@ -62,7 +58,7 @@ ul {
 #main button {
 	width: 30%;
 	height: 50px;
-	background-color: #eb6d20;
+	background-color: rgb(237,125,49);
 	color: white;
 	font-size: 25;
 	font-style: bold;
