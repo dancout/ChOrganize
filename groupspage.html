@@ -19,11 +19,33 @@
 	</head>
 
 <script>
+	function dummy() {
+		alert("hello");
+	}
+</script>
+
+
+<script>
   function addGroup() {
-    var img = document.createElement("img");
-    img.src = "photos/tennisChoreGroup.png";
-    img.setAttribute("class", "groupPic");
-    document.body.appendChild(img);
+
+ // declares the button
+   	var person = prompt("Please enter your group name", "Group X");
+    var btn = document.createElement("BUTTON");
+
+// adds attributes to the button
+    btn.setAttribute("id", person);
+    // hiddenInput.setAttribute("type", "hidden");                     
+    // hiddenInput.setAttribute("value", ID);
+    // hiddenInput.setAttribute("class", "ListItem");
+    
+// adds the button onscreen
+    var t = document.createTextNode(person);
+    btn.appendChild(t);
+    document.body.appendChild(btn);
+
+    document.getElementById(person).onclick = function() {dummy();};
+
+
   }
 </script>
 
