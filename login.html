@@ -18,6 +18,26 @@
 
 	</head>
 
+	<script>
+	    var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
+
+		function dummy() {
+			var loginInfo = document.getElementById("login");
+
+			myDataRef.authWithPassword({
+			  email    : loginInfo.username.value,
+			  password : loginInfo.pwd.value
+			}, function(error, authData) {
+			  if (error) {
+			    console.log("Login Failed!", error);
+			  } else {
+			    console.log("Authenticated successfully with payload:", authData);
+			    window.location.href="homepage.html";
+			  }
+			});
+		}
+	</script>
+
 	<body>
 	<!-- wrapper around entire body -->
 		<hr class="topline">
@@ -51,12 +71,9 @@
 				    	<label for="pwd">Password:</label>
 				    	<input type="password" class="form-control" placeholder="Password" id="pwd">
 				  	</div>
-				  	<button type="submit" class="btn btn-default">Submit</button>
+				  	<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
 				</form>
 
-				<script>
-				    var myDataRef = new Firebase('flickering-inferno-1570.firebaseIO.com');\
-    			</script>
 
 			</div>
 
