@@ -22,24 +22,20 @@
 	    var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
 
 		function dummy() {
-			var loginInfo = document.getElementById("login");
+			var regInfo = document.getElementById("login");
 
-			myDataRef.authWithPassword({
-			  email    : loginInfo.email.value,
-			  password : loginInfo.pwd.value
-			}, function(error, authData) {
+			myDataRef.createUser({
+			  email    : regInfo.email.value,
+			  password : regInfo.pwd.value
+			}, function(error, userData) {
 			  if (error) {
-			    console.log("Login Failed!", error);
-			    alert("Login info incorrect, please try again!")
+			    console.log("Error creating user:", error);
 			  } else {
-			    console.log("Authenticated successfully with payload:", authData);
-			    window.location.href="homepage.html";
+			  	alert("User created!");
+			    console.log("Successfully created user account with uid:", userData.uid);
+			    window.location.href="login.html";
 			  }
 			});
-		}
-
-		function gotoRegister() {
-			window.location.href="register.html";
 		}
 	</script>
 
@@ -65,7 +61,7 @@
 
 			<!-- Login Input -->
 			<div id="main">
-				<h3>Login</h3>
+				<h3>Register</h3>
 
 				<form role="form" id="login">
 				  	<div class="form-group">
@@ -79,7 +75,6 @@
 				  	<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
 				</form>
 
-				<button type="button" class="btn btn-default" onclick="gotoRegister()">Register</button>
 
 			</div>
 
