@@ -19,33 +19,114 @@
 	</head>
 
 <script>
-	function dummy() {
-		window.location.href="choreItem.html";
+  //this function sets the window location with the correct appeneded user, group, and choreItem values
+	function dummy(choreName) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+    var choreUrl = "choreItem.html?";
+    choreUrl = choreUrl.concat(UrlSubString);
+    choreUrl = choreUrl.concat("&");
+    choreUrl = choreUrl.concat(choreName);
+		window.location.href=choreUrl;
 	}
+
+  //this function returns the firebase url with the correct children appended
+  function firebaseUrl(choreName) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.lastIndexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+    var groupIndex = UrlString.lastIndexOf("&") + 1;  
+    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
+
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
+    var mainUrlGroup = mainUrl.concat(leftUrlSubString);
+    var mainUrlGroupSlash = mainUrlGroup.concat("/");
+    var mainUrlChore = mainUrlGroupSlash.concat(rightUrlSubString);
+    var mainUrlChoreFinal = mainUrlChore.concat("/");
+    if(choreName == null) {
+      console.log("Inside Chore Name");
+      return mainUrlChoreFinal;
+    }
+    mainUrlChoreFinal = mainUrlChoreFinal.concat(choreName);
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
+    return mainUrlChoreFinal;
+  }
 </script>
 
 
 <script>
-  function addChore() {
+  //this function auto initalizes the data onto the page, when page is loaded
+  $(document).ready(function () {
+	  var myDataRef = new Firebase(firebaseUrl());
+    //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
+    myDataRef.on('value', function(snapshot) {
 
+        var chores = snapshot.val();
+        //console.log(snapshot.val());
+        snapshot.forEach(function(data) {
+        //console.log(data.key() + " description is " + data.val().description);
+
+        var btn = document.createElement("BUTTON");
+
+    // adds attributes to the button
+        btn.setAttribute("id", data.key());
+        
+    // adds the button onscreen
+        var t = document.createTextNode(data.key());
+        btn.appendChild(t);
+        document.body.appendChild(btn);
+    // adds script to button
+        document.getElementById(data.key()).onclick = function() {dummy(data.key());};
+        });
+      //}
+    });
+    //adds buttons when new chore is added
+    myDataRef.on('child_added', function(data, prevchildkey) {
+        console.log(prevchildkey);
+        /*var btn = document.createElement("BUTTON");
+
+    // adds attributes to the button
+        btn.setAttribute("id", data.key());
+        
+    // adds the button onscreen
+        var t = document.createTextNode(data.key());
+        btn.appendChild(t);
+        document.body.appendChild(btn);
+    // adds script to button
+        document.getElementById(data.key()).onclick = function() {dummy(data.key());};*/
+    });
+  });
+
+  function addChore() {
+	  //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
  // declares the button
    	var choreName = prompt("Please enter your chore name", "Chore X");
    	var choreDesc = prompt("Please enter your chore description", "Description");
    	var dueDate = prompt("Please enter your chore due date", "Due Date");
+
     var btn = document.createElement("BUTTON");
 
 // adds attributes to the button
-    btn.setAttribute("id", choreName);
+    /*btn.setAttribute("id", choreName);
     
 // adds the button onscreen
     var t = document.createTextNode(choreName);
     btn.appendChild(t);
     document.body.appendChild(btn);
 // adds script to button
-    document.getElementById(choreName).onclick = function() {dummy();};
+    document.getElementById(choreName).onclick = function() {dummy(choreName);};*/
 
-
+    var mainUrlChoreFinal = firebaseUrl(choreName);
+    console.log(mainUrlChoreFinal);
+    var newDataRef = new Firebase(mainUrlChoreFinal);
+    newDataRef.set({choreName: choreName, dueDate: dueDate, description: choreDesc});
+    window.location.href=window.location;
   }
+
+
 </script>
 
 <body>

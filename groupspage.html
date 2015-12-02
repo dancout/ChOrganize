@@ -19,29 +19,71 @@
 	</head>
 
 <script>
-	function dummy() {
-		alert("hello");
+	function choresLink() {
+    window.location.href = "chorespage.html";
 	}
 </script>
 
 
 <script>
-  function addGroup() {
 
- // declares the button
+  //this function auto initalizes the data onto the page, when page is loaded
+  $(document).ready(function () {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
+    mainUrl = mainUrl.concat(UrlSubString);
+    mainUrl = mainUrl.concat("/");
+    var myDataRef = new Firebase(mainUrl);
+    myDataRef.on('value', function(snapshot) {
+      snapshot.forEach(function(data) {
+        var btn = document.createElement("BUTTON");
+
+        // adds attributes to the button
+        btn.setAttribute("id", data.key());
+        
+        // adds the button onscreen
+        var t = document.createTextNode(data.key());
+        btn.appendChild(t);
+        document.body.appendChild(btn);
+
+        // adds script to button
+        document.getElementById(data.key()).onclick = function() {  
+          var choreUrl = 'chorespage.html?';
+          var finalChoreUrl = choreUrl.concat(UrlSubString);
+          var finalChoreUrl2 = finalChoreUrl.concat("&");
+          var finalChoreUrl3 = finalChoreUrl2.concat(data.key());
+          window.location.href=finalChoreUrl3;
+        };
+      });
+    });
+  });
+
+  function addGroup() {
+	  
+    // declares the button
    	var person = prompt("Please enter your group name", "Group X");
     var btn = document.createElement("BUTTON");
 
-// adds attributes to the button
+    // adds attributes to the button
     btn.setAttribute("id", person);
     
-// adds the button onscreen
+    // adds the button onscreen
     var t = document.createTextNode(person);
     btn.appendChild(t);
     document.body.appendChild(btn);
-// adds script to button
-document.getElementById(person).onclick = function() {window.location.href = "chorespage.html";};
-
+    // adds script to button, appends user string to the end and the groupname appended also
+    document.getElementById(person).onclick = function() {
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;   
+      var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
+      var choreUrl = 'chorespage.html?';
+      var finalChoreUrl = choreUrl.concat(UrlSubString);
+      var finalChoreUrl2 = finalChoreUrl.concat("&");
+      var finalChoreUrl3 = finalChoreUrl2.concat(person);
+      window.location.href=finalChoreUrl3;
+    };
   }
 </script>
 

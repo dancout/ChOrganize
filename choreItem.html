@@ -1,7 +1,7 @@
 <html>
 
 	<head>
-	    <title>My Groups</title>
+	    <title>My Chore Item</title>
 
 	    <!-- include stylesheets and bootstrap -->
 	    <meta charset="utf-8">
@@ -19,9 +19,56 @@
 	</head>
 
 <script>
+  //this function returns the firebase url with the correct children appended
+  function firebaseUrl(choreName) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.indexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+    var groupIndex = UrlString.indexOf("&") + 1;  
+    var endGroupIndex = UrlString.lastIndexOf("&");
+    var rightUrlSubString = UrlString.substring(groupIndex, endGroupIndex);  
+
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
+    var mainUrlGroup = mainUrl.concat(leftUrlSubString);
+    var mainUrlGroupSlash = mainUrlGroup.concat("/");
+    var mainUrlChore = mainUrlGroupSlash.concat(rightUrlSubString);
+    var mainUrlChoreFinal = mainUrlChore.concat("/");
+    if(choreName == null) {
+      console.log("Inside Chore Name");
+      return mainUrlChoreFinal;
+    }
+    mainUrlChoreFinal = mainUrlChoreFinal.concat(choreName);
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
+    return mainUrlChoreFinal;
+  }
+
+  //this function auto initalizes the data onto the page, when page is loaded
+  $(document).ready(function () {
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
+	  var myDataRef = new Firebase(firebaseUrl(UrlSubString));
+    //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
+    myDataRef.on('value', function(snapshot) {
+      var chores = snapshot.val();
+      console.log(snapshot.val());
+      /*snapshot.forEach(function(data) {
+        console.log(data.key() + " description is " + data.val().description);
+
+        //document.getElementById('header').innerHTML = data.val().choreName;
+      });*/
+      document.getElementById('header3').innerHTML = snapshot.val().choreName;
+      document.getElementById('dueDate').innerHTML = snapshot.val().dueDate;
+      document.getElementById('description').innerHTML = snapshot.val().description;
+    });
+  });
+
 	function complete() {
 		alert("Chore completed!");
 	}
+
 </script>
 
 <body>
@@ -78,13 +125,13 @@
 		</div>
 
 		<hr class="bottomline">
-		<h3 style="text-align:center;">Doing the Dishes</h1>
+		<h3 style="text-align:center;" id="header3">Doing the Dishes</h1>
 
 
 		<!-- info about chore -->
 		<ul>
-			<li>Due Date: 12/01/15</li>
-			<li>Description: Clean each dish and put inside dishwasher. Unload any dishes that were previously there.</li>
+			<li id="dueDate">Due Date: 12/01/15</li>
+			<li id="description">Description: Clean each dish and put inside dishwasher. Unload any dishes that were previously there.</li>
 		</ul>
 
 		<!-- main buttons -->
