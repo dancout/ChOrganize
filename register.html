@@ -36,12 +36,10 @@
 
         var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
         loginUrl = loginUrl.concat(regInfo.username.value);
-        loginUrl = loginUrl.concat("/");
-        loginUrl = loginUrl.concat("UserInfo/");
 
         var regDataRef = new Firebase(loginUrl);
 
-    regDataRef.set({Email: regInfo.email.value, FirstName: regInfo.fName.value, LastName: regInfo.lName.value});
+    regDataRef.set({UserInfo: {Email: regInfo.email.value, FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
 
 			    window.location.href="login.html";
 			  }

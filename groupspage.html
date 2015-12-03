@@ -68,25 +68,63 @@
   function addGroup() {
 	  
     // declares the button
-   	var person = prompt("Please enter your group name", "Group X");
+   	var groupName = prompt("Please enter your group name", "Group X");
     var btn = document.createElement("BUTTON");
 
     // adds attributes to the button
-    btn.setAttribute("id", person);
+    btn.setAttribute("id", groupName);
     
     // adds the button onscreen
-    var t = document.createTextNode(person);
+    var t = document.createTextNode(groupName);
     btn.appendChild(t);
     document.body.appendChild(btn);
+
+    var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
+    //groupUrl.concat(person);
+    //groupUrl.concat("/");
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var groupDataRef = new Firebase(groupUrl);
+    var newGroupRef = groupDataRef.push();
+    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}});
+
+    var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
+    var keyString = newGroupRef.toString().substring(keyIndex, newGroupRef.length);
+
+    var newGroupRef2 = newGroupRef.toString();
+    newGroupRef2 = newGroupRef2.concat("/Members");
+    var insertMemberRef = new Firebase(newGroupRef2);
+    var anotherVarRef = insertMemberRef.push();
+    anotherVarRef.set({value: UrlSubString});
+    
+    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    userUrl = userUrl.concat(UrlSubString);
+    userUrl = userUrl.concat("/Groups");
+    //alert(userUrl);
+
+
+    var userDataRef = new Firebase(userUrl);
+
+    var newUserGroup = userDataRef.push();
+        newUserGroup.update({value: keyString});
+    /*userDataRef.once("value", function(snapshot) {
+      var hasGroup = snapshot.hasChild("Groups");
+      if(hasGroup == false) {
+        userDataRef.update({Groups: {Group_1: newGroupRef.toString()}});
+      }
+    });*/
+
     // adds script to button, appends user string to the end and the groupname appended also
-    document.getElementById(person).onclick = function() {
+    document.getElementById(groupName).onclick = function() {
       var UrlString = window.location.toString();
       var userIndex = UrlString.indexOf("?") + 1;   
       var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
       var choreUrl = 'chorespage.html?';
       var finalChoreUrl = choreUrl.concat(UrlSubString);
       var finalChoreUrl2 = finalChoreUrl.concat("&");
-      var finalChoreUrl3 = finalChoreUrl2.concat(person);
+      var finalChoreUrl3 = finalChoreUrl2.concat(groupName);
       window.location.href=finalChoreUrl3;
     };
   }
