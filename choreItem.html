@@ -60,8 +60,8 @@
         //document.getElementById('header').innerHTML = data.val().choreName;
       });*/
       document.getElementById('header3').innerHTML = snapshot.val().choreName;
-      document.getElementById('dueDate').innerHTML = snapshot.val().dueDate;
-      document.getElementById('description').innerHTML = snapshot.val().description;
+      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.val().dueDate;
+      document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.val().description;
     });
   });
 
@@ -71,6 +71,11 @@
     var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
 		alert(UrlSubString);
     
+	}
+
+	function gotoChorespage() {
+		// When we figure it out, make sure it goes to the group that this chore was located in
+		window.location.href="chorespage.html";
 	}
 
 </script>
@@ -129,13 +134,13 @@
 		</div>
 
 		<hr class="bottomline">
-		<h3 style="text-align:center;" id="header3">Doing the Dishes</h1>
+		<h3 style="text-align:center;" id="header3"><br></h1>
 
 
 		<!-- info about chore -->
 		<ul>
-			<li id="dueDate">Due Date: 12/01/15</li>
-			<li id="description">Description: Clean each dish and put inside dishwasher. Unload any dishes that were previously there.</li>
+			<li id="dueDate"><strong>Due Date: </strong></li>
+			<li id="description"><strong>Description: </strong></li>
 		</ul>
 
 		<!-- main buttons -->
@@ -143,6 +148,7 @@
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
 				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete()">Complete this Chore</button></li>
+				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoChorespage()">Go Back</button></li>
 			</ul>
 
 
