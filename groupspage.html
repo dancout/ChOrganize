@@ -22,6 +22,11 @@
 	function choresLink() {
     window.location.href = "chorespage.html";
 	}
+
+	function gotoHomepage()
+ 	{
+   		window.location.href="homepage.html";
+  	}
 </script>
 
 
@@ -149,6 +154,7 @@
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
+				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoHomepage()">Go Back</button></li>
 				<li><img class = "buttonPic" src="photos/addNewGroup.png"><button class="btn-default btn" onclick="addGroup()">Add a new group</button></li>
 			</ul>
 

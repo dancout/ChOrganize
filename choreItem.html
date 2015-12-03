@@ -69,6 +69,11 @@
 		alert("Chore completed!");
 	}
 
+	function gotoChorespage() {
+		// When we figure it out, make sure it goes to the group that this chore was located in
+		window.location.href="chorespage.html";
+	}
+
 </script>
 
 <body>
@@ -139,6 +144,7 @@
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
 				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete()">Complete this Chore</button></li>
+				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoChorespage()">Go Back</button></li>
 			</ul>
 
 
