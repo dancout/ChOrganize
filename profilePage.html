@@ -17,13 +17,46 @@
 	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
 	</head>
 
+	<script>
+		function loginCheck(){
+			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+			var authData = ref.getAuth();
+
+			document.getElementById('email').innerHTML = "I got this far";
+
+			if (authData) {
+			  	//console.log("Authenticated user with uid:", authData.uid);
+			  	// show email
+				document.getElementById('email').innerHTML = authData.password.email;
+
+				// find username
+				var usersUrl = "https://flickering-inferno-1570.firebaseio.com/Users";
+				var usersRef = new Firebase(usersUrl);
+
+				usersRef.once("value", function(snapshot) {
+
+					snapshot.forEach(function(childSnapshot) {
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
+							document.getElementById('username').innerHTML = childSnapshot.key();
+					});
+
+				});
+			}
+			else
+			{
+				document.getElementById('email').innerHTML = "No ID ):";
+			}
+		}
+	</script>
+
 	<body>
 		<div>
 			<img src="photos/profilePic.Png">
 			<p>My Profile, yo</p>
-
+			<p id="email">Logged In Email</p>
+			<p id="username">Logged In Username</p>
+			<button onClick="loginCheck()">press</button>
 		</div>
-
 
 	</body>
 
