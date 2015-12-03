@@ -34,34 +34,46 @@
 
   //this function auto initalizes the data onto the page, when page is loaded
   $(document).ready(function () {
-    var UrlString = window.location.toString();
-    var userIndex = UrlString.indexOf("?") + 1;   
-    var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
-    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
-    mainUrl = mainUrl.concat(UrlSubString);
-    mainUrl = mainUrl.concat("/");
-    var myDataRef = new Firebase(mainUrl);
-    myDataRef.on('value', function(snapshot) {
-      snapshot.forEach(function(data) {
-        var btn = document.createElement("BUTTON");
+  var UrlString = window.location.toString();
+  var userIndex = UrlString.indexOf("?") + 1;   
+  var UrlSubString = UrlString.substring(userIndex, UrlString.length); 
+  
+  usersUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+  usersUrl = usersUrl.concat(UrlSubString);
+  usersUrl = usersUrl.concat('/Groups');
+  var usersRef = new Firebase(usersUrl);
+  usersRef.once("value", function(snapshot) {
+      var hasGroup = snapshot.hasChild("Dummy");
+      if(hasGroup == false) {
+        snapshot.forEach(function(valueSnapshot) {
+			var groupKey = valueSnapshot.child("value").val();
+			
+			groupsUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+			groupsUrl = groupsUrl.concat(groupKey);
+			var groupsRef = new Firebase(groupsUrl);
+			groupsRef.once("value", function(nameSnapshot) {
+				var groupName = nameSnapshot.child("GroupName").val();
+				var btn = document.createElement("BUTTON");
 
-        // adds attributes to the button
-        btn.setAttribute("id", data.key());
-        
-        // adds the button onscreen
-        var t = document.createTextNode(data.key());
-        btn.appendChild(t);
-        document.body.appendChild(btn);
+				// adds attributes to the button
+				btn.setAttribute("id", groupName);
+				
+				// adds the button onscreen
+				var t = document.createTextNode(groupName);
+				btn.appendChild(t);
+				document.body.appendChild(btn);
 
-        // adds script to button
-        document.getElementById(data.key()).onclick = function() {  
-          var choreUrl = 'chorespage.html?';
-          var finalChoreUrl = choreUrl.concat(UrlSubString);
-          var finalChoreUrl2 = finalChoreUrl.concat("&");
-          var finalChoreUrl3 = finalChoreUrl2.concat(data.key());
-          window.location.href=finalChoreUrl3;
-        };
-      });
+				// adds script to button
+				document.getElementById(groupName).onclick = function() {  
+				  var choreUrl = 'chorespage.html?';
+				  var finalChoreUrl = choreUrl.concat(UrlSubString);
+				  var finalChoreUrl2 = finalChoreUrl.concat("&");
+				  var finalChoreUrl3 = finalChoreUrl2.concat(groupName);
+				  window.location.href=finalChoreUrl3;
+				};
+			});
+		});
+      }
     });
   });
 
