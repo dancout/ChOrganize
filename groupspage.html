@@ -25,7 +25,10 @@
 
 	function gotoHomepage()
  	{
-   		window.location.href="homepage.html";
+ 		var UrlString = window.location.toString();
+		UrlString = UrlString.replace("groupspage", "homepage");
+		window.location.href = UrlString;
+
   	}
 </script>
 

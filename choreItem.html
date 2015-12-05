@@ -65,18 +65,41 @@
     });
   });
 
-	function complete() {
+	function complete(deletebool) {
     var UrlString = window.location.toString();
     var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
     var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
-		alert(UrlSubString);
+	if(deletebool)
+	{
+		removeChore(UrlSubString);
+
+	}
+	gotoChorespage(UrlSubString);
     
 	}
 
-	function gotoChorespage() {
-		// When we figure it out, make sure it goes to the group that this chore was located in
-		window.location.href="chorespage.html";
+	function gotoChorespage(choreName) {
+
+		var UrlString = window.location.toString();
+		UrlString = UrlString.replace("choreItem", "chorespage");
+		var userIndex = UrlString.indexOf("?") + 1;   
+		var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+		var choreUrl = "&";
+		choreUrl=choreUrl.concat(choreName);
+		var backUrl = UrlString.replace(choreUrl, "");
+		window.location.href = backUrl;
+
 	}
+
+  function removeChore(choreName) {
+     
+    var mainUrlChoreFinal = firebaseUrl(choreName);
+    console.log(mainUrlChoreFinal);
+    var newDataRef = new Firebase(mainUrlChoreFinal);
+    newDataRef.remove();
+  }
+
 
 </script>
 
@@ -147,8 +170,8 @@
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete()">Complete this Chore</button></li>
-				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoChorespage()">Go Back</button></li>
+				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete(true)">Complete this Chore</button></li>
+				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="complete(false)">Go Back</button></li>
 			</ul>
 
 
