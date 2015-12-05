@@ -55,13 +55,17 @@
 				var groupName = nameSnapshot.child("GroupName").val();
 				var btn = document.createElement("BUTTON");
 
+
 				// adds attributes to the button
 				btn.setAttribute("id", groupName);
+				btn.setAttribute("class", "btn btn-primary");
 				
 				// adds the button onscreen
 				var t = document.createTextNode(groupName);
 				btn.appendChild(t);
-				document.body.appendChild(btn);
+				// myItem.appendChild(btn);
+				// document.getElementById("myItem").appendChild(btn);
+				document.getElementById("groupButtons").appendChild(btn);
 
 				// adds script to button
 				document.getElementById(groupName).onclick = function() {  
@@ -89,7 +93,7 @@
     // adds the button onscreen
     var t = document.createTextNode(groupName);
     btn.appendChild(t);
-    document.body.appendChild(btn);
+    document.getElementById("groupButtons").appendChild(btn);
 
     var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
     //groupUrl.concat(person);
@@ -220,8 +224,16 @@
 				<li><img class = "buttonPic" src="photos/addNewGroup.png"><button class="btn-default btn" onclick="addGroup()">Add a new group</button></li>
 			</ul>
 
+			<h4 style="text-align:center;"> My Groups </h4>
+
+					<!-- this wrapper will hold all the buttons leading to the user's groups -->
+		<div id="groupButtons" class="btn-group-vertical" style="float:center">
+		</div>
+
 
 		</div>
+
+
 
 	</div>
 
