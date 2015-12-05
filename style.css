@@ -97,7 +97,7 @@ button {
 }
 
 
-#groupButtons {
+#scrollingButtons {
 	text-align: center;
 	padding-top: 25px;
 	float: center;
@@ -107,7 +107,7 @@ button {
 	padding-left: 15%;
 }
 
-#groupButtons button {
+#scrollingButtons button {
 
 	width: 100%;
 }

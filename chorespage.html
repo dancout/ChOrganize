@@ -83,7 +83,8 @@
     // adds the button onscreen
         var t = document.createTextNode(data.key());
         btn.appendChild(t);
-        document.body.appendChild(btn);
+        // document.body.appendChild(btn);
+        document.getElementById("scrollingButtons").appendChild(btn);
     // adds script to button
         document.getElementById(data.key()).onclick = function() {dummy(data.key());};
         });
@@ -200,6 +201,12 @@
 				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
 			</ul>
 
+      <h4 style="text-align:center;"> My Chores </h4>
+
+
+      <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
+
+      </div>
 
 		</div>
 

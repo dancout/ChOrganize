@@ -65,7 +65,7 @@
 				btn.appendChild(t);
 				// myItem.appendChild(btn);
 				// document.getElementById("myItem").appendChild(btn);
-				document.getElementById("groupButtons").appendChild(btn);
+				document.getElementById("scrollingButtons").appendChild(btn);
 
 				// adds script to button
 				document.getElementById(groupName).onclick = function() {  
@@ -93,7 +93,7 @@
     // adds the button onscreen
     var t = document.createTextNode(groupName);
     btn.appendChild(t);
-    document.getElementById("groupButtons").appendChild(btn);
+    document.getElementById("scrollingButtons").appendChild(btn);
 
     var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
     //groupUrl.concat(person);
@@ -227,7 +227,7 @@
 			<h4 style="text-align:center;"> My Groups </h4>
 
 					<!-- this wrapper will hold all the buttons leading to the user's groups -->
-		<div id="groupButtons" class="btn-group-vertical" style="float:center">
+		<div id="scrollingButtons" class="btn-group-vertical" style="float:center">
 		</div>
 
 
