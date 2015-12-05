@@ -57,8 +57,17 @@
 
   function gotoGroupspage()
   {
-    // When we figure it out, make sure it goes to the user that this group was located in
-    window.location.href="groupspage.html";
+    var UrlString = window.location.toString();
+    UrlString = UrlString.replace("chorespage", "groupspage");
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var subIndex = UrlSubString.indexOf("&");
+    var UrlSubSubString = UrlSubString.substring(subIndex, UrlSubString.length);
+
+    var UrlString = UrlString.replace(UrlSubSubString, "");
+    window.location.href = UrlString;
+
   }
 </script>
 
