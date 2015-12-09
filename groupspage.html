@@ -25,9 +25,13 @@
 
 	function gotoHomepage()
  	{
- 		var UrlString = window.location.toString();
-		UrlString = UrlString.replace("groupspage", "homepage");
-		window.location.href = UrlString;
+    //assigns correct url to home button
+      var home = "homepage.html?";
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var leftUrlSubString = UrlString.substring(userIndex, UrlString.length);
+      home = home.concat(leftUrlSubString);
+      window.location.href=home;
 
   	}
 </script>
@@ -75,7 +79,7 @@
 				  var choreUrl = 'chorespage.html?';
 				  var finalChoreUrl = choreUrl.concat(UrlSubString);
 				  var finalChoreUrl2 = finalChoreUrl.concat("&");
-				  var finalChoreUrl3 = finalChoreUrl2.concat(groupName);
+				  var finalChoreUrl3 = finalChoreUrl2.concat(groupKey);
 				  window.location.href=finalChoreUrl3;
 				};
 			});
@@ -107,7 +111,8 @@
 
     var groupDataRef = new Firebase(groupUrl);
     var newGroupRef = groupDataRef.push();
-    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}});
+    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}});
+
 
     var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
     var keyString = newGroupRef.toString().substring(keyIndex, newGroupRef.length);
@@ -155,7 +160,7 @@
       var choreUrl = 'chorespage.html?';
       var finalChoreUrl = choreUrl.concat(UrlSubString);
       var finalChoreUrl2 = finalChoreUrl.concat("&");
-      var finalChoreUrl3 = finalChoreUrl2.concat(groupName);
+      var finalChoreUrl3 = finalChoreUrl2.concat(newGroupRef.toString());
       window.location.href=finalChoreUrl3;
     };
   }
@@ -176,7 +181,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><a href="homepage.html"><img class="title" src="photos/ChOrganizelogo.png"></a></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
 
 
 				<!-- Setting menu -->

@@ -30,15 +30,16 @@
     var endGroupIndex = UrlString.lastIndexOf("&");
     var rightUrlSubString = UrlString.substring(groupIndex, endGroupIndex);  
 
-    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
-    var mainUrlGroup = mainUrl.concat(leftUrlSubString);
-    var mainUrlGroupSlash = mainUrlGroup.concat("/");
-    var mainUrlChore = mainUrlGroupSlash.concat(rightUrlSubString);
-    var mainUrlChoreFinal = mainUrlChore.concat("/");
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    //var mainUrlGroup = mainUrl.concat(leftUrlSubString);
+    //var mainUrlGroupSlash = mainUrlGroup.concat("/");
+    var mainUrlChore = mainUrl.concat(rightUrlSubString);
+    var mainUrlChoreFinal = mainUrlChore.concat("/Chores");
     if(choreName == null) {
       console.log("Inside Chore Name");
       return mainUrlChoreFinal;
     }
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
     mainUrlChoreFinal = mainUrlChoreFinal.concat(choreName);
     mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
     return mainUrlChoreFinal;
@@ -59,9 +60,9 @@
 
         //document.getElementById('header').innerHTML = data.val().choreName;
       });*/
-      document.getElementById('header3').innerHTML = snapshot.val().choreName;
-      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.val().dueDate;
-      document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.val().description;
+      document.getElementById('header3').innerHTML = snapshot.child("ChoreName").val();
+      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("ChoreDueDate").val();
+      document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
     });
   });
 
@@ -100,6 +101,16 @@
     newDataRef.remove();
   }
 
+  function gotoHomePage() {
+    //assigns correct url to home button
+      var home = "homepage.html?";
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var rightIndex = UrlString.indexOf("&"); 
+      var leftUrlSubString = UrlString.substring(userIndex, rightIndex);
+      home = home.concat(leftUrlSubString);
+      window.location.href=home;
+  }
 
 </script>
 
@@ -116,7 +127,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><a href="homepage.html"><img class="title" src="photos/ChOrganizelogo.png"></a></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomePage()"></li>
 
 
 				<!-- Setting menu -->
