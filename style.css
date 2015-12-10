@@ -122,8 +122,16 @@ button {
 	float: left;
 }
 
-.radioButton {
-	margin-right: 100px;
+.radioButtonLeft {
+	float:left;
+}
+
+.radioButtonCenter {
+	float:center;
+}
+
+.radioButtonRight {
+	float:right;
 }
 
 

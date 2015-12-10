@@ -132,6 +132,7 @@
         var radioName1 = data.child("ChoreName").val() + "b1";
         x.setAttribute("id", radioName1);
         x.onclick = function() {colorChange(data.child("ChoreName").val());};
+        x.setAttribute("class", "radioButtonLeft");
 
         // create 2nd radio button
         var y = document.createElement("INPUT");
@@ -140,6 +141,8 @@
         var radioName2 = data.child("ChoreName").val() + "b2";
         y.setAttribute("id", radioName2);
         y.onclick = function() {colorChange(data.child("ChoreName").val());};
+        y.setAttribute("class", "radioButtonCenter");
+
 
         // create 3rd radio button
         var z = document.createElement("INPUT");
@@ -147,7 +150,9 @@
         z.setAttribute("name", "james");
         var radioName2 = data.child("ChoreName").val() + "b3";
         z.setAttribute("id", radioName2);
-        z.onclick = function() {removeChore(data.key());};
+        z.onclick = function() {removeChore(data.key());};        
+        z.setAttribute("class", "radioButtonRight");
+
 
         // add button then button form to button div
         document.getElementById(divName).appendChild(btn);
@@ -312,7 +317,11 @@
 
 
       <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
-
+        <p style="float:center;"> 
+          <span style="display:inline-block; width: 45%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 15%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 15%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
+        </p>
       </div>
 
 		</div>
