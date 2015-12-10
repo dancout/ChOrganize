@@ -46,7 +46,31 @@
 				document.getElementById('email').innerHTML = "<strong>Email: </strong>No Email ):";
 			}
 		}
+	</script>
 
+	<!-- Function returns username -->
+	<script>
+		function getUsername() {
+			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+			var authData = ref.getAuth();
+
+			if (authData) {
+				// find username
+				var usersUrl = "https://flickering-inferno-1570.firebaseio.com/Users";
+				var usersRef = new Firebase(usersUrl);
+
+				usersRef.once("value", function(snapshot) {
+
+					snapshot.forEach(function(childSnapshot) {
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
+							return childSnapshot.key();
+					});
+				});
+			}
+			else {
+				return false;
+			}
+		}
 	</script>
 
 	<!-- For login sensitive pages! -->
