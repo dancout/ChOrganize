@@ -245,7 +245,7 @@
         }
         else if (document.getElementById(choreName + "b2").checked) // complete
         {
-          document.getElementById(choreName).style.backgroundColor = "blue";
+          document.getElementById(choreName).style.backgroundColor = "green";
 
           // update firebase "done" value to 1
 
@@ -306,6 +306,55 @@
     });
 
     window.location.href=window.location;
+
+  }
+
+  function addMember() {
+    var memberName = prompt("Please enter the member's name", "member");
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.lastIndexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+    var groupIndex = UrlString.lastIndexOf("&") + 1;  
+    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
+
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    var mainUrlMember = mainUrl.concat(rightUrlSubString);
+    mainUrlMember = mainUrlMember.concat("/Members");
+    var insertMemberRef = new Firebase(mainUrlMember);
+
+    // add memberName to members
+    var dataRef = insertMemberRef.push();
+    dataRef.set({value: memberName})
+
+    // add this group to the new member/user's groups
+    var userURL = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    userURL = userURL.concat(memberName);
+    var userGroupURL = userURL.concat("/Groups");
+
+    var memberGroupRef = new Firebase(userGroupURL);
+    var memberDataGroupRef = memberGroupRef.push();
+
+    memberDataGroupRef.set({value: rightUrlSubString});
+
+    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    userUrl = userUrl.concat(memberName);
+    userUrl = userUrl.concat("/Groups");
+
+    var userDataRef = new Firebase(userUrl);
+    alert("just before");
+    userDataRef.once("value", function(snapshot) {
+      var hasGroup = snapshot.hasChild("Dummy");
+      if(hasGroup == true) {
+        removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+        removeDummyUrl = removeDummyUrl.concat(memberName);
+        removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
+        alert(removeDummyUrl);
+        removeDummy = new Firebase(removeDummyUrl);
+        removeDummy.remove();
+      }
+    });
 
   }
 
@@ -375,6 +424,7 @@
 				<!-- put a picture and a button in each 'list' item (row) -->
                 <li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoGroupspage()">Go Back</button></li>
 				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
+        <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="addMember()">Add a new member</button></li>
 			</ul>
 
 
