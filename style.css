@@ -126,6 +126,11 @@ ul {
 	float: left;
 }
 
+#scrollingButtons .assignClass {
+	width: 17%;
+	float: left;
+}
+
 #scrollingButtonsGroups {
 	text-align: center;
 	padding-top: 25px;
@@ -140,6 +145,8 @@ ul {
 	width: 80%;
 	float: center;
 }
+
+
 
 .radioButtonLeft {
 	float:left;

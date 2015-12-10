@@ -106,6 +106,52 @@
         // add button div to scrollingButtons
         document.getElementById("scrollingButtons").appendChild(buttonDiv);
 
+        var pickupbtn;
+
+        if(data.child("ChoreAssign").val() == "0")
+        {
+        // create assing user button
+        pickupbtn = document.createElement("BUTTON");
+        pickupbtn.setAttribute("class", "assignClass");
+        var pickupbtnName = data.child("ChoreName").val();
+        pickupbtnName = pickupbtnName.concat("pickupbtn");
+        pickupbtn.setAttribute("id", pickupbtnName);
+
+        var pickupText = document.createTextNode("Pick Up");
+        pickupbtn.appendChild(pickupText);
+        pickupbtn.onclick = function() {pickUp(data);};
+        }
+
+        else
+        {
+
+        // create user assigned text
+        pickupbtn = document.createElement("p");
+        pickupbtn.setAttribute("class", "assignClass");
+        var message = data.child("ChoreAssign").val();
+        var node = document.createTextNode(message);
+        pickupbtn.appendChild(node);
+        }
+
+
+        // create user assigned text
+        // var par = document.createElement("p");
+        // var node = document.createTextNode("Open");
+        // par.setAttribute("class", "assignClass");
+        // par.appendChild(node);
+
+        // // create assing user button
+        // var pickupbtn = document.createElement("BUTTON");
+        // pickupbtn.setAttribute("class", "assignClass");
+        // var pickupbtnName = data.child("ChoreName").val();
+        // pickupbtnName = pickupbtnName.concat("pickupbtn");
+        // pickupbtn.setAttribute("id", pickupbtnName);
+
+        // var pickupText = document.createTextNode("Pick Up");
+        // pickupbtn.appendChild(pickupText);
+        // pickupbtn.onclick = function() {pickUp(data);};
+
+
         // create button
         var btn = document.createElement("BUTTON");
         btn.setAttribute("id", data.child("ChoreName").val());
@@ -165,7 +211,8 @@
         z.setAttribute("class", "radioButtonRight");
 
 
-        // add button then button form to button div
+        // add availability text then button then button form to button div
+        document.getElementById(divName).appendChild(pickupbtn);
         document.getElementById(divName).appendChild(btn);
         document.getElementById(divName).appendChild(buttonForm);
 
@@ -271,8 +318,6 @@
 
 
   function addChore() {
-	  //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
- // declares the button
    	var choreName = prompt("Please enter your chore name", "Chore X");
    	var choreDesc = prompt("Please enter your chore description", "Description");
    	var dueDate = prompt("Please enter your chore due date", "Due Date");
@@ -282,11 +327,12 @@
     var userIndex = UrlString.indexOf("?") + 1;  
     var rightIndex = UrlString.lastIndexOf("&"); 
     var leftUrlSubString = UrlString.substring(userIndex, rightIndex); 
+    var none = "0";
 
     var userDataRef = new Firebase(firebaseUrl());
     var newGroupChore = userDataRef.push();
     var doneVal = 0;
-        newGroupChore.update({ChoreAssign: leftUrlSubString, ChoreDesc: choreDesc, 
+        newGroupChore.update({ChoreAssign: none, ChoreDesc: choreDesc, 
           ChoreDueDate: dueDate, ChoreName: choreName, Done: {Done: doneVal}});
 
 // adds script to button
@@ -343,18 +389,41 @@
     userUrl = userUrl.concat("/Groups");
 
     var userDataRef = new Firebase(userUrl);
-    alert("just before");
     userDataRef.once("value", function(snapshot) {
       var hasGroup = snapshot.hasChild("Dummy");
       if(hasGroup == true) {
         removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
         removeDummyUrl = removeDummyUrl.concat(memberName);
         removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
-        alert(removeDummyUrl);
         removeDummy = new Firebase(removeDummyUrl);
         removeDummy.remove();
       }
     });
+
+  }
+
+  function pickUp (data) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.lastIndexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex); 
+
+    var choreKey = data.key();
+
+    var dummySlash = "/";
+    choreKey = dummySlash.concat(choreKey);
+    var choreFirebaseUrl = firebaseUrl(choreKey);
+    var choreDataRef = new Firebase(choreFirebaseUrl);
+    choreDataRef.update({ChoreAssign: leftUrlSubString});
+
+    window.location.href = window.location;
+
+    // alert(choreDataRef.toString());
+    // alert(data.child("ChoreName").val());
+    // var buttonName = data.child("ChoreName").val();
+    // buttonName = buttonName.concat("pickupbtn");
+    // var myBtn = document.getElementById(buttonName);
+    // alert("done");
 
   }
 
@@ -434,9 +503,9 @@
 
       <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
         <p style="float:center;"> 
-          <span style="display:inline-block; width: 45%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 15%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 15%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 62%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 9%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 9%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
         </p>
       </div>
 
