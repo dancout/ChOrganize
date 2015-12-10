@@ -74,15 +74,6 @@ ul {
 	font-style: bold;
 	font-family: "Arial Narrow", Arial, sans-serif;
 }
-button {
-	width: 30%;
-	height: 50px;
-	background-color: #eb6d20;
-	color: white;
-	font-size: 25;
-	font-style: bold;
-	font-family: "Arial Narrow", Arial, sans-serif;
-}
 
 #body button{
 	width: 30%;
@@ -92,6 +83,19 @@ button {
 	font-size: 25;
 	font-style: bold;
 	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+#table button{
+	width: 100%;
+	height: 40px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 18;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+#table table, th, td {
+    padding: 5px;
 }
 
 #main input {

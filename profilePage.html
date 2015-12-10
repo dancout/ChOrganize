@@ -18,16 +18,25 @@
 	</head>
 
 	<script>
+		function editUsername() {
+			alert("hi");
+		}
+
+		function editEmail() {
+			alert("helpme");
+		}
+
+
 		function getProfile(){
 			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
 			var authData = ref.getAuth();
 
-			document.getElementById('email').innerHTML = "I got this far";
+			var username = getUsername();
 
 			if (authData) {
 			  	//console.log("Authenticated user with uid:", authData.uid);
 			  	// show email
-				document.getElementById('email').innerHTML = "<strong>Email</strong>: " + authData.password.email;
+				document.getElementById('email').innerHTML = authData.password.email;
 
 				// find username
 				var usersUrl = "https://flickering-inferno-1570.firebaseio.com/Users";
@@ -37,13 +46,13 @@
 
 					snapshot.forEach(function(childSnapshot) {
 						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
-							document.getElementById('username').innerHTML = "<strong>Username</strong>: " + childSnapshot.key();
+							document.getElementById('username').innerHTML = childSnapshot.key();
 					});
 				});
 			}
 			else
 			{
-				document.getElementById('email').innerHTML = "<strong>Email: </strong>No Email ):";
+				document.getElementById('email').innerHTML = "No Email ):";
 			}
 		}
 	</script>
@@ -62,8 +71,12 @@
 				usersRef.once("value", function(snapshot) {
 
 					snapshot.forEach(function(childSnapshot) {
-						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
-							return childSnapshot.key();
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+							//var username = childShapshot.key();
+							var username = childSnapshot.key().toString();
+							alert ("hi " + username);
+							return username;
+						}
 					});
 				});
 			}
@@ -157,13 +170,27 @@
 
 					
 				</div>
-			</div>
+			</div> <center>
 			<div id="body">
+				<h3>Profile</h3>
 				<img src="photos/profilePic.Png">
-				<p>My Profile, yo</p>
-				<div id="email"><strong>Email</strong>: </div>
-				<div id="username"><strong>Username</strong>: </div>	
-			</div>
+				<br>
+				<br>
+				<div id="table">
+					<table style="width:40%">
+						<tr>
+							<td><strong>Email</strong></td>
+							<td><div id="email"><div></td> 
+							<td><button type="button" class="btn btn-default" onclick="editEmail()"> edit </button></td>
+						</tr>
+						<tr>
+							<td><strong>Username</strong></td>
+							<td><div id="username"><div></td> 
+							<td><button type="button" class="btn btn-default" onclick="editUsername()">edit</button></td>
+						</tr>
+					</table>
+				</div>
+			</div> </center>
 		</div>
 	</body>
 
