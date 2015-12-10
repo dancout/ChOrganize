@@ -126,6 +126,21 @@ ul {
 	float: left;
 }
 
+#scrollingButtonsGroups {
+	text-align: center;
+	padding-top: 25px;
+	float: center;
+	overflow: scroll;
+	height: 200px;
+	width: 40%;
+	padding-left: 15%;
+}
+
+#scrollingButtonsGroups button {
+	width: 80%;
+	float: center;
+}
+
 .radioButtonLeft {
 	float:left;
 }

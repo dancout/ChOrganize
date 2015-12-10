@@ -25,6 +25,7 @@
 		{
 			var loginInfo = document.getElementById("login");
 	      	var nameString = loginInfo.email.value;
+	      	var splitName = nameString.toString().split("@");
 
 			myDataRef.authWithPassword({
 				"email":  loginInfo.email.value,
@@ -35,7 +36,10 @@
 				} 
 				else {
 					console.log("Authenticated successfully with payload:", authData);
-					window.location.href = "homepage.html";
+					var homepageUrl = "homepage.html?";
+
+					homepageUrl = homepageUrl.concat(splitName[0]);
+					window.location.href = homepageUrl;
 				}
 			});
 		}
