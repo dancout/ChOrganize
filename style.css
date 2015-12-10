@@ -113,11 +113,18 @@ button {
 	float: center;
 	overflow: scroll;
 	height: 200px;
-	width: 50%;
+	width: 60%;
 	padding-left: 15%;
 }
 
 #scrollingButtons button {
-
-	width: 100%;
+	width: 50%;
+	float: left;
 }
+
+.radioButton {
+	margin-right: 100px;
+}
+
+
+
