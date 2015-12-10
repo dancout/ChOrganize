@@ -123,15 +123,8 @@
         formName = data.key() + "Form";
         buttonForm.setAttribute("id", formName);
 
-
-        // create radio button
-        var x = document.createElement("INPUT");
-        x.setAttribute("type", "radio");
-        x.setAttribute("name", "james");
-
+        // check the status of which radio button should be checked
         var status;
-        // var changeXstatus = true;
-        // alert(document.createTextNode(data.child("Done").val().toString()));
         if(0 == data.child("Done").child("Done").val())
         {
           status = false;
@@ -141,10 +134,11 @@
           status = true;
         }
 
-        alert(data.key());
+        // create radio button
+        var x = document.createElement("INPUT");
+        x.setAttribute("type", "radio");
+        x.setAttribute("name", "james");
         x.checked = !status;
-      
-
         var radioName1 = data.child("ChoreName").val() + "b1";
         x.setAttribute("id", radioName1);
         x.onclick = function() {colorChange(data.child("ChoreName").val(), data.key());};
@@ -179,6 +173,9 @@
         document.getElementById(formName).appendChild(x);
         document.getElementById(formName).appendChild(y);
         document.getElementById(formName).appendChild(z);
+
+        // update the color of the button
+        colorChange(data.child("ChoreName").val(), data.key());
 
         });
       }
@@ -239,14 +236,11 @@
           var choreUrl = firebaseUrl(dKey);
 
           choreUrl = choreUrl.concat("Done");
-          alert(choreUrl);
 
           var dataRef = new Firebase(choreUrl);
           var doneVal = 0;
 
           dataRef.update({Done: doneVal});
-
-          alert("made it");
 
         }
         else if (document.getElementById(choreName + "b2").checked) // complete
@@ -260,14 +254,11 @@
           var choreUrl = firebaseUrl(dKey);
 
           choreUrl = choreUrl.concat("Done");
-          alert(choreUrl);
 
           var dataRef = new Firebase(choreUrl);
           var doneVal = 1;
 
           dataRef.update({Done: doneVal});
-
-          alert("made it");
 
         }
         else if (document.getElementById(choreName + "b3").checked){
