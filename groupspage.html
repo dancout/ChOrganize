@@ -36,6 +36,36 @@
   	}
 </script>
 
+<script>
+  function logout(){
+  	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+	ref.unauth();
+  }
+</script>
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+<script>
+	function gotoLogin() {
+		window.location.href="login.html?";
+	}
+	function gotoRegister() {
+		window.location.href="register.html?";
+	}
+	function loginCheck(){
+		var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+		var authData = ref.getAuth();
+
+		if (authData) {
+			// Insert any function you want here
+		}
+		else
+		{
+			document.getElementById('main').innerHTML = "<h3><center>You are not logged in</center></h3>" + 
+			"<center><button class='btn-default btn' onclick='gotoLogin()'>Login</button></center>" +
+			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
+		}		
+	}
+</script>
 
 <script>
 
@@ -166,7 +196,7 @@
   }
 </script>
 
-<body>
+<body onload="loginCheck()">
 		<!-- title bar header -->
 		<hr class="topline">
 		
@@ -211,7 +241,7 @@
 				    	<li style="padding:15px;"><a>Friends</a></li>
 				    	<li style="padding:15px;"><a>Edit</a></li>
 				    	<li role="separator" class="divider"></li>
-				    	<li style="padding:15px;"><a href="login.html">Logout</a></li>
+				    	<li style="padding:15px;"><a href="login.html" onclick="logout()">Logout</a></li>
 				    </ul>
 			  	</li>
 
@@ -222,23 +252,26 @@
 		</div>
 
 		<hr class="bottomline">
-		<h3 style="text-align:center;">My Group List</h1>
-
-		<!-- main buttons -->
-		<div id="main">
-			<ul>
-				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoHomepage()">Go Back</button></li>
-				<li><img class = "buttonPic" src="photos/addNewGroup.png"><button class="btn-default btn" onclick="addGroup()">Add a new group</button></li>
-			</ul>
-
-			<h4 style="text-align:center;"> My Groups </h4>
-
-					<!-- this wrapper will hold all the buttons leading to the user's groups -->
-		<div id="scrollingButtons" class="btn-group-vertical" style="float:center">
-		</div>
 
 
+		<div id="body">
+
+			<h3 style="text-align:center;">My Group List</h3>
+			<!-- main buttons -->
+			<div id="main">
+				<ul>
+					<!-- put a picture and a button in each 'list' item (row) -->
+					<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoHomepage()">Go Back</button></li>
+					<li><img class = "buttonPic" src="photos/addNewGroup.png"><button class="btn-default btn" onclick="addGroup()">Add a new group</button></li>
+				</ul>
+
+				<h4 style="text-align:center;"> My Groups </h4>
+
+				<!-- this wrapper will hold all the buttons leading to the user's groups -->
+				<div id="scrollingButtons" class="btn-group-vertical" style="float:center">
+				</div>
+
+			</div>
 		</div>
 
 

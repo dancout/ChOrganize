@@ -84,6 +84,16 @@ button {
 	font-family: "Arial Narrow", Arial, sans-serif;
 }
 
+#body button{
+	width: 30%;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
 #main input {
 	height: 50px;
 }
