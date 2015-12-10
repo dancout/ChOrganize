@@ -91,6 +91,26 @@
   //this function auto initalizes the data onto the page, when page is loaded
   $(document).ready(function () {
 	  var myDataRef = new Firebase(firebaseUrl());
+
+        var UrlString = window.location.toString();
+        var groupIndex = UrlString.lastIndexOf("&") + 1;  
+        var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+        var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+        // var titleHeader = document.createElement("H3");
+        var titleText;
+
+        var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+        mainUrl = mainUrl.concat(rightUrlSubString);
+        var groupDataRef = new Firebase(mainUrl); 
+
+        groupDataRef.once('value', function(snapshot) {
+          titleText = snapshot.child("GroupName").val();
+          titleText = titleText.concat(" Chores");
+          document.getElementById("groupTitle").innerHTML = titleText;
+        });
+
+
     //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
     myDataRef.once('value', function(snapshot) {
       var hasChore = snapshot.hasChild("Dummy");
@@ -98,6 +118,8 @@
         var chores = snapshot.val();
 
         snapshot.forEach(function(data) {
+        // update the group title
+
         // create the button div
         var buttonDiv = document.createElement("div");
         var divName = data.key() + "Div"; // button div name, to be used for id
@@ -132,24 +154,6 @@
         var node = document.createTextNode(message);
         pickupbtn.appendChild(node);
         }
-
-
-        // create user assigned text
-        // var par = document.createElement("p");
-        // var node = document.createTextNode("Open");
-        // par.setAttribute("class", "assignClass");
-        // par.appendChild(node);
-
-        // // create assing user button
-        // var pickupbtn = document.createElement("BUTTON");
-        // pickupbtn.setAttribute("class", "assignClass");
-        // var pickupbtnName = data.child("ChoreName").val();
-        // pickupbtnName = pickupbtnName.concat("pickupbtn");
-        // pickupbtn.setAttribute("id", pickupbtnName);
-
-        // var pickupText = document.createTextNode("Pick Up");
-        // pickupbtn.appendChild(pickupText);
-        // pickupbtn.onclick = function() {pickUp(data);};
 
 
         // create button
@@ -417,14 +421,6 @@
     choreDataRef.update({ChoreAssign: leftUrlSubString});
 
     window.location.href = window.location;
-
-    // alert(choreDataRef.toString());
-    // alert(data.child("ChoreName").val());
-    // var buttonName = data.child("ChoreName").val();
-    // buttonName = buttonName.concat("pickupbtn");
-    // var myBtn = document.getElementById(buttonName);
-    // alert("done");
-
   }
 
 
@@ -484,7 +480,8 @@
 		</div>
 
 		<hr class="bottomline">
-		<h3 style="text-align:center;">My Chore List</h1>
+		<h3 style="text-align:center;" id="groupTitle"></h3>
+    <!-- <div styel="text-align:center;" id="groupTitle"></div> -->
 
 
 		<!-- main buttons -->
