@@ -19,46 +19,24 @@
 	</head>
 
 	<script>
-    var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
+	    var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
 
-	function dummy() {
+		function dummy()
+		{
+			var loginInfo = document.getElementById("login");
+	      	var nameString = loginInfo.email.value;
 
-
-		  var loginInfo = document.getElementById("login");
-
-      var nameString = loginInfo.email.value;
-      //make array of split strings on the "@"
-      var splitName = nameString.toString().split("@");
-      //myDataRef.child(splitName[0]);
-
-
-      //var success = 0;
 			myDataRef.authWithPassword({
-			  email    : loginInfo.email.value,
-			  password : loginInfo.pwd.value
+				"email":  loginInfo.email.value,
+				"password": loginInfo.pwd.value
 			}, function(error, authData) {
-			  if (error) {
-			    console.log("Login Failed!", error);
-			    alert("Login info incorrect, please try again!")
-			  } else {
-			    console.log("Authenticated successfully with payload:", authData);
-    
-          //append the user name to the end of the homepage.html to pass on the user string
-          var homeUrl = "homepage.html?";
-          var homeFinalUrl = homeUrl.concat(splitName[0]);
-
-          window.location.href=homeFinalUrl;
-
-          //success = 1;
-          //console.log("success " + success);
-          //console.log("name " + splitName[0]);
-          //var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/';
-          //console.log(mainUrl.concat(splitName[0]));
-
-          //var newDataRef = new Firebase(mainUrl.concat(splitName[0]));
-
-          //newDataRef.set({user_name: splitName[0], description: "i stands for ipod"});
-			  }
+				if (error) {
+					alert("Login info incorrect, please try again!")
+				} 
+				else {
+					console.log("Authenticated successfully with payload:", authData);
+					window.location.href = "homepage.html";
+				}
 			});
 		}
 
@@ -71,6 +49,7 @@
 			{
 				dummy();
 			    return false; // returning false will prevent the event from bubbling up.
+			}
 			else
 			{
 			    return true;
