@@ -190,7 +190,9 @@ function addGroup()
 		      var choreUrl = 'chorespage.html?';
 		      var finalChoreUrl = choreUrl.concat(UrlSubString);
 		      var finalChoreUrl2 = finalChoreUrl.concat("&");
-		      var finalChoreUrl3 = finalChoreUrl2.concat(newGroupRef.toString());
+          var keyIndex = newGroupRef.toString().lastIndexOf("/");
+          var choreRef = newGroupRef.toString().substring(keyIndex, newGroupRef.toString().length);
+		      var finalChoreUrl3 = finalChoreUrl2.concat(choreRef);
 		      window.location.href=finalChoreUrl3;
 		    };
 
