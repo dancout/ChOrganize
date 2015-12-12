@@ -62,7 +62,7 @@
       });*/
       document.getElementById('assigned').innerHTML = "<strong> Assigned to: </strong>" + snapshot.child("ChoreAssign").val();
       document.getElementById('header3').innerHTML = snapshot.child("ChoreName").val();
-      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("ChoreDueDate").val();
+      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("StrDueDate").val();
       document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
     });
 
