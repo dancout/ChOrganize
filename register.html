@@ -34,7 +34,7 @@
 
 	      	userRef.once("value", function(snapshot) {
 				snapshot.forEach(function(childSnapshot) {
-					if ( childSnapshot.child("UserInfo").child("Username").val() == regInfo.username.value.toLowerCase() ) {
+					if ( childSnapshot.child("UserInfo").child("Username").val() == regInfo.username.value ) {
 						document.getElementById("error").innerHTML = "<font color='red'>Error: Username already in use</font>";
 						check = 1;
 					}
@@ -52,11 +52,11 @@
 					    	console.log("Successfully created user account with uid:", userData.uid);
 
 					        var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-					        loginUrl = loginUrl.concat(regInfo.username.value.toLowerCase());
+					        loginUrl = loginUrl.concat(regInfo.username.value);
 
 			        		var regDataRef = new Firebase(loginUrl);
 
-			    			regDataRef.set({UserInfo: {Email: regInfo.email.value, Username: regInfo.username.value.toLowerCase(), FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
+			    			regDataRef.set({UserInfo: {Email: regInfo.email.value, Username: regInfo.username.value, FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
 
 						    window.location.href="login.html";
 						}
