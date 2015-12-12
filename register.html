@@ -77,6 +77,18 @@
 				}
 	      	});
 		}
+
+		function enterPressed(e) {
+			if(e.keyCode == 13)
+			{
+				dummy();
+			    return false; // returning false will prevent the event from bubbling up.
+			}
+			else
+			{
+			    return true;
+			}
+		}
 	</script>
 
 	<script>
@@ -103,7 +115,7 @@
 			<hr>
 
 			<!-- Login Input -->
-			<div id="loginMain">
+			<div id="loginMain" onkeypress="return enterPressed(event)">
 				<h3>Register</h3>
 
 				<form role="form" id="login">

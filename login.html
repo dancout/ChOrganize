@@ -27,29 +27,46 @@
 	      	//var nameString = loginInfo.username.value;
 	      	//var splitName = nameString.toString().split("@");
 
-	      	var loginURL = 'https://flickering-inferno-1570.firebaseio.com/';
-	      	var loginURL = loginURL.concat("Users/");
+	      	document.getElementById("error").innerHTML = "<br>";
+
+	      	var loginURL = 'https://flickering-inferno-1570.firebaseio.com/Users';
+	      	var usersRef = new Firebase(loginURL);
+	      	var loginURL = loginURL.concat("/");
 	      	loginURL = loginURL.concat(loginInfo.username.value.toLowerCase());
 	      	var userRef = new Firebase(loginURL);
 
-	      	userRef.once("value", function(snapshot) {
-	      		var userdata = snapshot.val();
-
-		      	myDataRef.authWithPassword({
-					"email":  userdata.UserInfo.Email,
-					"password": loginInfo.pwd.value
-				}, function(error, authData) {
-					if (error) {
-						alert("Login info incorrect, please try again!")
-					} 
-					else {
-						console.log("Authenticated successfully with payload:", authData);
-						var homepageUrl = "homepage.html?";
-
-						homepageUrl = homepageUrl.concat(loginInfo.username.value.toLowerCase());
-						window.location.href = homepageUrl;
+	      	var check = 0;
+	      	usersRef.once("value", function(snapshot) {
+	      		snapshot.forEach(function(childSnapshot) {
+	      			//alert(childSnapshot.key());
+					if ( childSnapshot.child("UserInfo").child("Username").val() == loginInfo.username.value.toLowerCase() && childSnapshot.key() != "Dummy") {
+						check = 1;
 					}
 				});
+				if (check == 0)
+					document.getElementById("error").innerHTML = "<font color='red'>Error: Username doesn't exist</font>";
+				else {
+	      			userRef.once("value", function(snapshot) {
+	      				var userdata = snapshot.val();
+
+				      	myDataRef.authWithPassword({
+							"email":  userdata.UserInfo.Email,
+							"password": loginInfo.pwd.value
+						}, function(error, authData) {
+							if (error) {
+								//alert("Login info incorrect, please try again!")
+								document.getElementById("error").innerHTML = "<font color='red'>" + error + "</font>";
+							} 
+							else {
+								console.log("Authenticated successfully with payload:", authData);
+								var homepageUrl = "homepage.html?";
+
+								homepageUrl = homepageUrl.concat(loginInfo.username.value.toLowerCase());
+								window.location.href = homepageUrl;
+							}
+						});
+			      	});
+				}
 	      	});
 		}
 
@@ -79,27 +96,25 @@
 			<div id="header">
 				<div id="headerInner">
 					<!-- makes a horizontal list hlding title and icons -->
-
-
-
 				</div>
 			</div>
 			
 			<hr>
 
 			<!-- Login Input -->
-			<div id="loginMain">
+			<div id="loginMain" onkeypress="return enterPressed(event)">
 				<h3>Login</h3>
 
 				<form role="form" id="login">
 				  	<div class="form-group">
-				    	<label for="email">Username:</label>
+				    	<label for="username">Username:</label>
 				    	<input type="text" class="form-control" placeholder="Username" id="username">
 				  	</div>
 				  	<div class="form-group">
 				    	<label for="pwd">Password:</label>
-				    	<input type="password" class="form-control" placeholder="Password" id="pwd" onkeypress="return enterPressed(event)">
+				    	<input type="password" class="form-control" placeholder="Password" id="pwd">
 				  	</div>
+				  	<div id="error"><br></div>
 				  	<button type="button" class="btn btn-default" onclick="loginCheck()">Submit</button>
 				</form>
 
