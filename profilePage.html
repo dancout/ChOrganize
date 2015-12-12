@@ -60,13 +60,12 @@
 				"<td><strong>" + title + "</strong></td>" +
 
 				"<td><div id=\"" + rowID + "error\"></div><div class=\"form-group\">" +
-				    	"<input type=\"email\" class=\"form-control\" placeholder=\"New Email\" id=\"change" + rowID + "\">" +
-				"</div>" +
-				"<div class=\"form-group\">" +
-				    	"<input type=\"password\" class=\"form-control\" placeholder=\"Current Password\" id=\"password" + "\">" +
+					"<input type=\"email\" class=\"form-control\" placeholder=\"New Email\" id=\"change" + rowID + "\">" +
+					"<input type=\"password\" class=\"form-control\" placeholder=\"Current Password\" id=\"password" + "\">" +
 				"</div></td>" +
 
-				"<td></div><button type='button' class='btn btn-default' onclick='emailChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\")'> Submit </button></td>";
+				"<td><button type='button' class='btn btn-default' onclick='emailChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\")'>Submit</button>" +
+				"<br><button type='button' class='btn btn-default' onclick='emailCancel(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\")'>Cancel</button></td>";
 		}
 
 		function emailChange(title, rowID, infoKey) {
@@ -133,6 +132,15 @@
 			});
 		}
 
+		function emailCancel(title, rowID, infoKey) {
+			document.getElementById(rowID).innerHTML = 
+			"<td><strong>" + title + "</strong></td>" +
+			"<td><div id=\"email\"><div></td>" + 
+			"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"emailEdit(\'Email\' , \'emailForm\', \'Email\')\"> edit </button></td>"
+
+			getProfile();
+		}
+
 		function getProfile(){
 			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
 			var authData = ref.getAuth();
@@ -166,6 +174,64 @@
 			{
 				document.getElementById('email').innerHTML = "No Email ):";
 			}
+		}
+
+		function pwdEdit(rowID) {
+			document.getElementById(rowID).innerHTML = 
+				"<td><strong>Password</strong></td>" +
+
+				"<td><div id=\"" + rowID + "error\"></div><div class=\"form-group\">" +
+				    	"<input type=\"password\" class=\"form-control\" placeholder=\"Current Password\" id=\"old" + rowID + "\">" +
+				    	"<input type=\"password\" class=\"form-control\" placeholder=\"New Password\" id=\"new" + rowID + "\">" +
+				"</div></td>" +
+
+				"<td><button type='button' class='btn btn-default' onclick='pwdChange(\"" + rowID + "\")'> Submit </button>"+
+				"<br><button type='button' class='btn btn-default' onclick='pwdCancel(\"" + rowID + "\")'> Cancel </button></td>";
+		}
+
+		function pwdChange(rowID) {
+			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com");
+			var authData = ref.getAuth();
+			var emailValue = authData.password.email;
+
+			var oldPasswordValue = document.getElementById("old" + rowID).value;
+			var newPasswordValue = document.getElementById("new" + rowID).value;
+
+			ref.changePassword({
+				email: emailValue,
+				oldPassword: oldPasswordValue,
+				newPassword: newPasswordValue
+			}, function(error) {
+				if (error) {
+					switch (error.code) {
+						case "INVALID_PASSWORD":
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Password is incorrect.</font>";
+							console.log("The specified user account password is incorrect.");
+							break;
+					case "INVALID_USER":
+						document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Account does not exist.</font>";
+						console.log("The specified user account does not exist.");
+						break;
+					default:
+						document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>"+error+ "</font>";
+						console.log("Error changing password:", error);
+					}
+				} else {
+					console.log("User password changed successfully!");
+
+					document.getElementById(rowID).innerHTML = 
+						"<td><strong>Password</strong></td>" +
+						"<td></td>" +
+						"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"pwdEdit(\'pwdForm\')\"> edit </button></td>";
+				}
+			});
+		}
+
+		function pwdCancel(rowID) {
+			document.getElementById(rowID).innerHTML = 
+				"<td><strong>Password</strong></td>" +
+				"<td></td>" +
+				"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"pwdEdit(\'pwdForm\')\"> edit </button></td>";
 		}
 	</script>
 
@@ -290,11 +356,6 @@
 				<br>
 				<div id="table">
 					<table style="width:40%">
-						<tr id="emailForm">
-							<td><strong>Email</strong></td>
-							<td><div id="email"><div></td> 
-							<td><button type="button" class="btn btn-default" onclick="emailEdit('Email' , 'emailForm', 'Email', 'valueID')"> edit </button></td>
-						</tr>
 						<tr id="fNameForm">
 							<td><strong>First Name</strong></td>
 							<td><div id="fName"><div></td> 
@@ -304,6 +365,16 @@
 							<td><strong>Last Name</strong></td>
 							<td><div id="lName"><div></td> 
 							<td><button type="button" class="btn btn-default" onclick="textEdit('Last Name', 'lNameForm', 'LastName', 'lName')"> edit </button></td>
+						</tr>
+						<tr id="emailForm">
+							<td><strong>Email</strong></td>
+							<td><div id="email"><div></td> 
+							<td><button type="button" class="btn btn-default" onclick="emailEdit('Email' , 'emailForm', 'Email', 'valueID')"> edit </button></td>
+						</tr>
+						<tr id="pwdForm">
+							<td><strong>Password</strong></td>
+							<td></td>
+							<td><button type="button" class="btn btn-default" onclick="pwdEdit('pwdForm')"> edit </button></td>
 						</tr>
 					</table>
 				</div>
