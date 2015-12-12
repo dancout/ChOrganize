@@ -322,9 +322,13 @@
 
 
   function addChore() {
-   	var choreName = prompt("Please enter your chore name", "Chore X");
-   	var choreDesc = prompt("Please enter your chore description", "Description");
-   	var dueDate = prompt("Please enter your chore due date", "month/day/year 00/00/00");
+    var myChore = document.getElementById("addChore");
+    choreName = myChore.myChoreName.value;
+    choreDesc = myChore.myChoreDesc.value;
+    dueDate = myChore.myChoreDate.value;
+
+
+      // declares the button
 
 
     var splitDate = dueDate.toString().split("/");
@@ -714,7 +718,31 @@ function sortDefault() {
 <ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
                 <li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoGroupspage()">Go Back</button></li>
-				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
+				
+
+                <li>
+                <!-- New Group form Input -->
+                <img class = "buttonPic" src="photos/addNewGroup.png"></h3>
+
+                  <form role="form" id="addChore">
+                      <div class="form-chore">
+                        <label for="myChoreName">Chore Name:</label>
+                        <input type="myChoreName" class="form-control" placeholder="ChoreX" id="myChoreName">
+                      </div>
+                      <div class="form-chore">
+                        <label for="myChoreDesc">Chore Description:</label>
+                        <input type="myChoreDesc" class="form-control" placeholder="Description" id="myChoreDesc">
+                      </div>
+                      <div class="form-chore">
+                        <label for="myChoreDate">Chore Due Date:</label>
+                        <input type="myChoreDate" class="form-control" placeholder="mm/dd/yy" id="myChoreDate">
+                      </div>
+                      <button type="button" class="btn btn-default" onclick="addChore()">Add Chore</button>
+                  </form>
+                </li>
+
+
+
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="addMember()">Add a new member</button></li>
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="viewMembers()">View Members</button></li>
 			</ul>
