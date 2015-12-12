@@ -18,14 +18,120 @@
 	</head>
 
 	<script>
-		function editUsername() {
-			alert("hi");
+		function textEdit(title, rowID, infoKey, valueID) {
+			document.getElementById(rowID).innerHTML = 
+				"<td><strong>" + title + "</strong></td>" +
+
+				"<td><div class=\"form-group\">" +
+				    	"<input type=\"text\" class=\"form-control\" placeholder=\"" + title + "\" id=\"change" + rowID + "\">" +
+				"</div></td>" +
+
+				"<td><button type='button' class='btn btn-default' onclick='textChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\", \"" + valueID + "\")'> Submit </button></td>";
 		}
 
-		function editEmail() {
-			alert("helpme");
+		function textChange(title, rowID, infoKey, valueID) {
+
+			// actually update the stuff
+			var newTextValue = document.getElementById("change" + rowID).value;
+			var baseRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+			var authData = baseRef.getAuth();
+			var usersRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/Users");
+			usersRef.once("value", function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+						if (infoKey == "FirstName")
+							childSnapshot.child("UserInfo").ref().update({ FirstName: newTextValue });
+						if (infoKey == "LastName")
+							childSnapshot.child("UserInfo").ref().update({ LastName: newTextValue });
+
+						document.getElementById(rowID).innerHTML = 
+							"<td><strong>" + title + "</strong></td>" +
+							"<td><div id=\"" + valueID + "\"><div></td>" +
+							"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"textEdit(\'" + title +"\' ,\'" + rowID + "\', \'" + infoKey + "\', \'" + valueID + "\')\"> edit </button></td>";
+
+						getProfile();
+					}
+			 	});
+			});
 		}
 
+		function emailEdit(title, rowID, infoKey) {
+			document.getElementById(rowID).innerHTML = 
+				"<td><strong>" + title + "</strong></td>" +
+
+				"<td><div id=\"" + rowID + "error\"></div><div class=\"form-group\">" +
+				    	"<input type=\"email\" class=\"form-control\" placeholder=\"New Email\" id=\"change" + rowID + "\">" +
+				"</div>" +
+				"<div class=\"form-group\">" +
+				    	"<input type=\"password\" class=\"form-control\" placeholder=\"Current Password\" id=\"password" + "\">" +
+				"</div></td>" +
+
+				"<td></div><button type='button' class='btn btn-default' onclick='emailChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\")'> Submit </button></td>";
+		}
+
+		function emailChange(title, rowID, infoKey) {
+
+			// actually update the stuff
+
+			var emailRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+			var authData = emailRef.getAuth();
+			var oldEmailValue = authData.password.email;
+			var newEmailValue = document.getElementById("change" + rowID).value;
+			var passwordValue = document.getElementById("password").value;
+
+			emailRef.changeEmail({
+				oldEmail: oldEmailValue,
+				newEmail: newEmailValue,
+				password: passwordValue
+			}, function(error) {
+				if (error) {
+					switch (error.code) {
+						case "INVALID_PASSWORD":
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Password is incorrect.</font>";
+							console.log("The specified user account password is incorrect");
+							break;
+						case "INVALID_USER":
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Account does not exist.</font>";
+							console.log("The specified user account does not exist.");
+							break;
+						default:
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>"+error+ "</font>";
+							console.log("Error creating user:", error);
+					}
+				} else {
+					var usersRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/Users");
+					usersRef.once("value", function(snapshot) {
+						snapshot.forEach(function(childSnapshot) {
+							if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+								childSnapshot.child("UserInfo").ref().update({ Email: newEmailValue });
+							}
+					 	});
+					});
+
+					console.log("User email changed successfully!");
+
+					emailRef.authWithPassword({
+						"email":  newEmailValue,
+						"password": passwordValue
+					}, function(error, authData) {
+						if (error) {
+							//console.log(error);
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\">" + error +"</font>";
+						} 
+						else {
+							console.log("Authenticated successfully with payload:", authData);
+							// Put it back in initial state
+							document.getElementById(rowID).innerHTML = 
+							"<td><strong>" + title + "</strong></td>" +
+							"<td><div id=\"email\"><div></td>" + 
+							"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"emailEdit(\'Email\' , \'emailForm\', \'Email\')\"> edit </button></td>"
+
+							getProfile();
+						}
+					});
+				}
+			});
+		}
 
 		function getProfile(){
 			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
@@ -42,11 +148,17 @@
 				var usersUrl = "https://flickering-inferno-1570.firebaseio.com/Users";
 				var usersRef = new Firebase(usersUrl);
 
+
 				usersRef.once("value", function(snapshot) {
 
 					snapshot.forEach(function(childSnapshot) {
-						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
-							document.getElementById('username').innerHTML = childSnapshot.child("UserInfo").child("username").val();
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+							document.getElementById('profileTitle').innerHTML = childSnapshot.child("UserInfo").child("Username").val() + "'s Profile";
+
+							document.getElementById('fName').innerHTML = childSnapshot.child("UserInfo").child("FirstName").val();
+
+							document.getElementById('lName').innerHTML = childSnapshot.child("UserInfo").child("LastName").val();
+						}
 					});
 				});
 			}
@@ -74,7 +186,6 @@
 						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
 							//var username = childShapshot.key();
 							var username = childSnapshot.child("UserInfo").child("username").val();
-							alert ("hi " + username);
 							return username;
 						}
 					});
@@ -173,21 +284,26 @@
 				</div>
 			</div> <center>
 			<div id="body">
-				<h3>Profile</h3>
+				<h3 id="profileTitle">Profile</h3>
 				<img src="photos/profilePic.Png">
 				<br>
 				<br>
 				<div id="table">
 					<table style="width:40%">
-						<tr>
+						<tr id="emailForm">
 							<td><strong>Email</strong></td>
 							<td><div id="email"><div></td> 
-							<td><button type="button" class="btn btn-default" onclick="editEmail()"> edit </button></td>
+							<td><button type="button" class="btn btn-default" onclick="emailEdit('Email' , 'emailForm', 'Email', 'valueID')"> edit </button></td>
 						</tr>
-						<tr>
-							<td><strong>Username</strong></td>
-							<td><div id="username"><div></td> 
-							<td><button type="button" class="btn btn-default" onclick="editUsername()">edit</button></td>
+						<tr id="fNameForm">
+							<td><strong>First Name</strong></td>
+							<td><div id="fName"><div></td> 
+							<td><button type="button" class="btn btn-default" onclick="textEdit('First Name' ,'fNameForm', 'FirstName', 'fName')"> edit </button></td>
+						</tr>
+						<tr id="lNameForm">
+							<td><strong>Last Name</strong></td>
+							<td><div id="lName"><div></td> 
+							<td><button type="button" class="btn btn-default" onclick="textEdit('Last Name', 'lNameForm', 'LastName', 'lName')"> edit </button></td>
 						</tr>
 					</table>
 				</div>

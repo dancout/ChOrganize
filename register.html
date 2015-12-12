@@ -32,6 +32,8 @@
 
 	      	var check = 0;
 
+	      	document.getElementById("error").innerHTML = "<br>";
+
 	      	userRef.once("value", function(snapshot) {
 				snapshot.forEach(function(childSnapshot) {
 					if ( childSnapshot.child("UserInfo").child("Username").val() == regInfo.username.value.toLowerCase() ) {
@@ -139,7 +141,7 @@
 				    	<label for="pwd">Password:</label>
 				    	<input type="password" class="form-control" placeholder="Password" id="pwd">
 				  	</div>
-				  	<div id="error"></div>
+				  	<div id="error"><br></div>
 				  	<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
 				  	<br>
 				  	<br>
