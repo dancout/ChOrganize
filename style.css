@@ -140,12 +140,12 @@ ul {
 	overflow: scroll;
 	height: 400px;
 	width: 40%;
-	padding-left: 15%;
+	padding-left: 15px;
 }
 
 #scrollingButtonsGroups button {
-	width: 80%;
-	float: center;
+	width: 60%;
+	float: left;
 }
 
 #choreButtons {

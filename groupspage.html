@@ -89,6 +89,8 @@
 			groupsUrl = groupsUrl.concat(groupKey);
 			var groupsRef = new Firebase(groupsUrl);
 			groupsRef.once("value", function(nameSnapshot) {
+
+				// create button
 				var groupName = nameSnapshot.child("GroupName").val();
 				var btn = document.createElement("BUTTON");
 
@@ -96,13 +98,33 @@
 				// adds attributes to the button
 				btn.setAttribute("id", groupName);
 				btn.setAttribute("class", "btn btn-primary");
-				
-				// adds the button onscreen
 				var t = document.createTextNode(groupName);
 				btn.appendChild(t);
-				// myItem.appendChild(btn);
-				// document.getElementById("myItem").appendChild(btn);
-				document.getElementById("scrollingButtonsGroups").appendChild(btn);
+
+				// create trash bin
+				var trash = document.createElement("IMG");
+			    trash.setAttribute("src", "photos/trashcan.png");
+			    trash.setAttribute("class", "buttonPic");
+			    trash.setAttribute("style", "float:right;");
+			    trash.setAttribute("style", "height:50px;");
+			    trash.setAttribute("style", "width:50px;");
+			    trash.setAttribute("alt", "The Pulpit Rock");
+			    trash.onclick = function() {deleteGroup(valueSnapshot.key())};
+
+				// create the button div
+		        var buttonDiv = document.createElement("div");
+		        var divName = valueSnapshot.key() + "Div"; // button div name, to be used for id
+		        buttonDiv.setAttribute("id", divName);
+		        buttonDiv.setAttribute("style", "width:100%;");
+		        // buttonDiv.setAttribute("style", "float: left;");
+
+		        // add button div to scrollingButtonsGroups
+		        document.getElementById("scrollingButtonsGroups").appendChild(buttonDiv);
+				
+				// add button and trash can to buttonDiv 
+
+				document.getElementById(divName).appendChild(btn);
+				document.getElementById(divName).appendChild(trash);
 
 				// adds script to button
 				document.getElementById(groupName).onclick = function() {  
@@ -117,6 +139,42 @@
       }
     });
   });
+
+function deleteGroup(groupName) {
+	var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    userUrl = userUrl.concat(UrlSubString);
+    userUrl = userUrl.concat("/Groups");
+
+    var slashGroup = "/";
+    slashGroup = slashGroup.concat(groupName);
+    userUrl = userUrl.concat(slashGroup);
+    // userUrl = userUrl.concat("/value");
+
+    // var mainUrlGroupFinal = firebaseUrl(userUrl);
+    var newDataRef = new Firebase(userUrl);
+    var groupToDelete;
+
+    newDataRef.once('value', function(snapshot) {
+    	groupToDelete = snapshot.child("value").val();
+	    var deleteGroupDataRefURL = 'https://flickering-inferno-1570.firebaseio.com/Groups/'
+    	deleteGroupDataRefURL = deleteGroupDataRefURL.concat(groupToDelete);
+	    var deleteGroupDataRef = new Firebase(deleteGroupDataRefURL);
+		deleteGroupDataRef.remove();
+		newDataRef.remove();
+
+    });
+
+
+    alert("Deleting Group!");
+
+
+    window.location.href = window.location;
+
+}
 
 function addGroup()
 		{
@@ -304,7 +362,7 @@ function addGroup()
 				<!--<h4 style="text-align:center;"> My Groups </h4>-->
 
 				<!-- this wrapper will hold all the buttons leading to the user's groups -->
-				<div id="scrollingButtonsGroups" class="btn-group-vertical" style="float:center">
+				<div id="scrollingButtonsGroups" class="btn-group-vertical" sytle="floating:left;">
 				</div>
 
 			</div>
