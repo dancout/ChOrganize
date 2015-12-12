@@ -65,6 +65,12 @@
       document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("ChoreDueDate").val();
       document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
     });
+
+    var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    var firebaseRef = new Firebase(dataGRef);
+    firebaseRef.on('child_changed', function(dataSnapshot) {
+      window.location.href = window.location;
+    });
   });
 
 	function complete(deletebool) {
