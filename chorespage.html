@@ -324,8 +324,15 @@
   function addChore() {
    	var choreName = prompt("Please enter your chore name", "Chore X");
    	var choreDesc = prompt("Please enter your chore description", "Description");
-   	var dueDate = prompt("Please enter your chore due date", "Due Date");
+   	var dueDate = prompt("Please enter your chore due date", "month/day/year 00/00/00");
 
+
+    var splitDate = dueDate.toString().split("/");
+    var splitDateStr = "";
+    splitDateStr = splitDateStr.concat(splitDate[2]);
+    splitDateStr = splitDateStr.concat(splitDate[0]);
+    splitDateStr = splitDateStr.concat(splitDate[1]);
+    alert("Chore Created");
 
     var UrlString = window.location.toString();
     var userIndex = UrlString.indexOf("?") + 1;  
@@ -337,7 +344,7 @@
     var newGroupChore = userDataRef.push();
     var doneVal = 0;
         newGroupChore.update({ChoreAssign: none, ChoreDesc: choreDesc, 
-          ChoreDueDate: dueDate, ChoreName: choreName, Done: {Done: doneVal}});
+          ChoreDueDate: splitDateStr, ChoreName: choreName, Done: {Done: doneVal}});
 
 // adds script to button
 
@@ -451,6 +458,166 @@
 
   }
 
+function sortByDueDate() {
+  var mytext = "<p style='float:center;'>  <span style='display:inline-block; width: 62%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img> <span style='display:inline-block; width: 9%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img> <span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
+  document.getElementById("scrollingButtons").innerHTML = "";
+
+  document.getElementById("scrollingButtons").innerHTML = mytext;
+
+	  var myDataRef = new Firebase(firebaseUrl());
+
+        var UrlString = window.location.toString();
+        var groupIndex = UrlString.lastIndexOf("&") + 1;  
+        var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+        var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+        // var titleHeader = document.createElement("H3");
+        var titleText;
+
+        var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+        mainUrl = mainUrl.concat(rightUrlSubString);
+        var groupDataRef = new Firebase(mainUrl); 
+
+        groupDataRef.once('value', function(snapshot) {
+          titleText = snapshot.child("GroupName").val();
+          titleText = titleText.concat(" Chores");
+          document.getElementById("groupTitle").innerHTML = titleText;
+        });
+
+
+    //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
+    myDataRef.orderByChild("ChoreDueDate").once('value', function(snapshot) {
+      var hasChore = snapshot.hasChild("Dummy");
+      if(hasChore == false) {
+        var chores = snapshot.val();
+
+        snapshot.forEach(function(data) {
+        // update the group title
+
+        // create the button div
+        var buttonDiv = document.createElement("div");
+        var divName = data.key() + "Div"; // button div name, to be used for id
+        buttonDiv.setAttribute("id", divName);
+
+        // add button div to scrollingButtons
+        document.getElementById("scrollingButtons").appendChild(buttonDiv);
+
+        var pickupbtn;
+
+        if(data.child("ChoreAssign").val() == "0")
+        {
+        // create assing user button
+        pickupbtn = document.createElement("BUTTON");
+        pickupbtn.setAttribute("class", "assignClass");
+        var pickupbtnName = data.child("ChoreName").val();
+        pickupbtnName = pickupbtnName.concat("pickupbtn");
+        pickupbtn.setAttribute("id", pickupbtnName);
+
+        var pickupText = document.createTextNode("Pick Up");
+        pickupbtn.appendChild(pickupText);
+        pickupbtn.onclick = function() {pickUp(data);};
+        }
+
+        else
+        {
+
+        // create user assigned text
+        pickupbtn = document.createElement("p");
+        pickupbtn.setAttribute("class", "assignClass");
+        var message = data.child("ChoreAssign").val();
+        var node = document.createTextNode(message);
+        pickupbtn.appendChild(node);
+        }
+
+
+        // create button
+        var btn = document.createElement("BUTTON");
+        btn.setAttribute("id", data.child("ChoreName").val());
+
+        // create button's name, and add it on 
+        var t = document.createTextNode(data.child("ChoreName").val());
+        btn.appendChild(t);
+
+
+        // add function to button click
+        btn.onclick = function() {dummy(data.key());};
+
+        // create radio button's form
+        var buttonForm = document.createElement("FORM");
+        formName = data.key() + "Form";
+        buttonForm.setAttribute("id", formName);
+
+        // check the status of which radio button should be checked
+        var status;
+        if(0 == data.child("Done").child("Done").val())
+        {
+          status = false;
+        }
+        else
+        {
+          status = true;
+        }
+
+        // create radio button
+        var x = document.createElement("INPUT");
+        x.setAttribute("type", "radio");
+        x.setAttribute("name", "james");
+        x.checked = !status;
+        var radioName1 = data.child("ChoreName").val() + "b1";
+        x.setAttribute("id", radioName1);
+
+        x.onclick = function() {colorChange(data.child("ChoreName").val(), data.key());};
+        x.setAttribute("class", "radioButtonLeft");
+
+        // create 2nd radio button
+        var y = document.createElement("INPUT");
+        y.setAttribute("type", "radio");
+        y.setAttribute("name", "james");
+        var radioName2 = data.child("ChoreName").val() + "b2";
+        y.setAttribute("id", radioName2);
+        y.onclick = function() {colorChange(data.child("ChoreName").val(), data.key());};
+        y.setAttribute("class", "radioButtonCenter");
+        y.checked = status;
+
+
+        // create 3rd radio button
+        var z = document.createElement("INPUT");
+        z.setAttribute("type", "radio");
+        z.setAttribute("name", "james");
+        var radioName2 = data.child("ChoreName").val() + "b3";
+        z.setAttribute("id", radioName2);
+        z.onclick = function() {removeChore(data.key());};        
+        z.setAttribute("class", "radioButtonRight");
+
+
+        // add availability text then button then button form to button div
+        document.getElementById(divName).appendChild(pickupbtn);
+        document.getElementById(divName).appendChild(btn);
+        document.getElementById(divName).appendChild(buttonForm);
+
+        // add radio buttons to formDiv
+        document.getElementById(formName).appendChild(x);
+        document.getElementById(formName).appendChild(y);
+        document.getElementById(formName).appendChild(z);
+
+        // update the color of the button
+        colorChange(data.child("ChoreName").val(), data.key());
+
+        });
+      }
+    });
+    //adds buttons when new chore is added
+    myDataRef.on('child_added', function(data, prevchildkey) {
+        console.log(prevchildkey);
+
+
+    });
+
+}
+
+function sortDefault() {
+  window.location.href = window.location;
+}
 
 </script>
 
@@ -512,6 +679,21 @@
     <!-- <div styel="text-align:center;" id="groupTitle"></div> -->
 
 
+
+
+<div class="sort">                                 
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="firstmenu" style="background-color:#eb6d20;color: white;" data-toggle="dropdown">Sort By
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="firstmenu">
+      <li role="presentation"><a role="menuitem" onclick="sortDefault()">Date Created</a></li>
+      <li role="presentation"><a role="menuitem" onclick="sortByDueDate()">Due Date</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
 		<!-- main buttons -->
 		<div id="main">
 			<!--<ul>
@@ -538,17 +720,29 @@
 			</ul>
 </div>
 
+
+
       <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
+
         <p style="float:center;"> 
           <span style="display:inline-block; width: 62%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
           <span style="display:inline-block; width: 9%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 9%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 8%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
         </p>
+
+        <p style="float:center;"> 
+
+        </p>
+
+
       </div>
+
+
 
 		</div>
 
 	</div>
+
 
 </body>
 

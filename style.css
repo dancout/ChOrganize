@@ -128,6 +128,17 @@ ul {
 	float: left;
 }
 
+#scrollingButtons2 {
+	text-align: center;
+	padding-top: 25px;
+	float: center;
+	height: 400px;
+	width: 60%;
+	padding-left: 15%;
+  float: right;
+}
+
+
 #scrollingButtons .assignClass {
 	width: 17%;
 	float: left;
@@ -202,3 +213,6 @@ ul {
 	font-family: "Arial Narrow", Arial, sans-serif;
 }
 
+.sort {
+  margin-left: 70%;
+}
