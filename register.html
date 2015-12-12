@@ -40,40 +40,27 @@
 					}
 				});
 				if (check == 0) {
+					myDataRef.createUser({
+						email    : regInfo.email.value,
+						password : regInfo.pwd.value
+					}, function(error, userData) {
+						if (error) {
+							console.log("Error creating user:", error);
+							document.getElementById("error").innerHTML = "<font color='red'>" + error +"</font>"
+						} 
+					  	else {
+					    	console.log("Successfully created user account with uid:", userData.uid);
 
-					// Check to see all forms are filled out
-					if (regInfo.username.value == "" || regInfo.fName.value == "" || regInfo.lName.value == "") {
-						document.getElementById("error").innerHTML = "<font color='red'>Error: Missing the following</font>";
-						if (regInfo.fName.value == "")
-							document.getElementById("error").innerHTML += "<font color='red'> - First Name</font>";
-						if (regInfo.lName.value == "")
-							document.getElementById("error").innerHTML += "<font color='red'> - Last Name</font>";
-						if (regInfo.username.value == "")
-							document.getElementById("error").innerHTML += "<font color='red'> - Username</font>";
-					}
-					else {	
-						myDataRef.createUser({
-							email    : regInfo.email.value,
-							password : regInfo.pwd.value
-						}, function(error, userData) {
-							if (error) {
-								console.log("Error creating user:", error);
-								document.getElementById("error").innerHTML = "<font color='red'>" + error +"</font>"
-							} 
-						  	else {
-						    	console.log("Successfully created user account with uid:", userData.uid);
+					        var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+					        loginUrl = loginUrl.concat(regInfo.username.value.toLowerCase());
 
-						        var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-						        loginUrl = loginUrl.concat(regInfo.username.value.toLowerCase());
+			        		var regDataRef = new Firebase(loginUrl);
 
-				        		var regDataRef = new Firebase(loginUrl);
+			    			regDataRef.set({UserInfo: {Email: regInfo.email.value, Username: regInfo.username.value.toLowerCase(), FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
 
-				    			regDataRef.set({UserInfo: {Email: regInfo.email.value, Username: regInfo.username.value.toLowerCase(), FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
-
-							    window.location.href="login.html";
-							}
-						});
-					}
+						    window.location.href="login.html";
+						}
+					});
 				}
 	      	});
 		}
