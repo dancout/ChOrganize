@@ -46,7 +46,7 @@
 
 					snapshot.forEach(function(childSnapshot) {
 						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email )
-							document.getElementById('username').innerHTML = childSnapshot.key();
+							document.getElementById('username').innerHTML = childSnapshot.child("UserInfo").child("username").val();
 					});
 				});
 			}
@@ -73,7 +73,7 @@
 					snapshot.forEach(function(childSnapshot) {
 						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
 							//var username = childShapshot.key();
-							var username = childSnapshot.key().toString();
+							var username = childSnapshot.child("UserInfo").child("username").val();
 							alert ("hi " + username);
 							return username;
 						}
@@ -120,6 +120,7 @@
 	</script>
 
 	<body onload="loginCheck()">
+    <body>
 
 		<hr class="topline">
 		<div id="wrapper">
