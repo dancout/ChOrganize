@@ -232,10 +232,10 @@
       }
     });
     //adds buttons when new chore is added
-    myDataRef.on('child_added', function(data, prevchildkey) {
-        console.log(prevchildkey);
-
-
+    var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    var firebaseRef = new Firebase(dataGRef);
+    firebaseRef.on('child_changed', function(dataSnapshot) {
+      window.location.href = window.location;
     });
   });
 

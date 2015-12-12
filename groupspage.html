@@ -138,6 +138,11 @@
 		});
       }
     });
+    var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    var firebaseRef = new Firebase(dataGRef);
+    firebaseRef.on('child_changed', function(dataSnapshot) {
+      window.location.href = window.location;
+    });
   });
 
 function deleteGroup(groupName) {
