@@ -29,7 +29,7 @@
 
 	      	var loginURL = 'https://flickering-inferno-1570.firebaseio.com/';
 	      	var loginURL = loginURL.concat("Users/");
-	      	loginURL = loginURL.concat(loginInfo.username.value);
+	      	loginURL = loginURL.concat(loginInfo.username.value.toLowerCase());
 	      	var userRef = new Firebase(loginURL);
 
 	      	userRef.once("value", function(snapshot) {
@@ -46,7 +46,7 @@
 						console.log("Authenticated successfully with payload:", authData);
 						var homepageUrl = "homepage.html?";
 
-						homepageUrl = homepageUrl.concat(loginInfo.username.value);
+						homepageUrl = homepageUrl.concat(loginInfo.username.value.toLowerCase());
 						window.location.href = homepageUrl;
 					}
 				});
