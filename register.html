@@ -23,29 +23,28 @@
 
 		function dummy() {
 			var regInfo = document.getElementById("login");
-	    	var nameString = regInfo.email.value;
-	    	var splitName = nameString.toString().split("@");
+    	var nameString = regInfo.email.value;
+    	var splitName = nameString.toString().split("@");
 
 			myDataRef.createUser({
-				email    : regInfo.email.value,
-				password : regInfo.pwd.value
+			  email    : regInfo.email.value,
+			  password : regInfo.pwd.value
 			}, function(error, userData) {
-				if (error) {
-					console.log("Error creating user:", error);
-				} 
-			  	else {
-			  		alert("User created!");
-			    	console.log("Successfully created user account with uid:", userData.uid);
+			  if (error) {
+			    console.log("Error creating user:", error);
+			  } else {
+			  	alert("User created!");
+			    console.log("Successfully created user account with uid:", userData.uid);
 
-			        var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-			        loginUrl = loginUrl.concat(regInfo.username.value);
+        var loginUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+        loginUrl = loginUrl.concat(splitName[0]);
 
-	        		var regDataRef = new Firebase(loginUrl);
+        var regDataRef = new Firebase(loginUrl);
 
-	    			regDataRef.set({UserInfo: {Email: regInfo.email.value, Username: regInfo.username.value, FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
+    regDataRef.set({UserInfo: {Email: regInfo.email.value, username: regInfo.username.value, FirstName: regInfo.fName.value, LastName: regInfo.lName.value}, Groups: {Dummy: 0}});
 
-				    window.location.href="login.html";
-				}
+			    window.location.href="login.html";
+			  }
 			});
 		}
 	</script>

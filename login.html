@@ -21,36 +21,27 @@
 	<script>
 	    var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
 
-		function loginCheck()
+		function dummy()
 		{
 			var loginInfo = document.getElementById("login");
-	      	//var nameString = loginInfo.username.value;
-	      	//var splitName = nameString.toString().split("@");
+	      	var nameString = loginInfo.email.value;
+	      	var splitName = nameString.toString().split("@");
 
-	      	var loginURL = 'https://flickering-inferno-1570.firebaseio.com/';
-	      	var loginURL = loginURL.concat("Users/");
-	      	loginURL = loginURL.concat(loginInfo.username.value);
-	      	var userRef = new Firebase(loginURL);
+			myDataRef.authWithPassword({
+				"email":  loginInfo.email.value,
+				"password": loginInfo.pwd.value
+			}, function(error, authData) {
+				if (error) {
+					alert("Login info incorrect, please try again!")
+				} 
+				else {
+					console.log("Authenticated successfully with payload:", authData);
+					var homepageUrl = "homepage.html?";
 
-	      	userRef.once("value", function(snapshot) {
-	      		var userdata = snapshot.val();
-
-		      	myDataRef.authWithPassword({
-					"email":  userdata.UserInfo.Email,
-					"password": loginInfo.pwd.value
-				}, function(error, authData) {
-					if (error) {
-						alert("Login info incorrect, please try again!")
-					} 
-					else {
-						console.log("Authenticated successfully with payload:", authData);
-						var homepageUrl = "homepage.html?";
-
-						homepageUrl = homepageUrl.concat(loginInfo.username.value);
-						window.location.href = homepageUrl;
-					}
-				});
-	      	});
+					homepageUrl = homepageUrl.concat(splitName[0]);
+					window.location.href = homepageUrl;
+				}
+			});
 		}
 
 		function gotoRegister() {
@@ -60,7 +51,7 @@
 		function enterPressed(e) {
 			if(e.keyCode == 13)
 			{
-				loginCheck();
+				dummy();
 			    return false; // returning false will prevent the event from bubbling up.
 			}
 			else
@@ -93,14 +84,14 @@
 
 				<form role="form" id="login">
 				  	<div class="form-group">
-				    	<label for="email">Username:</label>
-				    	<input type="text" class="form-control" placeholder="Username" id="username">
+				    	<label for="email">Email:</label>
+				    	<input type="email" class="form-control" placeholder="Email" id="email">
 				  	</div>
 				  	<div class="form-group">
 				    	<label for="pwd">Password:</label>
 				    	<input type="password" class="form-control" placeholder="Password" id="pwd" onkeypress="return enterPressed(event)">
 				  	</div>
-				  	<button type="button" class="btn btn-default" onclick="loginCheck()">Submit</button>
+				  	<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
 				</form>
 
 				<button type="button" class="btn btn-default" onclick="gotoRegister()">Register</button>
