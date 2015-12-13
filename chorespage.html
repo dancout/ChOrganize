@@ -441,116 +441,153 @@
     choreDesc = myChore.myChoreDesc.value;
     dueDate = myChore.myChoreDate.value;
 
-
-      // declares the button
-
-
-    var splitDate = dueDate.toString().split("/");
-    var splitDateStr = "";
-    splitDateStr = splitDateStr.concat(splitDate[2]);
-    splitDateStr = splitDateStr.concat(splitDate[0]);
-    splitDateStr = splitDateStr.concat(splitDate[1]);
-    alert("Chore Created");
-
-    var UrlString = window.location.toString();
-    var userIndex = UrlString.indexOf("?") + 1;  
-    var rightIndex = UrlString.lastIndexOf("&"); 
-    var leftUrlSubString = UrlString.substring(userIndex, rightIndex); 
-    var none = "0";
-
-    var userDataRef = new Firebase(firebaseUrl());
-    var newGroupChore = userDataRef.push();
-    var doneVal = 0;
-        newGroupChore.update({ChoreAssign: none, ChoreDesc: choreDesc, 
-          ChoreDueDate: splitDateStr, ChoreName: choreName, StrDueDate: dueDate, Done: {Done: doneVal}});
-
-
-
-
-    var groupIndex = UrlString.lastIndexOf("&") + 1;  
-    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
-    var groupDataRefURL = firebaseUrl(rightUrlSubString);
-    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
-    mainUrl = mainUrl.concat(rightUrlSubString);
-    var groupDataRef = new Firebase(mainUrl);
-    groupDataRef.once('value', function(snapshot) {
-      titleText = snapshot.child("GroupName").val();
-      titleText = titleText.concat(" Chores     ");
-
-      var groupNum;
-      groupDataRef.once('value', function(snapshot) {
-        groupNum = snapshot.child("GroupChores").val();
-      });
-      groupNum = groupNum + 1;
-      groupDataRef.update({GroupChores: groupNum});
-    });
-
-
-
-
-
-// adds script to button
-
-    var leftIndex = newGroupChore.toString().lastIndexOf("/") + 1;
-    var groupSubString = newGroupChore.toString().substring(leftIndex, newGroupChore.toString().length);
-    //document.getElementById(choreName).onclick = function() {dummy(groupSubString);};
-
-    userDataRef.once("value", function(snapshot) {
-      var hasChore = snapshot.hasChild("Dummy");
-      if(hasChore == true) {
-        var removeDummyUrl = firebaseUrl();
-        removeDummyUrl = removeDummyUrl.concat("/Dummy");
-        var removeDummy = new Firebase(removeDummyUrl);
-        removeDummy.remove();
+    if (choreName == "" || dueDate == "") {
+      document.getElementById("newChoreError").innerHTML = "<font color=\"red\">Error: The following information is missing</font>";
+      if (choreName == "") {
+        document.getElementById("newChoreError").innerHTML += "<font color=\"red\"> - Chore Name</font>";
+      }      
+      if (dueDate == "") {
+        document.getElementById("newChoreError").innerHTML += "<font color=\"red\"> - Due Date </font>";
       }
-    });
+    }
+    else {
+      // declares the button
+      var splitDate = dueDate.toString().split("/");
+      var splitDateStr = "";
+      splitDateStr = splitDateStr.concat(splitDate[2]);
+      splitDateStr = splitDateStr.concat(splitDate[0]);
+      splitDateStr = splitDateStr.concat(splitDate[1]);
+      //alert("Chore Created");
 
-    window.location.href=window.location;
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var rightIndex = UrlString.lastIndexOf("&"); 
+      var leftUrlSubString = UrlString.substring(userIndex, rightIndex); 
+      var none = "0";
 
+      var userDataRef = new Firebase(firebaseUrl());
+      var newGroupChore = userDataRef.push();
+      var doneVal = 0;
+          newGroupChore.update({ChoreAssign: none, ChoreDesc: choreDesc, 
+            ChoreDueDate: splitDateStr, ChoreName: choreName, StrDueDate: dueDate, Done: {Done: doneVal}});
+
+      var groupIndex = UrlString.lastIndexOf("&") + 1;  
+      var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+      var groupDataRefURL = firebaseUrl(rightUrlSubString);
+      var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+      mainUrl = mainUrl.concat(rightUrlSubString);
+      var groupDataRef = new Firebase(mainUrl);
+      groupDataRef.once('value', function(snapshot) {
+        titleText = snapshot.child("GroupName").val();
+        titleText = titleText.concat(" Chores     ");
+
+        var groupNum;
+        groupDataRef.once('value', function(snapshot) {
+          groupNum = snapshot.child("GroupChores").val();
+        });
+        groupNum = groupNum + 1;
+        groupDataRef.update({GroupChores: groupNum});
+      });
+
+      // adds script to button
+
+      var leftIndex = newGroupChore.toString().lastIndexOf("/") + 1;
+      var groupSubString = newGroupChore.toString().substring(leftIndex, newGroupChore.toString().length);
+      //document.getElementById(choreName).onclick = function() {dummy(groupSubString);};
+
+      userDataRef.once("value", function(snapshot) {
+        var hasChore = snapshot.hasChild("Dummy");
+        if(hasChore == true) {
+          var removeDummyUrl = firebaseUrl();
+          removeDummyUrl = removeDummyUrl.concat("/Dummy");
+          var removeDummy = new Firebase(removeDummyUrl);
+          removeDummy.remove();
+        }
+      });
+
+      window.location.href=window.location;
+    }
   }
 
   function addMember() {
-    var memberName = prompt("Please enter the member's name", "member");
-    var UrlString = window.location.toString();
-    var userIndex = UrlString.indexOf("?") + 1;  
-    var rightIndex = UrlString.lastIndexOf("&"); 
-    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+    var memberName = document.getElementById("newMember").value;
 
-    var groupIndex = UrlString.lastIndexOf("&") + 1;  
-    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
+    // Check to see if user exists
+    var usersRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/Users");
+    usersRef.once("value", function(snapshot) {
+      var check = 0;
+      snapshot.forEach(function(childSnapshot) {
+        if ( childSnapshot.child("UserInfo").child("Username").val() == memberName.toLowerCase() ) {
+          check = 1;
+        }
+      });
+      if (check == 0) {
+        document.getElementById("newMemberError").innerHTML = "<font color=\"red\">Error: User's account username does not exist.</font>";
+      }
+      else {
 
-    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
-    var mainUrlMember = mainUrl.concat(rightUrlSubString);
-    mainUrlMember = mainUrlMember.concat("/Members");
-    var insertMemberRef = new Firebase(mainUrlMember);
+        var userRefURL = "https://flickering-inferno-1570.firebaseio.com/Groups/";
+        var UrlString = window.location.toString();
+        var groupIndex = UrlString.lastIndexOf("&") + 1;  
+        var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
+        userRefURL = userRefURL.concat(rightUrlSubString);
+        userRefURL = userRefURL.concat("/Members");
+        var userRef = new Firebase(userRefURL);
 
-    // add memberName to members
-    var dataRef = insertMemberRef.push();
-    dataRef.set({value: memberName})
+        userRef.once("value", function(snapshot) {
+          check = 0;
+          snapshot.forEach(function(childSnapshot) {
+            if (childSnapshot.child("value").val() == memberName){
+              check = 1;
+            }
+          });
+          if (check == 1)
+            document.getElementById("newMemberError").innerHTML = "<font color=\"red\">Error: User is already a member of this group.</font>";
+          else {
+            var UrlString = window.location.toString();
+            var userIndex = UrlString.indexOf("?") + 1;  
+            var rightIndex = UrlString.lastIndexOf("&"); 
+            var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
 
-    // add this group to the new member/user's groups
-    var userURL = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-    userURL = userURL.concat(memberName);
-    var userGroupURL = userURL.concat("/Groups");
+            var groupIndex = UrlString.lastIndexOf("&") + 1;  
+            var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
 
-    var memberGroupRef = new Firebase(userGroupURL);
-    var memberDataGroupRef = memberGroupRef.push();
+            var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+            var mainUrlMember = mainUrl.concat(rightUrlSubString);
+            mainUrlMember = mainUrlMember.concat("/Members");
+            var insertMemberRef = new Firebase(mainUrlMember);
 
-    memberDataGroupRef.set({value: rightUrlSubString});
+            // add memberName to members
+            var dataRef = insertMemberRef.push();
+            dataRef.set({value: memberName})
 
-    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-    userUrl = userUrl.concat(memberName);
-    userUrl = userUrl.concat("/Groups");
+            // add this group to the new member/user's groups
+            var userURL = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+            userURL = userURL.concat(memberName);
+            var userGroupURL = userURL.concat("/Groups");
 
-    var userDataRef = new Firebase(userUrl);
-    userDataRef.once("value", function(snapshot) {
-      var hasGroup = snapshot.hasChild("Dummy");
-      if(hasGroup == true) {
-        removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-        removeDummyUrl = removeDummyUrl.concat(memberName);
-        removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
-        removeDummy = new Firebase(removeDummyUrl);
-        removeDummy.remove();
+            var memberGroupRef = new Firebase(userGroupURL);
+            var memberDataGroupRef = memberGroupRef.push();
+
+            memberDataGroupRef.set({value: rightUrlSubString});
+
+            var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+            userUrl = userUrl.concat(memberName);
+            userUrl = userUrl.concat("/Groups");
+
+            var userDataRef = new Firebase(userUrl);
+            userDataRef.once("value", function(snapshot) {
+              var hasGroup = snapshot.hasChild("Dummy");
+              if(hasGroup == true) {
+                removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+                removeDummyUrl = removeDummyUrl.concat(memberName);
+                removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
+                removeDummy = new Firebase(removeDummyUrl);
+                removeDummy.remove();
+              }
+            });
+          }
+        });
       }
     });
 
@@ -1025,6 +1062,7 @@ function sortByUser() {
                       <label for="myChoreDate">Chore Due Date:</label>
                       <input type="date" class="form-control" placeholder="mm/dd/yy" id="myChoreDate" />
                     </div>
+                    <div id="newChoreError"><br></div>
                     <button type="button" class="btn btn-default" onclick="addChore()">Add Chore</button>
                 </form>
               </div>
@@ -1048,12 +1086,11 @@ function sortByUser() {
         </div>
         <div id="addNewMember" class="panel-collapse collapse">
             <div class="panel-body">
-              <form role="form" id="addMember">
-                <div class="form-member">
-                  <label for="newMember">Member Username:</label>
-                  <input type="text" class="form-control" placeholder="Member Username" id="newMember">
-                </div>
-              </form>
+
+              <label for="newMember">Member Username:</label>
+              <input type="text" class="form-control" placeholder="Member Username" id="newMember">
+
+              <div id="newMemberError"><br></div>
               <button class="btn-default btn" onclick="addMember()">Add Group member</button>
             </div>
         </div>
@@ -1068,6 +1105,10 @@ function sortByUser() {
       <div id="memberList" onload=""></div>
       <button class="btn-default btn" onclick="viewMembers()">View Members</button>
     </li>
+
+
+
+    
   </ul>
 </div>
 
