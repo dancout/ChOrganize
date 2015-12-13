@@ -909,25 +909,6 @@ function sortByUser() {
 
     });
 }
-
-function showNumChores() {
-  var UrlString = window.location.toString();
-  var groupIndex = UrlString.lastIndexOf("&") + 1;  
-  var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
-  alert(rightUrlSubString);
-  var groupDataRefURL = firebaseUrl(rightUrlSubString);
-
-  // var titleHeader = document.createElement("H3");
-  var titleText;
-
-  var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
-  mainUrl = mainUrl.concat(rightUrlSubString);
-  var groupDataRef = new Firebase(mainUrl); 
-
-  groupDataRef.once('value', function(snapshot) {
-    alert(snapshot.child("GroupChoresCompleted").val());
-  });
-}
 </script>
 
 <body>
@@ -1034,7 +1015,6 @@ function showNumChores() {
 
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="addMember()">Add a new member</button></li>
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="viewMembers()">View Members</button></li>
-        <li><button class="btn-default btn" onclick="showNumChores()">show numchores</button></li>
 			</ul>
 </div>
 
