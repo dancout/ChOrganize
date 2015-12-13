@@ -47,6 +47,7 @@
 
   //this function auto initalizes the data onto the page, when page is loaded
   $(document).ready(function () {
+  	getGroup();
     var UrlString = window.location.toString();
     var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
     var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
@@ -72,6 +73,31 @@
       window.location.href = window.location;
     });
   });
+
+	function getGroup() {
+
+		var UrlString = window.location.toString();
+	    var userIndex = UrlString.indexOf("?") + 1;  
+	    var rightIndex = UrlString.indexOf("&"); 
+	    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+	    var groupIndex = UrlString.indexOf("&") + 1;  
+	    var endGroupIndex = UrlString.lastIndexOf("&");
+	    var rightUrlSubString = UrlString.substring(groupIndex, endGroupIndex);  
+
+	    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+	    mainUrl = mainUrl.concat(rightUrlSubString);
+
+	    var groupDataRef = new Firebase(mainUrl);
+	    var groupTitle;
+	    
+	    groupDataRef.once('value', function(snapshot) {
+	    	document.getElementById('group').innerHTML = "<strong> Group: </strong>" + snapshot.child("GroupName").val();
+	    });
+
+
+      	
+	}
 
 	function complete(deletebool) {
     var UrlString = window.location.toString();
@@ -169,6 +195,7 @@
 
 		<!-- info about chore -->
 		<ul>
+			<li id="group"><strong>Group: </strong></li>
 			<li id="assigned"><strong>Assigned to: </strong></li>
 			<li id="dueDate"><strong>Due Date: </strong></li>
 			<li id="description"><strong>Description: </strong></li>
