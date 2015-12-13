@@ -251,7 +251,7 @@
 					snapshot.forEach(function(childSnapshot) {
 						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
 							//var username = childShapshot.key();
-							var username = childSnapshot.child("UserInfo").child("username").val();
+							var username = childSnapshot.child("UserInfo").child("Username").val();
 							return username;
 						}
 					});
@@ -296,6 +296,42 @@
 	  }
 	</script>
 
+	<script>
+		function gotoHomepage() {
+			var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+			var authData = ref.getAuth();
+
+			var username = getUsername();
+
+			if (authData) {
+			  	//console.log("Authenticated user with uid:", authData.uid);
+			  	// show email
+				document.getElementById('email').innerHTML = authData.password.email;
+
+				// find username
+				var usersUrl = "https://flickering-inferno-1570.firebaseio.com/Users";
+				var usersRef = new Firebase(usersUrl);
+
+
+				usersRef.once("value", function(snapshot) {
+
+					snapshot.forEach(function(childSnapshot) {
+
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+							var username = childSnapshot.child("UserInfo").child("Username").val();
+							
+							// concatinate username to homepage url
+							var finalURL = "homepage.html?";
+							finalURL = finalURL.concat(username);
+							window.location.href=finalURL;
+						}
+					});
+				});
+			}
+			//window.location.href="homepage.html?fablemabel";
+		}
+	</script>
+
 	<body onload="loginCheck()">
     <body>
 
@@ -310,7 +346,7 @@
 					<ul class="nav nav-pills">
 
 					<!-- Chorganize Title -->
-					<li><a href="homepage.html"><img class="title" src="photos/ChOrganizelogo.png"></a></li>
+					<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
 
 
 					<!-- Setting menu -->
