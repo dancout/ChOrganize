@@ -71,7 +71,14 @@
 	  				}
   				}
   				var statText = memberName + ":  " + count + "/" + total;
-  				document.getElementById(divName).innerHTML = statText;
+  				var statHeader = document.createElement("h3");
+  				var t = document.createTextNode(statText);
+
+  				statHeader.appendChild(t);
+
+  				// document.getElementById(divName).innerHTML = statText;
+  				document.getElementById(divName).innerHTML = "";
+  				document.getElementById(divName).appendChild(statHeader);
   			});
 
   		});
@@ -91,6 +98,19 @@
 	    var subIndex = UrlSubString.indexOf("&") + 1;
 	    var UrlSubSubString = UrlSubString.substring(subIndex, UrlSubString.length);
 	    mainURL = mainURL.concat(UrlSubSubString);
+
+	    // get group name
+	    var groupRef = new Firebase(mainURL);
+
+	    groupRef.once('value', function(snapshot) {
+
+	    	var groupName = snapshot.child("GroupName").val();
+	    	
+	    	var titleText = groupName + "'s Total Completed Chores";
+			document.getElementById("groupNameTitle").innerHTML = titleText;
+	    });
+
+
 	    var membersUrl = mainURL.concat("/Members");
 
 	    var membersDataRef = new Firebase(membersUrl);
@@ -114,13 +134,51 @@
 
 
 	<body>
+
+		<!-- title bar header -->
+		<div id="header" style="width:100%;">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+        <li><img class = "buttonPic" src="photos/backArrow.png" onclick="gotoGroupspage()"></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
+
+
+        <!-- Setting menu -->
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-haspopup="true" aria-expanded="false">
+            <img class="titlePic" src="photos/orangeGear.png"> <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu">
+              <li style="padding:15px;"><a href="profilePage.html">Edit Profile</a></li>
+              <li style="padding:15px;"><a href="login.html">Logout</a></li>
+            </ul>
+          </li>
+          
+        </ul>
+
+
+				
+			</div>
+		</div>
 		<div>
-			<img src="photos/infoSymbol.Png">
-			<p>Information, yo</p>
+			<div>
+				<center><h1 id="groupNameTitle" style="width:100%;"></center>
+				</h1>
+				<center><img src="photos/infoSymbol.Png" ></center>
+
+			</div>
 
 		</div>
 
 		<div id="MembersList">
+			<h3>Member Name:  Member Completed / Total Completed</h3>
+			<hr class="bottomline">
 
 		</div>
 
