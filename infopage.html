@@ -21,6 +21,29 @@
 
 	<script>
 
+	function gotoHomepage()
+  {
+    var UrlString = window.location.toString();
+    UrlString = UrlString.replace("infopage", "homepage");
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var subIndex = UrlSubString.indexOf("&");
+    var UrlSubSubString = UrlSubString.substring(subIndex, UrlSubString.length);
+
+    var UrlString = UrlString.replace(UrlSubSubString, "");
+    window.location.href = UrlString;
+
+  }
+
+  function gotoChorespage()
+  {
+    var UrlString = window.location.toString();
+    UrlString = UrlString.replace("infopage", "chorespage");
+    window.location.href = UrlString;
+
+  }
+
 	function firebaseUrl(choreName) {
     var UrlString = window.location.toString();
     var userIndex = UrlString.indexOf("?") + 1;  
@@ -143,7 +166,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-        <li><img class = "buttonPic" src="photos/backArrow.png" onclick="gotoGroupspage()"></li>
+        <li><img class = "buttonPic" src="photos/backArrow.png" onclick="gotoChorespage()"></li>
 				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
 
 
