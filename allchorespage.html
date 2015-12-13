@@ -20,14 +20,16 @@
 
 <script>
   //this function sets the window location with the correct appeneded user, group, and choreItem values
-	function dummy(choreName) {
+	function dummy(choreName, choreKey) {
     var UrlString = window.location.toString();
     var userIndex = UrlString.indexOf("?") + 1;   
     var UrlSubString = UrlString.substring(userIndex, UrlString.length);
-    var choreUrl = "choreItem.html?";
+    var choreUrl = "allchoresitempage.html?";
     choreUrl = choreUrl.concat(UrlSubString);
     choreUrl = choreUrl.concat("&");
     choreUrl = choreUrl.concat(choreName);
+    choreUrl = choreUrl.concat("&");
+    choreUrl = choreUrl.concat(choreKey);
 		window.location.href=choreUrl;
 	}
 
@@ -117,7 +119,7 @@
         var btn = document.createElement("BUTTON");
 
     // adds attributes to the button
-        btn.setAttribute("id", data.key());
+        btn.setAttribute("id", groupdata.key());
         
     // adds the button onscreen
         var t = document.createTextNode(groupdata.child("ChoreName").val());
@@ -125,7 +127,7 @@
         btn.appendChild(t);
         document.getElementById("allChoresButtons").appendChild(btn);
     // adds script to button
-        document.getElementById(data.key()).onclick = function() {dummy(data.key());};
+        document.getElementById(groupdata.key()).onclick = function() {dummy(data.child("value").val(),groupdata.key());};
         }
         });
       });
@@ -135,73 +137,78 @@
         });
       }
     });
-    //adds buttons when new chore is added
-    myDataRef.on('child_added', function(data, prevchildkey) {
-        console.log(prevchildkey);
-        /*var btn = document.createElement("BUTTON");
+
+  });
+
+
+
+function sortByDueDate() {
+  document.getElementById("allChoresButtons").innerHTML = "";
+  var UrlString = window.location.toString();
+  var userIndex = UrlString.indexOf("?") + 1;   
+  var UrlSubString = UrlString.substring(userIndex, UrlString.length); 
+
+  var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+  mainUrl = mainUrl.concat(UrlSubString);
+  mainUrl = mainUrl.concat("/Groups");
+
+    console.log("main url: " + mainUrl);
+	  var myDataRef = new Firebase(mainUrl);
+    //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
+
+
+    myDataRef.once('value', function(snapshot) {
+      var hasChore = snapshot.hasChild("Dummy");
+      if(hasChore == false) {
+        //console.log("NOT supposed to be here");
+        var chores = snapshot.val();
+        //console.log(snapshot.val());
+        snapshot.forEach(function(data) {
+        //console.log(data.key() + " description is " + data.val().description);
+
+        var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+        groupUrl = groupUrl.concat(data.child("value").val());
+        groupUrl = groupUrl.concat("/Chores");
+
+        //addButton(groupUrl);
+
+      var myGroupRef = new Firebase(groupUrl);
+      
+      myGroupRef.orderByChild("ChoreDueDate").once('value', function(groupsnapshot) {
+        groupsnapshot.forEach(function(groupdata) {
+        var groupString = groupdata.child("ChoreAssign").val();
+        if(groupString == UrlSubString) {
+        var btn = document.createElement("BUTTON");
 
     // adds attributes to the button
         btn.setAttribute("id", data.key());
         
     // adds the button onscreen
-        var t = document.createTextNode(data.key());
+        var t = document.createTextNode(groupdata.child("ChoreName").val());
+        //console.log("DATA: " + data.child("value").val());
         btn.appendChild(t);
-        document.body.appendChild(btn);
+        document.getElementById("allChoresButtons").appendChild(btn);
     // adds script to button
-        document.getElementById(data.key()).onclick = function() {dummy(data.key());};*/
-    });
-  });
+        document.getElementById(data.key()).onclick = function() {dummy(data.key());};
 
-  function addChore() {
-	  //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/');
- // declares the button
-   	var choreName = prompt("Please enter your chore name", "Chore X");
-   	var choreDesc = prompt("Please enter your chore description", "Description");
-   	var dueDate = prompt("Please enter your chore due date", "Due Date");
-
-    var btn = document.createElement("BUTTON");
-
-// adds attributes to the button
-    btn.setAttribute("id", choreName);
-    
-// adds the button onscreen
-    var t = document.createTextNode(choreName);
-    btn.appendChild(t);
-    document.body.appendChild(btn);
+        }
+        });
+      });
 
 
-    var UrlString = window.location.toString();
-    var userIndex = UrlString.indexOf("?") + 1;  
-    var rightIndex = UrlString.lastIndexOf("&"); 
-    var leftUrlSubString = UrlString.substring(userIndex, rightIndex); 
 
-    var userDataRef = new Firebase(firebaseUrl());
-    var newGroupChore = userDataRef.push();
-        newGroupChore.update({ChoreAssign: leftUrlSubString, ChoreDesc: choreDesc, 
-          ChoreDueDate: dueDate, ChoreName: choreName});
-
-// adds script to button
-    document.getElementById(choreName).onclick = function() {dummy(newGroupChore.toString());};
-
-
-    /*var mainUrlChoreFinal = firebaseUrl();
-    console.log(mainUrlChoreFinal);
-    var newDataRef = new Firebase(mainUrlChoreFinal);
-    newDataRef.set({choreName: choreName, dueDate: dueDate, description: choreDesc});
-    window.location.href=window.location;*/
-
-
-    userDataRef.once("value", function(snapshot) {
-      var hasChore = snapshot.hasChild("Dummy");
-      if(hasChore == true) {
-        var removeDummyUrl = firebaseUrl();
-        removeDummyUrl = removeDummyUrl.concat("/Dummy");
-        var removeDummy = new Firebase(removeDummyUrl);
-        removeDummy.remove();
+        });
       }
     });
 
-  }
+}
+
+function sortDefault() {
+  window.location.href = window.location;
+}
+
+
+
 
 
   function gotoHomePage() {
@@ -256,9 +263,19 @@
 		<hr class="bottomline">
 		<h3 style="text-align:center;">My Chore List</h1>
 
+<div class="sort">                                 
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="firstmenu" style="background-color:#eb6d20;color: white;" data-toggle="dropdown">Sort By
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="firstmenu">
+      <li role="presentation"><a role="menuitem" onclick="sortDefault()">Date Created</a></li>
+      <li role="presentation"><a role="menuitem" onclick="sortByDueDate()">Due Date</a></li>
+    </ul>
+  </div>
+</div>
 
 		<!-- main buttons -->
-		<div id="main" style="padding-left:20%;">
+		<div id="mainAllChores" style="padding-left:20%;">
 			<ul>
 			
 			</ul>

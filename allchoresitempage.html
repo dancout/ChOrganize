@@ -1,0 +1,228 @@
+<html>
+
+	<head>
+	    <title>My Chore Item</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
+	  	<!-- firebase -->
+	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+
+	</head>
+
+<script>
+  //this function returns the firebase url with the correct children appended
+  function firebaseUrl(choreName) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.indexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+    var groupIndex = UrlString.indexOf("&") + 1;  
+    var endGroupIndex = UrlString.lastIndexOf("&");
+    var rightUrlSubString = UrlString.substring(groupIndex, endGroupIndex);  
+
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    //var mainUrlGroup = mainUrl.concat(leftUrlSubString);
+    //var mainUrlGroupSlash = mainUrlGroup.concat("/");
+    var mainUrlChore = mainUrl.concat(rightUrlSubString);
+    var mainUrlChoreFinal = mainUrlChore.concat("/Chores");
+    if(choreName == null) {
+      console.log("Inside Chore Name");
+      return mainUrlChoreFinal;
+    }
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
+    mainUrlChoreFinal = mainUrlChoreFinal.concat(choreName);
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
+    return mainUrlChoreFinal;
+  }
+
+  //this function auto initalizes the data onto the page, when page is loaded
+  $(document).ready(function () {
+  	getGroup();
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
+	  var myDataRef = new Firebase(firebaseUrl(UrlSubString));
+    //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
+    myDataRef.once('value', function(snapshot) {
+      var chores = snapshot.val();
+      console.log(snapshot.val());
+      /*snapshot.forEach(function(data) {
+        console.log(data.key() + " description is " + data.val().description);
+
+        //document.getElementById('header').innerHTML = data.val().choreName;
+      });*/
+      document.getElementById('assigned').innerHTML = "<strong> Assigned to: </strong>" + snapshot.child("ChoreAssign").val();
+      document.getElementById('header3').innerHTML = snapshot.child("ChoreName").val();
+      document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("StrDueDate").val();
+      document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
+    });
+
+    /*var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    var firebaseRef = new Firebase(dataGRef);
+    firebaseRef.on('child_changed', function(dataSnapshot) {
+      window.location.href = window.location;
+    });*/
+  });
+
+	function getGroup() {
+
+		var UrlString = window.location.toString();
+	    var userIndex = UrlString.indexOf("?") + 1;  
+	    var rightIndex = UrlString.indexOf("&"); 
+	    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+	    var groupIndex = UrlString.indexOf("&") + 1;  
+	    var endGroupIndex = UrlString.lastIndexOf("&");
+	    var rightUrlSubString = UrlString.substring(groupIndex, endGroupIndex);  
+
+	    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+	    mainUrl = mainUrl.concat(rightUrlSubString);
+
+	    var groupDataRef = new Firebase(mainUrl);
+	    var groupTitle;
+	    
+	    groupDataRef.once('value', function(snapshot) {
+	    	document.getElementById('group').innerHTML = "<strong> Group: </strong>" + snapshot.child("GroupName").val();
+	    });
+
+
+      	
+	}
+
+	function complete(deletebool) {
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
+  	if(deletebool) {
+  		removeChore(UrlSubString);
+  	}
+
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.indexOf("?") + 1;
+    var rightIndex = UrlString.indexOf("&");
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, rightIndex);
+    var back = "allchorespage.html?";
+    back = back.concat(UrlSubString);
+    window.location.href = back;
+  	//gotoChorespage(UrlSubString);
+	}
+
+  function completefalse() {
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.indexOf("?") + 1;
+    var rightIndex = UrlString.indexOf("&");
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, rightIndex);
+    var allchores = "allchorespage.html?";
+    allchores = allchores.concat(UrlSubString);
+    window.location.href = allchores;
+    //gotoChorespage(UrlSubString);
+  } 
+
+	function gotoChorespage(choreName) {
+
+		var UrlString = window.location.toString();
+		UrlString = UrlString.replace("choreItem", "chorespage");
+		var userIndex = UrlString.indexOf("?") + 1;   
+		var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+		var choreUrl = "&";
+		choreUrl=choreUrl.concat(choreName);
+		var backUrl = UrlString.replace(choreUrl, "");
+		window.location.href = backUrl;
+
+	}
+
+  function removeChore(choreName) {
+    var mainUrlChoreFinal = firebaseUrl(choreName);
+    console.log(mainUrlChoreFinal);
+    var newDataRef = new Firebase(mainUrlChoreFinal);
+    newDataRef.remove();
+  }
+
+  function gotoHomePage() {
+    //assigns correct url to home button
+      var home = "homepage.html?";
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var rightIndex = UrlString.indexOf("&"); 
+      var leftUrlSubString = UrlString.substring(userIndex, rightIndex);
+      home = home.concat(leftUrlSubString);
+      window.location.href=home;
+  }
+
+</script>
+
+<body>
+	<!-- wrapper around entire body -->
+	<hr class="topline">
+	<div id="wrapper">
+
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+        <li><img class = "buttonPic" src="photos/backArrow.png" onclick="completefalse()"></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomePage()"></li>
+
+
+				<!-- Setting menu -->
+			  	<li role="presentation" class="dropdown">
+			    	<a class="dropdown-toggle" data-toggle="dropdown"
+			    	role="button" aria-haspopup="true" aria-expanded="false">
+			    	<img class="titlePic" src="photos/orangeGear.png"> <span class="caret"></span>
+			    	</a>
+
+            <ul class="dropdown-menu">
+              <li style="padding:15px;"><a href="profilePage.html">Edit Profile</a></li>
+              <li style="padding:15px;"><a href="login.html">Logout</a></li>
+            </ul>
+			</li>
+          
+		</ul>
+
+
+				
+			</div>
+		</div>
+
+		<hr class="bottomline">
+		<h3 style="text-align:center;" id="header3"><br></h1>
+
+
+		<!-- info about chore -->
+		<ul>
+			<li id="group"><strong>Group: </strong></li>
+			<li id="assigned"><strong>Assigned to: </strong></li>
+			<li id="dueDate"><strong>Due Date: </strong></li>
+			<li id="description"><strong>Description: </strong></li>
+		</ul>
+
+		<!-- main buttons -->
+		<div id="main">
+			<ul>
+				<!-- put a picture and a button in each 'list' item (row) -->
+				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete(true)">Complete Chore</button></li>
+			</ul>
+
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>

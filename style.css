@@ -239,3 +239,22 @@ ul {
 .sort {
   margin-left: 70%;
 }
+
+#mainAllChores {
+	text-align: center;
+	padding-top: 25px;
+	/*padding-left: 20%;*/
+  /*display: flex;*/
+  float:center;
+}
+
+#mainAllChores button {
+	width: 850px;
+	height: 65px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+  margin-top: 10px;
+}
