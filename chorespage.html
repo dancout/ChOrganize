@@ -539,7 +539,7 @@
         userRef.once("value", function(snapshot) {
           check = 0;
           snapshot.forEach(function(childSnapshot) {
-            if (childSnapshot.child("value").val() == memberName){
+            if (childSnapshot.child("value").val() == memberName.toLowerCase()){
               check = 1;
             }
           });

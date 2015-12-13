@@ -184,90 +184,96 @@ function deleteGroup(groupName) {
 }
 
 function addGroup()
-		{
-			var myChore = document.getElementById("addGroup");
+{
+	var myChore = document.getElementById("addGroup");
+	if (myChore.myGroupName.value == "")
+	{
+		document.getElementById("addGroupError").innerHTML = "<font color=\"red\">Error: Missing group name.</font>"
+	}
+	else
+	{
+		// declares the button
+	   	groupName = myChore.myGroupName.value;
+	    var btn = document.createElement("BUTTON");
 
-			// declares the button
-		   	groupName = myChore.myGroupName.value;
-		    var btn = document.createElement("BUTTON");
+	    // adds attributes to the button
+	    btn.setAttribute("id", groupName);
+	    
+	    // adds the button onscreen
+	    var t = document.createTextNode(groupName);
+	    btn.appendChild(t);
+	    document.getElementById("scrollingButtonsGroups").appendChild(btn);
 
-		    // adds attributes to the button
-		    btn.setAttribute("id", groupName);
-		    
-		    // adds the button onscreen
-		    var t = document.createTextNode(groupName);
-		    btn.appendChild(t);
-		    document.getElementById("scrollingButtonsGroups").appendChild(btn);
+	    var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
+	    //groupUrl.concat(person);
+	    //groupUrl.concat("/");
+	    var UrlString = window.location.toString();
+	    var userIndex = UrlString.indexOf("?") + 1;   
+	    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
 
-		    var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
-		    //groupUrl.concat(person);
-		    //groupUrl.concat("/");
-		    var UrlString = window.location.toString();
-		    var userIndex = UrlString.indexOf("?") + 1;   
-		    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
-
-		    var groupDataRef = new Firebase(groupUrl);
-		    var newGroupRef = groupDataRef.push();
-		    var groupNum = 0;
-		    var zero = 0;
-		    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}, GroupChores: zero, GroupChoresCompleted: groupNum});
-
-
-		    var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
-		    var keyString = newGroupRef.toString().substring(keyIndex, newGroupRef.length);
-
-		    var newGroupRef2 = newGroupRef.toString();
-		    newGroupRef2 = newGroupRef2.concat("/Members");
-		    var insertMemberRef = new Firebase(newGroupRef2);
-		    var anotherVarRef = insertMemberRef.push();
-		    var zero = 0;
-		    anotherVarRef.set({value: UrlSubString, userCompleted: zero});
-		    
-		    //Remove dummy
-		    var removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
-		    removeDummyUrl = removeDummyUrl.concat(keyString);
-		    removeDummyUrl = removeDummyUrl.concat('/Members/Dummy');
-		    var removeDummy = new Firebase(removeDummyUrl);
-		    removeDummy.remove();
-		    
-		    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-		    userUrl = userUrl.concat(UrlSubString);
-		    userUrl = userUrl.concat("/Groups");
+	    var groupDataRef = new Firebase(groupUrl);
+	    var newGroupRef = groupDataRef.push();
+	    var groupNum = 0;
+	    var zero = 0;
+	    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}, GroupChores: zero, GroupChoresCompleted: groupNum});
 
 
-		    var userDataRef = new Firebase(userUrl);
-		    var userNum = 0;
-		    var newUserGroup = userDataRef.push();
-		        newUserGroup.update({value: keyString, UserChoresCompleted: userNum});
-		    userDataRef.once("value", function(snapshot) {
-		      var hasGroup = snapshot.hasChild("Dummy");
-		      if(hasGroup == true) {
-		        removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
-		        removeDummyUrl = removeDummyUrl.concat(UrlSubString);
-		        removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
-		        removeDummy = new Firebase(removeDummyUrl);
-		        removeDummy.remove();
-		      }
-		    });
+	    var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
+	    var keyString = newGroupRef.toString().substring(keyIndex, newGroupRef.length);
 
-		    // adds script to button, appends user string to the end and the groupname appended also
-		    document.getElementById(groupName).onclick = function() {
-		      var UrlString = window.location.toString();
-		      var userIndex = UrlString.indexOf("?") + 1;   
-		      var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
-		      var choreUrl = 'chorespage.html?';
-		      var finalChoreUrl = choreUrl.concat(UrlSubString);
-		      var finalChoreUrl2 = finalChoreUrl.concat("&");
-          var keyIndex = newGroupRef.toString().lastIndexOf("/");
-          var choreRef = newGroupRef.toString().substring(keyIndex, newGroupRef.toString().length);
-		      var finalChoreUrl3 = finalChoreUrl2.concat(choreRef);
-		      window.location.href=finalChoreUrl3;
-		    };
+	    var newGroupRef2 = newGroupRef.toString();
+	    newGroupRef2 = newGroupRef2.concat("/Members");
+	    var insertMemberRef = new Firebase(newGroupRef2);
+	    var anotherVarRef = insertMemberRef.push();
+	    var zero = 0;
+	    anotherVarRef.set({value: UrlSubString, userCompleted: zero});
+	    
+	    //Remove dummy
+	    var removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+	    removeDummyUrl = removeDummyUrl.concat(keyString);
+	    removeDummyUrl = removeDummyUrl.concat('/Members/Dummy');
+	    var removeDummy = new Firebase(removeDummyUrl);
+	    removeDummy.remove();
+	    
+	    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+	    userUrl = userUrl.concat(UrlSubString);
+	    userUrl = userUrl.concat("/Groups");
 
-		    alert("group added!");
-		    window.location.href = window.location;
 
-		}
+	    var userDataRef = new Firebase(userUrl);
+	    var userNum = 0;
+	    var newUserGroup = userDataRef.push();
+	        newUserGroup.update({value: keyString, UserChoresCompleted: userNum});
+	    userDataRef.once("value", function(snapshot) {
+	      var hasGroup = snapshot.hasChild("Dummy");
+	      if(hasGroup == true) {
+	        removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+	        removeDummyUrl = removeDummyUrl.concat(UrlSubString);
+	        removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
+	        removeDummy = new Firebase(removeDummyUrl);
+	        removeDummy.remove();
+	      }
+	    });
+
+	    // adds script to button, appends user string to the end and the groupname appended also
+	    document.getElementById(groupName).onclick = function() {
+			var UrlString = window.location.toString();
+			var userIndex = UrlString.indexOf("?") + 1;   
+			var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
+			var choreUrl = 'chorespage.html?';
+			var finalChoreUrl = choreUrl.concat(UrlSubString);
+			var finalChoreUrl2 = finalChoreUrl.concat("&");
+			var keyIndex = newGroupRef.toString().lastIndexOf("/");
+			var choreRef = newGroupRef.toString().substring(keyIndex, newGroupRef.toString().length);
+			var finalChoreUrl3 = finalChoreUrl2.concat(choreRef);
+			window.location.href=finalChoreUrl3;
+	    };
+
+	    alert("group added!");
+	    window.location.href = window.location;
+	}
+
+}
 
 		function enterPressed(e) {
 			if(e.keyCode == 13)
@@ -357,6 +363,7 @@ function addGroup()
 									    	<label for="myGroupName">Group Name:</label>
 									    	<input type="myGroupName" class="form-control" placeholder="GroupX" id="myGroupName" onkeypress="return enterPressed(event)">
 									  	</div>
+									  	<div id="addGroupError"><br></div>
 									  	<button type="button" class="btn btn-default" onclick="addGroup()">Add Group</button>
 									</form>
 						        </div>
