@@ -333,19 +333,32 @@ function addGroup()
 			<div id="main">
 				<ul>
 					<!-- put a picture and a button in each 'list' item (row) -->
-
 					<li>
-					<!-- New Group form Input -->
-					<img class = "buttonPic" src="photos/addNewGroup.png"></h3>
-
-						<form role="form" id="addGroup">
-						  	<div class="form-group">
-						    	<label for="myGroupName">Group Name:</label>
-						    	<input type="myGroupName" class="form-control" placeholder="GroupX" id="myGroupName" onkeypress="return enterPressed(event)">
-						  	</div>
-						  	<button type="button" class="btn btn-default" onclick="addGroup()">Add Group</button>
-						</form>
+						<img class = "buttonPic" src="photos/addNewGroup.png"></h3>
+						<div class="panel panel-default" id="newGroupPanel">
+						    <div class="panel-heading">
+						        <h4 class="panel-title">
+						            <a data-toggle="collapse" 
+						            data-target="#addNewGroup">
+						               <h4>Add New Group</h4>
+						            </a>
+						        </h4>
+						    </div>
+						    
+						    <div id="addNewGroup" class="panel-collapse collapse">
+						        <div class="panel-body">
+						            <form role="form" id="addGroup">
+									  	<div class="form-group">
+									    	<label for="myGroupName">Group Name:</label>
+									    	<input type="myGroupName" class="form-control" placeholder="GroupX" id="myGroupName" onkeypress="return enterPressed(event)">
+									  	</div>
+									  	<button type="button" class="btn btn-default" onclick="addGroup()">Add Group</button>
+									</form>
+						        </div>
+						    </div>
+						</div>
 					</li>
+
 				</ul>
 
 
