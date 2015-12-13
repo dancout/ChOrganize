@@ -1,24 +1,22 @@
-<html>
 
-	<head>
+<!-- saved from url=(0110)file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/groupspage.html?dancout -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	    <title>My Groups</title>
 
 	    <!-- include stylesheets and bootstrap -->
 	    <meta charset="utf-8">
-	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="./My Groups_files/bootstrap.min.css">
 	     <!-- Optional theme -->
-	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+	    <link href="./My Groups_files/bootstrap.min(1).css" rel="stylesheet" id="bs-theme-stylesheet">
 
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	   	<link rel="stylesheet" type="text/css" href="style.css">
+	    <script src="./My Groups_files/jquery.min.js"></script>
+	    <script src="./My Groups_files/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="./My Groups_files/style.css">
 
 	  	<!-- firebase -->
-	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	   	<script src="./My Groups_files/firebase.js"></script>
 
-	</head>
-
-<script>
+	<script>
 	function choresLink() {
     window.location.href = "chorespage.html";
 	}
@@ -34,17 +32,12 @@
       window.location.href=home;
 
   	}
-</script>
-
-<script>
+</script><script>
   function logout(){
   	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
 	ref.unauth();
   }
-</script>
-<!-- For login sensitive pages! -->
-<!-- Be sure to encompass the body with a div id="body" -->
-<script>
+</script><script>
 	function gotoLogin() {
 		window.location.href="login.html?";
 	}
@@ -65,9 +58,7 @@
 			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
 		}		
 	}
-</script>
-
-<script>
+</script><script>
 
   //this function auto initalizes the data onto the page, when page is loaded
   $(document).ready(function () {
@@ -116,8 +107,6 @@
 		        var divName = valueSnapshot.key() + "Div"; // button div name, to be used for id
 		        buttonDiv.setAttribute("id", divName);
 		        buttonDiv.setAttribute("style", "width:100%;");
-		        buttonDiv.setAttribute("style", "padding-top: 15px;")
-
 		        // buttonDiv.setAttribute("style", "float: left;");
 
 		        // add button div to scrollingButtonsGroups
@@ -281,7 +270,16 @@ function addGroup()
 			}
 		}
 
-</script>
+</script></head>
+
+
+
+
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+
+
+
 
 
 
@@ -302,20 +300,19 @@ function addGroup()
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><img class = "buttonPic" src="photos/backArrow.png" onclick="gotoHomepage()"></li>
-				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
+				<li><img class="buttonPic" src="./My Groups_files/backArrow.png" onclick="gotoHomepage()"></li>
+				<li><img class="title" src="./My Groups_files/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
 
 
 				<!-- Setting menu -->
 			  	<li role="presentation" class="dropdown">
-			    	<a class="dropdown-toggle" data-toggle="dropdown"
-			    	role="button" aria-haspopup="true" aria-expanded="false">
-			    	<img class="titlePic" src="photos/orangeGear.png"> <span class="caret"></span>
+			    	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			    	<img class="titlePic" src="./My Groups_files/orangeGear.png"> <span class="caret"></span>
 			    	</a>
 
             <ul class="dropdown-menu">
-              <li style="padding:15px;"><a href="profilePage.html">Edit Profile</a></li>
-              <li style="padding:15px;"><a href="login.html">Logout</a></li>
+              <li style="padding:15px;"><a href="file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/profilePage.html">Edit Profile</a></li>
+              <li style="padding:15px;"><a href="file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/login.html">Logout</a></li>
             </ul>
 			</li>
           
@@ -328,23 +325,20 @@ function addGroup()
 
 		<hr class="bottomline">
 
-
+		
 		<div id="body">
 
 			<h3 style="text-align:center;">My Group List</h3>
 			<!-- main buttons -->
-			<div id="mainGroupsPage">
-
-				<div id="groupButtons">
+			<div id="main">
 				<ul>
 					<!-- put a picture and a button in each 'list' item (row) -->
 					<li>
-						<img class = "buttonPic" src="photos/addNewGroup.png"></h3>
+						<img class="buttonPic" src="./My Groups_files/addNewGroup.png">
 						<div class="panel panel-default" id="newGroupPanel">
 						    <div class="panel-heading">
 						        <h4 class="panel-title">
-						            <a data-toggle="collapse" 
-						            data-target="#addNewGroup">
+						            <a data-toggle="collapse" data-target="#addNewGroup">
 						               <h4>Add New Group</h4>
 						            </a>
 						        </h4>
@@ -365,7 +359,6 @@ function addGroup()
 					</li>
 
 				</ul>
-			</div>
 
 
 
@@ -374,8 +367,8 @@ function addGroup()
 				<!--<h4 style="text-align:center;"> My Groups </h4>-->
 
 				<!-- this wrapper will hold all the buttons leading to the user's groups -->
-				<div id="scrollingButtonsGroups" class="btn-group-vertical" sytle="floating:left;">
-				</div>
+				<div id="scrollingButtonsGroups" class="btn-group-vertical" sytle="floating:center;">
+				<div id="-K5O_mDOflydgY_dKm3BDiv" style="width:100%;"><button id="x" class="btn btn-primary">x</button><img src="./My Groups_files/trashcan.png" class="buttonPic" style="width:50px;" alt="The Pulpit Rock"></div></div>
 
 			</div>
 		</div>
@@ -384,6 +377,7 @@ function addGroup()
 
 	</div>
 
-</body>
 
-</html>
+
+
+</body></html>

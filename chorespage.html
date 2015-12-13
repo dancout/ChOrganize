@@ -167,6 +167,7 @@
         // create button
         var btn = document.createElement("BUTTON");
         btn.setAttribute("id", data.child("ChoreName").val());
+        // btn.setAttribute("style", "padding: 5px;");
 
         // create button's name, and add it on 
         var t = document.createTextNode(data.child("ChoreName").val());
@@ -198,6 +199,7 @@
         var x = document.createElement("INPUT");
         x.setAttribute("type", "radio");
         x.setAttribute("name", "james");
+        // x.setAttribute("style", "padding-left: 5px;")
         x.checked = !status;
         var radioName1 = data.child("ChoreName").val() + "b1";
         x.setAttribute("id", radioName1);
@@ -1017,19 +1019,6 @@ function sortByUser() {
 
 		<!-- main buttons -->
 		<div id="main">
-			<!--<ul>
-				<!-- put a picture and a button in each 'list' item (row) -->
-                <!--<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="gotoGroupspage()">Go Back</button></li>
-				<li><img class = "buttonPic" src="photos/tennisBall.png"><button class="btn-default btn" onclick="addChore()">Add a new chore</button></li>
-        <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="addMember()">Add a new member</button></li>
-        <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="viewMembers()">View Members</button></li>
-			</ul>-->
-
-
-
-
-
-      <!--<h4 style="text-align:center;"> My Chores</h4>-->
 
 <div id="choreButtons" class="btn-group-vertical">
   <ul>
@@ -1100,10 +1089,9 @@ function sortByUser() {
     <hr>
 
     <li>
-      <img class = "buttonPic" src="photos/profilePic.png">
-      <h4>List of Members</h4>
+      <img class = "buttonPic" src="photos/infoSymbol.png">
       <div id="memberList" onload=""></div>
-      <button class="btn-default btn" onclick="viewMembers()">View Members</button>
+      <button class="btn-default btn" onclick="goToInfopage()">Get Stats</button>
     </li>
 
 
@@ -1118,8 +1106,8 @@ function sortByUser() {
 
         <p style="float:center;"> 
           <span style="display:inline-block; width: 62%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 9%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 8%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 7%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 7%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
         </p>
 
         <p style="float:center;"> 
@@ -1127,10 +1115,6 @@ function sortByUser() {
         </p>
 
 
-      </div>
-
-      <div id="getInfoDiv">
-        <button onclick="goToInfopage()">Get Stats</button>
       </div>
 
 

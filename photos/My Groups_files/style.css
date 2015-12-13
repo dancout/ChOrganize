@@ -63,29 +63,10 @@ ul {
 #main {
 	text-align: center;
 	padding-top: 25px;
-	/*padding-left: 20%;*/
   display: flex;
-  float:center;
 }
 
 #main button {
-	width: 250px;
-	height: 50px;
-	background-color: #eb6d20;
-	color: white;
-	font-size: 25;
-	font-style: bold;
-	font-family: "Arial Narrow", Arial, sans-serif;
-}
-
-#mainGroupsPage {
-	text-align: center;
-	padding-top: 25px;
-  display: flex;
-  float:center;
-}
-
-#mainGroupsPage button {
 	width: 250px;
 	height: 50px;
 	background-color: #eb6d20;
@@ -169,7 +150,7 @@ ul {
 	float: center;
 	overflow: scroll;
 	height: 400px;
-	width: 60%;
+	width: 40%;
 	padding-left: 15px;
 }
 
@@ -179,10 +160,6 @@ ul {
 }
 
 #choreButtons {
-  width: 50%;
-}
-
-#groupButtons {
   width: 50%;
 }
 

@@ -123,7 +123,7 @@
         var t = document.createTextNode(groupdata.child("ChoreName").val());
         //console.log("DATA: " + data.child("value").val());
         btn.appendChild(t);
-        document.getElementById("scrollingButtons").appendChild(btn);
+        document.getElementById("allChoresButtons").appendChild(btn);
     // adds script to button
         document.getElementById(data.key()).onclick = function() {dummy(data.key());};
         }
@@ -258,14 +258,14 @@
 
 
 		<!-- main buttons -->
-		<div id="main">
+		<div id="main" style="padding-left:20%;">
 			<ul>
 			
 			</ul>
 
       <!--<h4 style="text-align:center;"> My Chores </h4>-->
 
-      <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
+      <div id="allChoresButtons" class="btn-group-vertical" style="float:center;" style="padding-left:50%;">
 
 		  </div>
 
