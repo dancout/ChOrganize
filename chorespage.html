@@ -88,6 +88,8 @@
 
 
 <script>
+  var groupNumCompleted = 0;
+
   //this function auto initalizes the data onto the page, when page is loaded
   $(document).ready(function () {
 	  var myDataRef = new Firebase(firebaseUrl());
@@ -100,15 +102,11 @@
         // var titleHeader = document.createElement("H3");
         var titleText;
 
-        var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
-        mainUrl = mainUrl.concat(rightUrlSubString);
-        var groupDataRef = new Firebase(mainUrl); 
+        
 
-        groupDataRef.once('value', function(snapshot) {
-          titleText = snapshot.child("GroupName").val();
-          titleText = titleText.concat(" Chores");
-          document.getElementById("groupTitle").innerHTML = titleText;
-        });
+        
+
+
 
 
     //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
@@ -182,6 +180,7 @@
         else
         {
           status = true;
+          groupNumCompleted = groupNumCompleted + 1;
         }
 
         // create radio button
@@ -191,7 +190,7 @@
         x.checked = !status;
         var radioName1 = data.child("ChoreName").val() + "b1";
         x.setAttribute("id", radioName1);
-        x.onclick = function() {colorChange(data.child("ChoreName").val(), data.key());};
+        x.onclick = function() {colorChange(data.child("ChoreName").val(), data.key(), true);};
         x.setAttribute("class", "radioButtonLeft");
 
         // create 2nd radio button
@@ -200,7 +199,7 @@
         y.setAttribute("name", "james");
         var radioName2 = data.child("ChoreName").val() + "b2";
         y.setAttribute("id", radioName2);
-        y.onclick = function() {colorChange(data.child("ChoreName").val(), data.key());};
+        y.onclick = function() {colorChange(data.child("ChoreName").val(), data.key(), true);};
         y.setAttribute("class", "radioButtonCenter");
         y.checked = status;
 
@@ -226,7 +225,40 @@
         document.getElementById(formName).appendChild(z);
 
         // update the color of the button
-        colorChange(data.child("ChoreName").val(), data.key());
+        colorChange(data.child("ChoreName").val(), data.key(), false);
+
+
+
+        var UrlString = window.location.toString();
+        var groupIndex = UrlString.lastIndexOf("&") + 1;  
+        var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+        var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+        var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+        mainUrl = mainUrl.concat(rightUrlSubString);
+        var groupDataRef = new Firebase(mainUrl); 
+
+        groupDataRef.once('value', function(snapshot) {
+        titleText = snapshot.child("GroupName").val();
+        titleText = titleText.concat(" Chores     ");
+
+        // var groupNumCompleted;
+        var groupNum;
+        groupDataRef.once('value', function(snapshot) {
+          // groupNumCompleted = snapshot.child("GroupChoresCompleted").val();
+          groupNum = snapshot.child("GroupChores").val();
+        });
+
+        titleText = titleText.concat(groupNumCompleted);
+        titleText = titleText.concat("/");
+        titleText = titleText.concat(groupNum);
+        titleText = titleText.concat(" completed!");
+
+
+          
+          document.getElementById("groupTitle").innerHTML = titleText;
+        });   
+
 
         });
       }
@@ -239,6 +271,7 @@
     });
   });
 
+       
 
   function removeChore(choreName) {
     var choreNameWithSlash = "/";
@@ -250,12 +283,31 @@
     // if last chore, add dummy first
     var index = mainUrlChoreFinal.lastIndexOf("/Chores");
     var subStringUrl = mainUrlChoreFinal.substring(0, index);
+    alert(subStringUrl);
+
+    // mainUrl = mainUrl.concat(rightUrlSubString);
+    var groupDataRef = new Firebase(subStringUrl);
+    groupDataRef.once('value', function(snapshot) {
+      titleText = snapshot.child("GroupName").val();
+      titleText = titleText.concat(" Chores     ");
+
+      var groupNum;
+      groupDataRef.once('value', function(snapshot) {
+        groupNum = snapshot.child("GroupChores").val();
+      });
+      groupNum = groupNum - 1;
+      groupDataRef.update({GroupChores: groupNum});
+    });
+
+
     subStringUrl = subStringUrl.concat("/Chores/");
     var dummyRef = new Firebase(subStringUrl);
     var deleteBool = true;
 
     dummyRef.once("value", function(snapshot){
       var num = snapshot.numchildren();
+      alert("here");
+      alert(dummyRef);
 
       if (num == 1)
       {
@@ -277,7 +329,7 @@
   }
 
 
-  function colorChange(choreName, dKey) {
+  function colorChange(choreName, dKey, updateBool) {
         if(document.getElementById(choreName + "b1").checked) // not complete
         {
           document.getElementById(choreName).style.backgroundColor = "#eb6d20";
@@ -292,6 +344,29 @@
           var doneVal = 0;
 
           dataRef.update({Done: doneVal});
+
+          if(updateBool)
+          {
+            var UrlString = window.location.toString();
+            var groupIndex = UrlString.lastIndexOf("&") + 1;  
+            var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+            // alert(rightUrlSubString);
+            var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+            // var titleHeader = document.createElement("H3");
+            var titleText;
+
+            var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+            mainUrl = mainUrl.concat(rightUrlSubString);
+            var groupDataRef = new Firebase(mainUrl); 
+            var groupNum;
+            groupDataRef.once('value', function(snapshot) {
+              groupNum = snapshot.child("GroupChoresCompleted").val() - 1;
+            });
+
+            groupDataRef.update({GroupChoresCompleted: groupNum});
+            // alert(groupNum);
+          }
 
         }
         else if (document.getElementById(choreName + "b2").checked) // complete
@@ -310,6 +385,34 @@
           var doneVal = 1;
 
           dataRef.update({Done: doneVal});
+
+
+
+
+          if(updateBool)
+          {
+            var UrlString = window.location.toString();
+            var groupIndex = UrlString.lastIndexOf("&") + 1;  
+            var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+            // alert(rightUrlSubString);
+            var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+            // var titleHeader = document.createElement("H3");
+            var titleText;
+
+            var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+            mainUrl = mainUrl.concat(rightUrlSubString);
+            var groupDataRef = new Firebase(mainUrl); 
+            var groupNum;
+            groupDataRef.once('value', function(snapshot) {
+              groupNum = snapshot.child("GroupChoresCompleted").val() + 1;
+            });
+
+            groupDataRef.update({GroupChoresCompleted: groupNum});
+            // alert(groupNum);
+          }
+
+
 
         }
         else if (document.getElementById(choreName + "b3").checked){
@@ -349,6 +452,31 @@
     var doneVal = 0;
         newGroupChore.update({ChoreAssign: none, ChoreDesc: choreDesc, 
           ChoreDueDate: splitDateStr, ChoreName: choreName, StrDueDate: dueDate, Done: {Done: doneVal}});
+
+
+
+
+    var groupIndex = UrlString.lastIndexOf("&") + 1;  
+    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+    var groupDataRefURL = firebaseUrl(rightUrlSubString);
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    mainUrl = mainUrl.concat(rightUrlSubString);
+    var groupDataRef = new Firebase(mainUrl);
+    groupDataRef.once('value', function(snapshot) {
+      titleText = snapshot.child("GroupName").val();
+      titleText = titleText.concat(" Chores     ");
+
+      var groupNum;
+      groupDataRef.once('value', function(snapshot) {
+        groupNum = snapshot.child("GroupChores").val();
+      });
+      groupNum = groupNum + 1;
+      groupDataRef.update({GroupChores: groupNum});
+    });
+
+
+
+
 
 // adds script to button
 
@@ -779,6 +907,25 @@ function sortByUser() {
 
     });
 }
+
+function showNumChores() {
+  var UrlString = window.location.toString();
+  var groupIndex = UrlString.lastIndexOf("&") + 1;  
+  var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);
+  alert(rightUrlSubString);
+  var groupDataRefURL = firebaseUrl(rightUrlSubString);
+
+  // var titleHeader = document.createElement("H3");
+  var titleText;
+
+  var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+  mainUrl = mainUrl.concat(rightUrlSubString);
+  var groupDataRef = new Firebase(mainUrl); 
+
+  groupDataRef.once('value', function(snapshot) {
+    alert(snapshot.child("GroupChoresCompleted").val());
+  });
+}
 </script>
 
 <body>
@@ -885,6 +1032,7 @@ function sortByUser() {
 
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="addMember()">Add a new member</button></li>
         <li><img class = "buttonPic" src="photos/profilePic.png"><button class="btn-default btn" onclick="viewMembers()">View Members</button></li>
+        <li><button class="btn-default btn" onclick="showNumChores()">show numchores</button></li>
 			</ul>
 </div>
 

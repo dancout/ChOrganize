@@ -206,7 +206,9 @@ function addGroup()
 
 		    var groupDataRef = new Firebase(groupUrl);
 		    var newGroupRef = groupDataRef.push();
-		    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}});
+		    var groupNum = 0;
+		    var zero = 0;
+		    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}, GroupChores: zero, GroupChoresCompleted: groupNum});
 
 
 		    var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
@@ -231,9 +233,9 @@ function addGroup()
 
 
 		    var userDataRef = new Firebase(userUrl);
-
+		    var userNum = 0;
 		    var newUserGroup = userDataRef.push();
-		        newUserGroup.update({value: keyString});
+		        newUserGroup.update({value: keyString, UserChoresCompleted: userNum});
 		    userDataRef.once("value", function(snapshot) {
 		      var hasGroup = snapshot.hasChild("Dummy");
 		      if(hasGroup == true) {
