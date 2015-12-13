@@ -77,14 +77,19 @@
     var UrlString = window.location.toString();
     var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
     var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
-	if(deletebool)
-	{
-		removeChore(UrlSubString);
+  	if(deletebool) {
+  		removeChore(UrlSubString);
+  	}
+  	gotoChorespage(UrlSubString);
+	}
 
-	}
-	gotoChorespage(UrlSubString);
-    
-	}
+  function completefalse() {
+    var UrlString = window.location.toString();
+    var leftChoreItemIndex = UrlString.lastIndexOf("&") + 1;
+    var UrlSubString = UrlString.substring(leftChoreItemIndex, UrlString.length);
+
+    gotoChorespage(UrlSubString);
+  } 
 
 	function gotoChorespage(choreName) {
 
@@ -134,6 +139,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
+        <li><img class = "buttonPic" src="photos/backArrow.png" onclick="completefalse()"></li>
 				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomePage()"></li>
 
 
@@ -172,8 +178,7 @@
 		<div id="main">
 			<ul>
 				<!-- put a picture and a button in each 'list' item (row) -->
-				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete(true)">Complete this Chore</button></li>
-				<li><img class = "buttonPic" src="photos/backArrow.png"><button class="btn-default btn" onclick="complete(false)">Go Back</button></li>
+				<li><img class = "buttonPic" src="photos/checklist.png"><button class="btn-default btn" onclick="complete(true)">Complete Chore</button></li>
 			</ul>
 
 
