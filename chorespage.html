@@ -70,6 +70,21 @@
 
   }
 
+  function goToInfopage()
+  {
+    var UrlString = window.location.toString();
+    UrlString = UrlString.replace("chorespage", "infopage");
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var subIndex = UrlSubString.indexOf("&");
+    var UrlSubSubString = UrlSubString.substring(subIndex, UrlSubString.length);
+
+    // var UrlString = UrlString.replace(UrlSubSubString, "");
+    window.location.href = UrlString;
+
+  }
+
   function gotoHomepage()
   {
     var UrlString = window.location.toString();
@@ -102,13 +117,7 @@
 
         // var titleHeader = document.createElement("H3");
         var titleText;
-
         
-
-        
-
-
-
 
     //var myDataRef = new Firebase('https://flickering-inferno-1570.firebaseio.com/i/Group X/Chore X/');
     myDataRef.once('value', function(snapshot) {
@@ -1077,6 +1086,10 @@ function sortByUser() {
         </p>
 
 
+      </div>
+
+      <div id="getInfoDiv">
+        <button onclick="goToInfopage()">Get Stats</button>
       </div>
 
 

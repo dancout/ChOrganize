@@ -218,7 +218,8 @@ function addGroup()
 		    newGroupRef2 = newGroupRef2.concat("/Members");
 		    var insertMemberRef = new Firebase(newGroupRef2);
 		    var anotherVarRef = insertMemberRef.push();
-		    anotherVarRef.set({value: UrlSubString});
+		    var zero = 0;
+		    anotherVarRef.set({value: UrlSubString, userCompleted: zero});
 		    
 		    //Remove dummy
 		    var removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';

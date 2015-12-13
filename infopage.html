@@ -18,10 +18,109 @@
 	   	
 	</head>
 
+
+	<script>
+
+	function firebaseUrl(choreName) {
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;  
+    var rightIndex = UrlString.lastIndexOf("&"); 
+    var leftUrlSubString = UrlString.substring(userIndex, rightIndex);   
+
+    var groupIndex = UrlString.lastIndexOf("&") + 1;  
+    var rightUrlSubString = UrlString.substring(groupIndex, UrlString.length);  
+
+    var mainUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+    //var mainUrlGroup = mainUrl.concat(leftUrlSubString);
+    //var mainUrlGroupSlash = mainUrlGroup.concat("/");
+    var mainUrlChore = mainUrl.concat(rightUrlSubString);
+    var mainUrlChoreFinal = mainUrlChore.concat("/Chores");
+    if(choreName == null) {
+      console.log("Inside Chore Name");
+      return mainUrlChoreFinal;
+    }
+    mainUrlChoreFinal = mainUrlChoreFinal.concat(choreName);
+    mainUrlChoreFinal = mainUrlChoreFinal.concat("/");
+    return mainUrlChoreFinal;
+  }
+
+  	function cycle(dataRef, memberName) {
+
+  		// create the member div
+  		var memberDiv = document.createElement("div");
+  		var divName = memberName + "Div";
+  		memberDiv.setAttribute("id", divName);
+
+  		// add member div to MembersList (div)
+  		document.getElementById("MembersList").appendChild(memberDiv);
+
+
+  		var count = 0;
+  		var total = 0;
+  		dataRef.once('value', function(snapshot) {
+  			snapshot.forEach(function(data) {
+  				var curName = data.child("ChoreAssign").val();
+
+  				// check if chore is done
+  				if(data.child("Done").child("Done").val() == 1)
+  				{
+  					total = total + 1;
+	  				if (curName == memberName)
+	  				{
+	  					count = count + 1;
+	  				}
+  				}
+  				var statText = memberName + ":  " + count + "/" + total;
+  				document.getElementById(divName).innerHTML = statText;
+  			});
+
+  		});
+  		// return count;
+  	};
+
+	$(document).ready(function () {
+		
+		// make firebase url ref
+		var mainURL = 'https://flickering-inferno-1570.firebaseio.com/Groups/'
+
+		var UrlString = window.location.toString();
+	    UrlString = UrlString.replace("chorespage", "infopage");
+	    var userIndex = UrlString.indexOf("?") + 1;   
+	    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+	    var subIndex = UrlSubString.indexOf("&") + 1;
+	    var UrlSubSubString = UrlSubString.substring(subIndex, UrlSubString.length);
+	    mainURL = mainURL.concat(UrlSubSubString);
+	    var membersUrl = mainURL.concat("/Members");
+
+	    var membersDataRef = new Firebase(membersUrl);
+
+	    membersDataRef.once('value', function(snapshot) {
+	    	snapshot.forEach(function(data){
+	    		var choresDataURL = firebaseUrl();
+	    		var choresDataRef = new Firebase(choresDataURL);
+	    		var totalCompleted;
+
+	    		cycle(choresDataRef, data.child("value").val());
+	    		
+	    	});
+	    });
+
+			});
+
+
+	</script>
+
+
+
 	<body>
 		<div>
 			<img src="photos/infoSymbol.Png">
 			<p>Information, yo</p>
+
+		</div>
+
+		<div id="MembersList">
 
 		</div>
 
