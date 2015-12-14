@@ -26,7 +26,8 @@
 				    	"<input type=\"text\" class=\"form-control\" placeholder=\"" + title + "\" id=\"change" + rowID + "\">" +
 				"</div></td>" +
 
-				"<td><button type='button' class='btn btn-default' onclick='textChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\", \"" + valueID + "\")'> Submit </button></td>";
+				"<td><button type='button' class='btn btn-default' onclick='textChange(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\", \"" + valueID + "\")'> Submit </button>" +
+				"<br><button type='button' class='btn btn-default' onclick='textCancel(\"" + title + "\", \"" + rowID + "\", \"" + infoKey + "\", \"" + valueID + "\")'> Cancel </button></td>";
 		}
 
 		function textChange(title, rowID, infoKey, valueID) {
@@ -53,6 +54,14 @@
 					}
 			 	});
 			});
+		}
+
+		function textCancel(title, rowID, infoKey, valueID) {
+			document.getElementById(rowID).innerHTML = 
+				"<td><strong>" + title + "</strong></td>" +
+				"<td><div id=\"" + valueID + "\"><div></td>" +
+				"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"textEdit(\'" + title +"\' ,\'" + rowID + "\', \'" + infoKey + "\', \'" + valueID + "\')\"> edit </button></td>";
+			getProfile();
 		}
 
 		function emailEdit(title, rowID, infoKey) {
