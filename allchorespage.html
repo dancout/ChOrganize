@@ -181,7 +181,7 @@ function sortByDueDate() {
         var btn = document.createElement("BUTTON");
 
     // adds attributes to the button
-        btn.setAttribute("id", data.key());
+        btn.setAttribute("id", groupdata.key());
         
     // adds the button onscreen
         var t = document.createTextNode(groupdata.child("ChoreName").val());
@@ -189,7 +189,7 @@ function sortByDueDate() {
         btn.appendChild(t);
         document.getElementById("allChoresButtons").appendChild(btn);
     // adds script to button
-        document.getElementById(data.key()).onclick = function() {dummy(data.key());};
+        document.getElementById(groupdata.key()).onclick = function() {dummy(data.child("value").val(),groupdata.key());};
 
         }
         });
