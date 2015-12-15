@@ -61,10 +61,16 @@
 
         //document.getElementById('header').innerHTML = data.val().choreName;
       });*/
-      document.getElementById('assigned').innerHTML = "<strong> Assigned to: </strong>" + snapshot.child("ChoreAssign").val();
+
+      if (snapshot.child("ChoreAssign").val() == 0) {
+        document.getElementById('assigned').innerHTML = "<strong> Assigned to: </strong>No one";
+      }
+      else {
+        document.getElementById('assigned').innerHTML = "<strong> Assigned to: </strong>" + snapshot.child("ChoreAssign").val();
+      }
       document.getElementById('header3').innerHTML = snapshot.child("ChoreName").val();
       document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("StrDueDate").val();
-      document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
+      document.getElementById('description').innerHTML = "<strong> Description: </strong>No description";
     });
 
     var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
