@@ -147,7 +147,7 @@
         pickupbtnName = pickupbtnName.concat("pickupbtn");
         pickupbtn.setAttribute("id", pickupbtnName);
 
-        var pickupText = document.createTextNode("Pick Up");
+        var pickupText = document.createTextNode("CLAIM");
         pickupbtn.appendChild(pickupText);
         pickupbtn.onclick = function() {pickUp(data);};
         }
@@ -642,7 +642,7 @@
   }
 
 function sortByDueDate() {
-    var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>CLAIM:</strong></p><span style='display:inline-block; width: 53%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 10%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
+    var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>OWNER:</strong></p><span style='display:inline-block; width: 50%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
   document.getElementById("scrollingButtons").innerHTML = "";
 
   document.getElementById("scrollingButtons").innerHTML = mytext;
@@ -696,7 +696,7 @@ function sortByDueDate() {
         pickupbtnName = pickupbtnName.concat("pickupbtn");
         pickupbtn.setAttribute("id", pickupbtnName);
 
-        var pickupText = document.createTextNode("Pick Up");
+        var pickupText = document.createTextNode("CLAIM");
         pickupbtn.appendChild(pickupText);
         pickupbtn.onclick = function() {pickUp(data);};
         }
@@ -803,7 +803,7 @@ function sortDefault() {
 }
 
 function sortByUser() {
-  var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>CLAIM:</strong></p><span style='display:inline-block; width: 53%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 10%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
+  var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>OWNER:</strong></p><span style='display:inline-block; width: 50%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
   document.getElementById("scrollingButtons").innerHTML = "";
 
   document.getElementById("scrollingButtons").innerHTML = mytext;
@@ -857,7 +857,7 @@ function sortByUser() {
         pickupbtnName = pickupbtnName.concat("pickupbtn");
         pickupbtn.setAttribute("id", pickupbtnName);
 
-        var pickupText = document.createTextNode("Pick Up");
+        var pickupText = document.createTextNode("CLAIM");
         pickupbtn.appendChild(pickupText);
         pickupbtn.onclick = function() {pickUp(data);};
         }
@@ -1108,13 +1108,7 @@ function sortByUser() {
 
       <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
 
-        <p style="float:left;"> 
-          <p style="float:left; margin-top:20px; margin-left:30px;"><span style="display:inline-block; width: 30%;"></span>
-            <strong>CLAIM:</strong></p>
-          <span style="display:inline-block; width: 53%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 8%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 10%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
-        </p>
+        <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>OWNER:</strong></p><span style='display:inline-block; width: 50%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>;
 
         <p style="float:center;"> 
 
