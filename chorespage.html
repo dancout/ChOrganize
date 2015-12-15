@@ -1038,22 +1038,24 @@ function sortByUser() {
           
           <div id="AddNewChore" class="panel-collapse collapse">
               <div class="panel-body">
+                <center>
                 <form role="form" id="addChore">
                     <div class="form-chore">
                       <label for="myChoreName">Chore Name:</label>
-                      <input type="text" class="form-control" placeholder="ChoreX" id="myChoreName">
+                      <input type="text" class="form-control" placeholder="ChoreX" id="myChoreName" style="width:60%;">
                     </div>
                     <div class="form-chore">
                       <label for="myChoreDesc">Chore Description:</label>
-                      <input type="text" class="form-control" placeholder="Description" id="myChoreDesc">
+                      <input type="text" class="form-control" placeholder="Description" id="myChoreDesc" style="width:60%;">
                     </div>
                     <div class="form-chore">
                       <label for="myChoreDate">Chore Due Date:</label>
-                      <input type="date" class="form-control" placeholder="mm/dd/yy" id="myChoreDate" />
+                      <input type="date" class="form-control" placeholder="mm/dd/yy" id="myChoreDate" style="width:60%;">
                     </div>
                     <div id="newChoreError"><br></div>
                     <button type="button" class="btn btn-default" onclick="addChore()">Add Chore</button>
                 </form>
+                </center>
               </div>
           </div>
       </div>
@@ -1063,6 +1065,7 @@ function sortByUser() {
 
     <li>
       <img class = "buttonPic" src="photos/addNewMember.png">
+      <center>
       <div class="panel panel-default" id="addMemberPanel">
     
         <div class="panel-heading">
@@ -1077,13 +1080,14 @@ function sortByUser() {
             <div class="panel-body">
 
               <label for="newMember">Member Username:</label>
-              <input type="text" class="form-control" placeholder="Member Username" id="newMember">
+              <input type="text" class="form-control" placeholder="Member Username" id="newMember" style="width:60%;">
 
               <div id="newMemberError"><br></div>
               <button class="btn-default btn" onclick="addMember()">Add Group member</button>
             </div>
         </div>
       </div>
+      </center>
     </li>
 
     <hr>

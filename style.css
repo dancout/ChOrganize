@@ -258,3 +258,7 @@ ul {
 	font-family: "Arial Narrow", Arial, sans-serif;
   margin-top: 10px;
 }
+
+input{
+   text-align:center;
+}
