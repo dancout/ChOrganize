@@ -262,3 +262,9 @@ ul {
 input{
    text-align:center;
 }
+
+
+#allChoresButtons
+{
+	width: 300px;
+}

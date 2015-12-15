@@ -125,6 +125,7 @@
         var t = document.createTextNode(groupdata.child("ChoreName").val());
         //console.log("DATA: " + data.child("value").val());
         btn.appendChild(t);
+        btn.setAttribute("style", "width:300px;");
         document.getElementById("allChoresButtons").appendChild(btn);
     // adds script to button
         document.getElementById(groupdata.key()).onclick = function() {dummy(data.child("value").val(),groupdata.key());};
@@ -275,14 +276,14 @@ function sortDefault() {
 </div>
 
 		<!-- main buttons -->
-		<div id="mainAllChores" style="padding-left:20%;">
+		<div id="mainAllChores" style="padding-left:20%;" style="width:300px;">
 			<ul>
 			
 			</ul>
 
       <!--<h4 style="text-align:center;"> My Chores </h4>-->
 
-      <div id="allChoresButtons" class="btn-group-vertical" style="float:center;" style="padding-left:50%;">
+      <div id="allChoresButtons" class="btn-group-vertical" style="float:center;" style="padding-left:50%;" style="width:30px;">
 
 		  </div>
 
