@@ -642,7 +642,7 @@
   }
 
 function sortByDueDate() {
-  var mytext = "<p style='float:center;'>  <span style='display:inline-block; width: 62%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img> <span style='display:inline-block; width: 9%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img> <span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
+    var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>CLAIM:</strong></p><span style='display:inline-block; width: 53%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 10%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
   document.getElementById("scrollingButtons").innerHTML = "";
 
   document.getElementById("scrollingButtons").innerHTML = mytext;
@@ -664,7 +664,7 @@ function sortByDueDate() {
         groupDataRef.once('value', function(snapshot) {
           titleText = snapshot.child("GroupName").val();
           titleText = titleText.concat(" Chores");
-          document.getElementById("groupTitle").innerHTML = titleText;
+          // document.getElementById("groupTitle").innerHTML = titleText;
         });
 
 
@@ -803,7 +803,7 @@ function sortDefault() {
 }
 
 function sortByUser() {
-  var mytext = "<p style='float:center;'>  <span style='display:inline-block; width: 62%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img> <span style='display:inline-block; width: 9%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img> <span style='display:inline-block; width: 8%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
+  var mytext = " <p style='float:left;'> <p style='float:left; margin-top:20px; margin-left:30px;'><span style='display:inline-block; width: 30%;'></span><strong>CLAIM:</strong></p><span style='display:inline-block; width: 53%;'></span> <img src='photos/checklist.png' style='width: 30px;'></img><span style='display:inline-block; width: 8%;'></span> <img src='photos/checkmark.png' style='width: 30px;'></img><span style='display:inline-block; width: 10%;'></span> <img src='photos/trashcan.png' style='width: 30px;'></img></p>";
   document.getElementById("scrollingButtons").innerHTML = "";
 
   document.getElementById("scrollingButtons").innerHTML = mytext;
@@ -825,7 +825,7 @@ function sortByUser() {
         groupDataRef.once('value', function(snapshot) {
           titleText = snapshot.child("GroupName").val();
           titleText = titleText.concat(" Chores");
-          document.getElementById("groupTitle").innerHTML = titleText;
+          // document.getElementById("groupTitle").innerHTML = titleText;
         });
 
 
@@ -1108,10 +1108,12 @@ function sortByUser() {
 
       <div id="scrollingButtons" class="btn-group-vertical" style="float:center">
 
-        <p style="float:center;"> 
-          <span style="display:inline-block; width: 62%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 7%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
-          <span style="display:inline-block; width: 7%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
+        <p style="float:left;"> 
+          <p style="float:left; margin-top:20px; margin-left:30px;"><span style="display:inline-block; width: 30%;"></span>
+            <strong>CLAIM:</strong></p>
+          <span style="display:inline-block; width: 53%;"></span> <img src="photos/checklist.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 8%;"></span> <img src="photos/checkmark.png" style="width: 30px;"></img>
+          <span style="display:inline-block; width: 10%;"></span> <img src="photos/trashcan.png" style="width: 30px;"></img>
         </p>
 
         <p style="float:center;"> 
