@@ -75,6 +75,16 @@
   	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
 	ref.unauth();
   }
+
+  function gotoHomepage()
+  {
+      var home = "homepage.html?";
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var leftUrlSubString = UrlString.substring(userIndex, UrlString.length);
+      home = home.concat(leftUrlSubString);
+      window.location.href=home;
+  }
 </script>
 
 
@@ -92,7 +102,7 @@
 				<ul class="nav nav-pills">
 
 				<!-- Chorganize Title -->
-				<li><a href="homepage.html"><img class="title" src="photos/ChOrganizelogo.png"></a></li>
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
 
 
 				<!-- Setting menu -->
