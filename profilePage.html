@@ -23,6 +23,7 @@
 				"<td><strong>" + title + "</strong></td>" +
 
 				"<td><div class=\"form-group\">" +
+						"<div id=\"" + rowID + "error\"></div><div class=\"form-group\">" +
 				    	"<input type=\"text\" class=\"form-control\" placeholder=\"" + title + "\" id=\"change" + rowID + "\">" +
 				"</div></td>" +
 
@@ -34,26 +35,32 @@
 
 			// actually update the stuff
 			var newTextValue = document.getElementById("change" + rowID).value;
-			var baseRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
-			var authData = baseRef.getAuth();
-			var usersRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/Users");
-			usersRef.once("value", function(snapshot) {
-				snapshot.forEach(function(childSnapshot) {
-					if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
-						if (infoKey == "FirstName")
-							childSnapshot.child("UserInfo").ref().update({ FirstName: newTextValue });
-						if (infoKey == "LastName")
-							childSnapshot.child("UserInfo").ref().update({ LastName: newTextValue });
 
-						document.getElementById(rowID).innerHTML = 
-							"<td><strong>" + title + "</strong></td>" +
-							"<td><div id=\"" + valueID + "\"><div></td>" +
-							"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"textEdit(\'" + title +"\' ,\'" + rowID + "\', \'" + infoKey + "\', \'" + valueID + "\')\"> edit </button></td>";
+			if (newTextValue == "") {
+				document.getElementById(rowID + "error").innerHTML = "<font color=\"red\" size=2>Error: Form is empty.</font>"
+			}
+			else {
+				var baseRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+				var authData = baseRef.getAuth();
+				var usersRef = new Firebase("https://flickering-inferno-1570.firebaseio.com/Users");
+				usersRef.once("value", function(snapshot) {
+					snapshot.forEach(function(childSnapshot) {
+						if ( childSnapshot.child("UserInfo").child("Email").val() == authData.password.email ) {
+							if (infoKey == "FirstName")
+								childSnapshot.child("UserInfo").ref().update({ FirstName: newTextValue });
+							if (infoKey == "LastName")
+								childSnapshot.child("UserInfo").ref().update({ LastName: newTextValue });
 
-						getProfile();
-					}
-			 	});
-			});
+							document.getElementById(rowID).innerHTML = 
+								"<td><strong>" + title + "</strong></td>" +
+								"<td><div id=\"" + valueID + "\"><div></td>" +
+								"<td><button type=\"button\" class=\"btn btn-default\" onclick=\"textEdit(\'" + title +"\' ,\'" + rowID + "\', \'" + infoKey + "\', \'" + valueID + "\')\"> edit </button></td>";
+
+							getProfile();
+						}
+				 	});
+				});
+			}
 		}
 
 		function textCancel(title, rowID, infoKey, valueID) {
@@ -95,11 +102,11 @@
 				if (error) {
 					switch (error.code) {
 						case "INVALID_PASSWORD":
-							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Password is incorrect.</font>";
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Error: Password is incorrect.</font>";
 							console.log("The specified user account password is incorrect");
 							break;
 						case "INVALID_USER":
-							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Account does not exist.</font>";
+							document.getElementById(rowID+"error").innerHTML = "<font color=\"red\" size=2>Error: Account does not exist.</font>";
 							console.log("The specified user account does not exist.");
 							break;
 						default:
