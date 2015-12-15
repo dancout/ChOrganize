@@ -200,7 +200,16 @@ ul {
 
 #loginMain {
 	text-align: center;
-	padding-top: 25px;
+	/*padding-top: 25px;*/
+	/*float:left;*/
+	/*width: 50%;*/
+}
+
+#registerMain {
+	text-align: center;
+	/*padding-top: 25px;*/
+	float:left;
+	width: 50%;
 }
 
 #loginMain button {
@@ -267,4 +276,14 @@ input{
 #allChoresButtons
 {
 	width: 300px;
+}
+
+#RunningOutOfTime button {
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
 }

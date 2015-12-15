@@ -103,6 +103,24 @@
 	<body>
 	<!-- wrapper around entire body -->
 		<hr class="topline">
+
+				<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<!-- <ul class="nav nav-pills"> -->
+
+				<!-- Chorganize Title -->
+				<li><img class="title" src="photos/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
+				
+          
+		<!-- </ul> -->
+
+
+				
+			</div>
+		</div>
 		<div id="wrapper">
 			
 			<!-- title bar header -->
@@ -117,11 +135,11 @@
 			<hr>
 
 			<!-- Login Input -->
-			<div id="loginMain" onkeypress="return enterPressed(event)">
+			<div id="registerMain" onkeypress="return enterPressed(event)">
 				<h3>Register</h3>
 
-				<center>
 				<form role="form" id="login">
+					<center>
           			<div class="form-group">
 				    	<label for="fName">First Name</label>
 				    	<input type="text" class="form-control" placeholder="First Name" id="fName" style="width:30%;">
@@ -142,16 +160,18 @@
 				    	<label for="pwd">Password:</label>
 				    	<input type="password" class="form-control" placeholder="Password" id="pwd" style="width:30%;">
 				  	</div>
+				  	</center>
 				  	<div id="error"><br></div>
-				  	<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
+				  	
+				</form>
+				
+			</div>
+			<div id="RunningOutOfTime" style="float:center; margin-top:30%;">
+					<button type="button" class="btn btn-default" onclick="dummy()">Submit</button>
 				  	<br>
 				  	<br>
 				  	<button type="button" class="btn btn-default" onclick="gotoLogin()">Go to Login Page</button>
-				</form>
-				</center>
-
-
-			</div>
+				</div>
 
 		</div>
 
