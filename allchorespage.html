@@ -183,6 +183,8 @@ function sortByDueDate() {
 
     // adds attributes to the button
         btn.setAttribute("id", groupdata.key());
+        btn.setAttribute("style", "width:300px;");
+
         
     // adds the button onscreen
         var t = document.createTextNode(groupdata.child("ChoreName").val());
