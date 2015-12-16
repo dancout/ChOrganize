@@ -1,0 +1,383 @@
+
+<!-- saved from url=(0110)file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/groupspage.html?dancout -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>My Groups</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="./My Groups_files/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link href="./My Groups_files/bootstrap.min(1).css" rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="./My Groups_files/jquery.min.js"></script>
+	    <script src="./My Groups_files/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="./My Groups_files/style.css">
+
+	  	<!-- firebase -->
+	   	<script src="./My Groups_files/firebase.js"></script>
+
+	<script>
+	function choresLink() {
+    window.location.href = "chorespage.html";
+	}
+
+	function gotoHomepage()
+ 	{
+    //assigns correct url to home button
+      var home = "homepage.html?";
+      var UrlString = window.location.toString();
+      var userIndex = UrlString.indexOf("?") + 1;  
+      var leftUrlSubString = UrlString.substring(userIndex, UrlString.length);
+      home = home.concat(leftUrlSubString);
+      window.location.href=home;
+
+  	}
+</script><script>
+  function logout(){
+  	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+	ref.unauth();
+  }
+</script><script>
+	function gotoLogin() {
+		window.location.href="login.html?";
+	}
+	function gotoRegister() {
+		window.location.href="register.html?";
+	}
+	function loginCheck(){
+		var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+		var authData = ref.getAuth();
+
+		if (authData) {
+			// Insert any function you want here
+		}
+		else
+		{
+			document.getElementById('main').innerHTML = "<h3><center>You are not logged in</center></h3>" + 
+			"<center><button class='btn-default btn' onclick='gotoLogin()'>Login</button></center>" +
+			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
+		}		
+	}
+</script><script>
+
+  //this function auto initalizes the data onto the page, when page is loaded
+  $(document).ready(function () {
+  var UrlString = window.location.toString();
+  var userIndex = UrlString.indexOf("?") + 1;   
+  var UrlSubString = UrlString.substring(userIndex, UrlString.length); 
+  
+  usersUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+  usersUrl = usersUrl.concat(UrlSubString);
+  usersUrl = usersUrl.concat('/Groups');
+  var usersRef = new Firebase(usersUrl);
+  usersRef.once("value", function(snapshot) {
+      var hasGroup = snapshot.hasChild("Dummy");
+      if(hasGroup == false) {
+        snapshot.forEach(function(valueSnapshot) {
+			var groupKey = valueSnapshot.child("value").val();
+			
+			groupsUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+			groupsUrl = groupsUrl.concat(groupKey);
+			var groupsRef = new Firebase(groupsUrl);
+			groupsRef.once("value", function(nameSnapshot) {
+
+				// create button
+				var groupName = nameSnapshot.child("GroupName").val();
+				var btn = document.createElement("BUTTON");
+
+
+				// adds attributes to the button
+				btn.setAttribute("id", groupName);
+				btn.setAttribute("class", "btn btn-primary");
+				var t = document.createTextNode(groupName);
+				btn.appendChild(t);
+
+				// create trash bin
+				var trash = document.createElement("IMG");
+			    trash.setAttribute("src", "photos/trashcan.png");
+			    trash.setAttribute("class", "buttonPic");
+			    trash.setAttribute("style", "float:right;");
+			    trash.setAttribute("style", "height:50px;");
+			    trash.setAttribute("style", "width:50px;");
+			    trash.setAttribute("alt", "The Pulpit Rock");
+			    trash.onclick = function() {deleteGroup(valueSnapshot.key())};
+
+				// create the button div
+		        var buttonDiv = document.createElement("div");
+		        var divName = valueSnapshot.key() + "Div"; // button div name, to be used for id
+		        buttonDiv.setAttribute("id", divName);
+		        buttonDiv.setAttribute("style", "width:100%;");
+		        // buttonDiv.setAttribute("style", "float: left;");
+
+		        // add button div to scrollingButtonsGroups
+		        document.getElementById("scrollingButtonsGroups").appendChild(buttonDiv);
+				
+				// add button and trash can to buttonDiv 
+
+				document.getElementById(divName).appendChild(btn);
+				document.getElementById(divName).appendChild(trash);
+
+				// adds script to button
+				document.getElementById(groupName).onclick = function() {  
+				  var choreUrl = 'chorespage.html?';
+				  var finalChoreUrl = choreUrl.concat(UrlSubString);
+				  var finalChoreUrl2 = finalChoreUrl.concat("&");
+				  var finalChoreUrl3 = finalChoreUrl2.concat(groupKey);
+				  window.location.href=finalChoreUrl3;
+				};
+			});
+		});
+      }
+    });
+    var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    var firebaseRef = new Firebase(dataGRef);
+    firebaseRef.on('child_changed', function(dataSnapshot) {
+      window.location.href = window.location;
+    });
+  });
+
+function deleteGroup(groupName) {
+	var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;   
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+    userUrl = userUrl.concat(UrlSubString);
+    userUrl = userUrl.concat("/Groups");
+
+    var slashGroup = "/";
+    slashGroup = slashGroup.concat(groupName);
+    userUrl = userUrl.concat(slashGroup);
+    // userUrl = userUrl.concat("/value");
+
+    // var mainUrlGroupFinal = firebaseUrl(userUrl);
+    var newDataRef = new Firebase(userUrl);
+    var groupToDelete;
+
+    newDataRef.once('value', function(snapshot) {
+    	groupToDelete = snapshot.child("value").val();
+	    var deleteGroupDataRefURL = 'https://flickering-inferno-1570.firebaseio.com/Groups/'
+    	deleteGroupDataRefURL = deleteGroupDataRefURL.concat(groupToDelete);
+	    var deleteGroupDataRef = new Firebase(deleteGroupDataRefURL);
+		deleteGroupDataRef.remove();
+		newDataRef.remove();
+
+    });
+
+
+    alert("Deleting Group!");
+
+
+    window.location.href = window.location;
+
+}
+
+function addGroup()
+		{
+			var myChore = document.getElementById("addGroup");
+
+			// declares the button
+		   	groupName = myChore.myGroupName.value;
+		    var btn = document.createElement("BUTTON");
+
+		    // adds attributes to the button
+		    btn.setAttribute("id", groupName);
+		    
+		    // adds the button onscreen
+		    var t = document.createTextNode(groupName);
+		    btn.appendChild(t);
+		    document.getElementById("scrollingButtonsGroups").appendChild(btn);
+
+		    var groupUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups';
+		    //groupUrl.concat(person);
+		    //groupUrl.concat("/");
+		    var UrlString = window.location.toString();
+		    var userIndex = UrlString.indexOf("?") + 1;   
+		    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+
+		    var groupDataRef = new Firebase(groupUrl);
+		    var newGroupRef = groupDataRef.push();
+		    var groupNum = 0;
+		    var zero = 0;
+		    newGroupRef.set({GroupName: groupName ,Members: {Dummy: 0}, Chores: {Dummy: 0}, GroupChores: zero, GroupChoresCompleted: groupNum});
+
+
+		    var keyIndex = newGroupRef.toString().lastIndexOf("/") + 1;
+		    var keyString = newGroupRef.toString().substring(keyIndex, newGroupRef.length);
+
+		    var newGroupRef2 = newGroupRef.toString();
+		    newGroupRef2 = newGroupRef2.concat("/Members");
+		    var insertMemberRef = new Firebase(newGroupRef2);
+		    var anotherVarRef = insertMemberRef.push();
+		    var zero = 0;
+		    anotherVarRef.set({value: UrlSubString, userCompleted: zero});
+		    
+		    //Remove dummy
+		    var removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
+		    removeDummyUrl = removeDummyUrl.concat(keyString);
+		    removeDummyUrl = removeDummyUrl.concat('/Members/Dummy');
+		    var removeDummy = new Firebase(removeDummyUrl);
+		    removeDummy.remove();
+		    
+		    var userUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+		    userUrl = userUrl.concat(UrlSubString);
+		    userUrl = userUrl.concat("/Groups");
+
+
+		    var userDataRef = new Firebase(userUrl);
+		    var userNum = 0;
+		    var newUserGroup = userDataRef.push();
+		        newUserGroup.update({value: keyString, UserChoresCompleted: userNum});
+		    userDataRef.once("value", function(snapshot) {
+		      var hasGroup = snapshot.hasChild("Dummy");
+		      if(hasGroup == true) {
+		        removeDummyUrl = 'https://flickering-inferno-1570.firebaseio.com/Users/';
+		        removeDummyUrl = removeDummyUrl.concat(UrlSubString);
+		        removeDummyUrl = removeDummyUrl.concat("/Groups/Dummy");
+		        removeDummy = new Firebase(removeDummyUrl);
+		        removeDummy.remove();
+		      }
+		    });
+
+		    // adds script to button, appends user string to the end and the groupname appended also
+		    document.getElementById(groupName).onclick = function() {
+		      var UrlString = window.location.toString();
+		      var userIndex = UrlString.indexOf("?") + 1;   
+		      var UrlSubString = UrlString.substring(userIndex, UrlString.length);   
+		      var choreUrl = 'chorespage.html?';
+		      var finalChoreUrl = choreUrl.concat(UrlSubString);
+		      var finalChoreUrl2 = finalChoreUrl.concat("&");
+          var keyIndex = newGroupRef.toString().lastIndexOf("/");
+          var choreRef = newGroupRef.toString().substring(keyIndex, newGroupRef.toString().length);
+		      var finalChoreUrl3 = finalChoreUrl2.concat(choreRef);
+		      window.location.href=finalChoreUrl3;
+		    };
+
+		    alert("group added!");
+		    window.location.href = window.location;
+
+		}
+
+		function enterPressed(e) {
+			if(e.keyCode == 13)
+			{
+				addGroup();
+			    return false; // returning false will prevent the event from bubbling up.
+			}
+			else
+			{
+			    return true;
+			}
+		}
+
+</script></head>
+
+
+
+
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+
+
+
+
+
+
+
+<!-- <body onload="loginCheck()"> -->
+<body>
+		<!-- title bar header -->
+		<hr class="topline">
+		
+<!-- wrapper around entire body -->
+	<div id="wrapper">
+		
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+				<li><img class="buttonPic" src="./My Groups_files/backArrow.png" onclick="gotoHomepage()"></li>
+				<li><img class="title" src="./My Groups_files/ChOrganizelogo.png" onclick="gotoHomepage()"></li>
+
+
+				<!-- Setting menu -->
+			  	<li role="presentation" class="dropdown">
+			    	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			    	<img class="titlePic" src="./My Groups_files/orangeGear.png"> <span class="caret"></span>
+			    	</a>
+
+            <ul class="dropdown-menu">
+              <li style="padding:15px;"><a href="file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/profilePage.html">Edit Profile</a></li>
+              <li style="padding:15px;"><a href="file:///Users/danielcouturier/Desktop/School/Fall%202015/EECS%20493/Project/ChOrganize/login.html">Logout</a></li>
+            </ul>
+			</li>
+          
+		</ul>
+
+
+				
+			</div>
+		</div>
+
+		<hr class="bottomline">
+
+		
+		<div id="body">
+
+			<h3 style="text-align:center;">My Group List</h3>
+			<!-- main buttons -->
+			<div id="main">
+				<ul>
+					<!-- put a picture and a button in each 'list' item (row) -->
+					<li>
+						<img class="buttonPic" src="./My Groups_files/addNewGroup.png">
+						<div class="panel panel-default" id="newGroupPanel">
+						    <div class="panel-heading">
+						        <h4 class="panel-title">
+						            <a data-toggle="collapse" data-target="#addNewGroup">
+						               <h4>Add New Group</h4>
+						            </a>
+						        </h4>
+						    </div>
+						    
+						    <div id="addNewGroup" class="panel-collapse collapse">
+						        <div class="panel-body">
+						            <form role="form" id="addGroup">
+									  	<div class="form-group">
+									    	<label for="myGroupName">Group Name:</label>
+									    	<input type="myGroupName" class="form-control" placeholder="GroupX" id="myGroupName" onkeypress="return enterPressed(event)">
+									  	</div>
+									  	<button type="button" class="btn btn-default" onclick="addGroup()">Add Group</button>
+									</form>
+						        </div>
+						    </div>
+						</div>
+					</li>
+
+				</ul>
+
+
+
+
+
+				<!--<h4 style="text-align:center;"> My Groups </h4>-->
+
+				<!-- this wrapper will hold all the buttons leading to the user's groups -->
+				<div id="scrollingButtonsGroups" class="btn-group-vertical" sytle="floating:center;">
+				<div id="-K5O_mDOflydgY_dKm3BDiv" style="width:100%;"><button id="x" class="btn btn-primary">x</button><img src="./My Groups_files/trashcan.png" class="buttonPic" style="width:50px;" alt="The Pulpit Rock"></div></div>
+
+			</div>
+		</div>
+
+
+
+	</div>
+
+
+
+
+</body></html>

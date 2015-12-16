@@ -1,0 +1,260 @@
+#wrapper {
+	padding-left: 20px;
+	padding-right: 20px;
+	/*float: center;*/
+}
+
+hr.topline {
+	border: solid;
+	margin: 0px;
+	padding: 0px;
+	color: #eb6d20;
+}
+
+hr.bottomline {
+	margin: 0px;
+	padding: 0px;
+}
+
+#header {
+	padding-top: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 0px;
+	background-color: white;
+}
+
+#header a {
+	padding: 0px;
+}
+
+#headerInner {
+	background-color: white;
+}
+
+#headerInner li {
+    display: inline;
+}
+
+.title {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 100px;
+}
+
+.titlePic {
+	width: 60px;
+	padding-top: 33px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+}
+
+.buttonPic {
+	width: 80px;
+	padding-right: 15px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+	text-align: center;
+	padding-top: 25px;
+	/*padding-left: 20%;*/
+  display: flex;
+  float:center;
+}
+
+#main button {
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+#mainGroupsPage {
+	text-align: center;
+	padding-top: 25px;
+  display: flex;
+  float:center;
+}
+
+#mainGroupsPage button {
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+#body button{
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+#table button{
+	width: 100%;
+	height: 40px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 18;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+#table table, th, td {
+    padding: 5px;
+}
+
+#main input {
+	height: 50px;
+}
+
+#main li {
+	padding-left: 10px;
+}
+
+#header li {
+	padding-right: 10px;
+}
+
+
+#scrollingButtons {
+	text-align: center;
+	padding-top: 25px;
+	float: center;
+	overflow: scroll;
+	height: 400px;
+	width: 60%;
+	/*padding-left: 15%;*/
+  float: right;
+}
+
+#scrollingButtons button {
+	width: 50%;
+	float: left;
+}
+
+#scrollingButtons2 {
+	text-align: center;
+	padding-top: 25px;
+	float: center;
+	height: 400px;
+	width: 60%;
+	padding-left: 15%;
+  float: right;
+}
+
+
+#scrollingButtons .assignClass {
+	width: 17%;
+	float: left;
+}
+
+#scrollingButtonsGroups {
+	text-align: center;
+	padding-top: 25px;
+	float: center;
+	overflow: scroll;
+	height: 400px;
+	width: 60%;
+	padding-left: 15px;
+}
+
+#scrollingButtonsGroups button {
+	width: 60%;
+	float: left;
+}
+
+#choreButtons {
+  width: 50%;
+}
+
+#groupButtons {
+  width: 50%;
+}
+
+.radioButtonLeft {
+	float:left;
+}
+
+.radioButtonCenter {
+	float:center;
+}
+
+.radioButtonRight {
+	float:right;
+}
+
+#loginMain {
+	text-align: center;
+	padding-top: 25px;
+}
+
+#loginMain button {
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+#loginMain input {
+	height: 50px;
+}
+
+#loginMain li {
+	padding-left: 10px;
+}
+
+#home {
+	text-align: center;
+	padding-top: 25px;
+}
+
+#home button {
+	width: 250px;
+	height: 50px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+}
+
+.sort {
+  margin-left: 70%;
+}
+
+#mainAllChores {
+	text-align: center;
+	padding-top: 25px;
+	/*padding-left: 20%;*/
+  /*display: flex;*/
+  float:center;
+}
+
+#mainAllChores button {
+	width: 850px;
+	height: 65px;
+	background-color: #eb6d20;
+	color: white;
+	font-size: 25;
+	font-style: bold;
+	font-family: "Arial Narrow", Arial, sans-serif;
+  margin-top: 10px;
+}

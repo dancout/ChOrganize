@@ -1,0 +1,170 @@
+
+
+<html>
+
+	<head>
+	    <title>ChOrganize</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
+	   	<!-- firebase -->
+	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	   	
+	</head>
+
+<script>
+  //function goes to groupspage with user string appended to the end
+  function parseUrl() {
+    window.location.href="projwebpagewalkthr.html";
+  }
+
+  function parseUrlHome() {
+    window.location.href="projwebpagemain.html";
+  }
+
+  function parseUrlCreators() {
+    window.location.href="projwebpagecreators.html";
+  }
+
+  function parseUrlDeploy() {
+    window.location.href="https://flickering-inferno-1570.firebaseapp.com";
+  }
+
+  function gotoAllChoresPage() {
+    console.log("window location: " + window.location);
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;
+    console.log("USER NAME: " + UrlString.substring(userIndex, UrlString.length));
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+    var groupUrl = 'allchorespage.html?';
+    var finalGroupUrl = groupUrl.concat(UrlSubString);
+    window.location.href=finalGroupUrl;
+  }
+</script>
+
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+<script>
+	function gotoLogin() {
+		window.location.href="login.html?";
+	}
+	function gotoRegister() {
+		window.location.href="register.html?";
+	}
+	function loginCheck(){
+		var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+		var authData = ref.getAuth();
+
+		if (authData) {
+			// Insert any function you want here
+		}
+		else
+		{
+			document.getElementById('main').innerHTML = "<h3><center>You are not logged in</center></h3>" + 
+			"<center><button class='btn-default btn' onclick='gotoLogin()'>Login</button></center>" +
+			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
+		}		
+	}
+</script>
+
+<script>
+  function logout(){
+  	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+	ref.unauth();
+  }
+</script>
+
+
+<!-- <body onload="loginCheck()"> -->
+<body>
+	<!-- wrapper around entire body -->
+	<hr class="topline">
+	<div id="wrapper">
+		
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+				<li><img class="title" src="photos/ChOrganizelogo.png"></li>
+
+          
+		</ul>
+
+
+				
+			</div>
+		</div>
+		
+		<hr class="bottomline">
+
+		<!-- main buttons -->
+
+		<div id="mainGroupsPage">
+
+<div>
+			<ul>
+				<!-- put a picture and a button in each 'list' item (row) -->
+<li><button class="btn-default btn" onclick="parseUrlHome()">About</button></li>
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrl()">Walkthrough</button></li>
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlCreators()">The Creators</button></li>
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlDeploy()">Visit ChOrganize</button></li>
+			</ul>
+</div>
+<div>
+    <h4 style="margin-left: 10%; margin-right: 10%;">Walkthrough and Features</h4>
+
+    <h5>Login Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">This will be the first page that you see as the user. You can see that there are two buttons to click on: login and register. As a new user you should click on register. A form will load, and you will fill out the entire form. After submitting the form, it will return you back to the login page where you can enter your login credentials. If the login is successful it will take you to the homepage.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/login.png"> 
+
+
+    <h5>Home Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">On the homepage, there is a my groups button and a my chores button. There is also a functional gear button at the top that has drop down options to edit your profile information and logout. Since you don't have any groups or chores created yet. You need to click on my groups to create a group.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/homepage.png"> 
+
+    <h5>Group Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">On the group page, the first thing that you should do is type in the group name on line provided above the add group button. Next click the add group button, and your new group button should appear. Next click on your new group button to create a new chore.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/grouppage.png"> 
+
+    <h5>Chores Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">On the chores page click add new chore and fill out the form. Next click on the add chore button. Afterwards we need to pick up the chore, so we click on the pick up button on the left of the chores button. We can mark this chore complete, or delete it if we want. You can also sort the chores by due date and user. We also have the option of adding a new group member, and seeing additional statistics of the members in the group. To see the details of the chore, click on the chore button.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/chorespage.png"> 
+
+    <h5>ChoresItem Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">On the chores item page, you can see the group the chore is in, the person it's assigned to, the due date, and the description of the chore. You also have the option of completing the chore. If you press complete chore it will delete the chore of the group's chores page.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/choresitempage.png"> 
+
+    <h5>My chores Page</h5>
+    <p style="margin-left: 10%; margin-right: 10%;">On the home page there is a my chores button. when we click that button we get to the my chores page, which lists all the chores that are assigned to us.</p>
+
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/homepage.png"> 
+    <img style="width: 700px; height: 500px; border: 5px solid black;" class="titlePic" src="photos/mychorespage.png"> 
+
+
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>

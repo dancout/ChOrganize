@@ -1,0 +1,181 @@
+
+
+<html>
+
+	<head>
+	    <title>ChOrganize</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
+	   	<!-- firebase -->
+	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	   	
+	</head>
+
+<script>
+  //function goes to groupspage with user string appended to the end
+  function parseUrl() {
+    window.location.href="projwebpagewalkthr.html";
+  }
+
+  function parseUrlHome() {
+    window.location.href="projwebpagemain.html";
+  }
+
+  function parseUrlDeploy() {
+    window.location.href="https://flickering-inferno-1570.firebaseapp.com";
+  }
+
+  function gotoAllChoresPage() {
+    console.log("window location: " + window.location);
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;
+    console.log("USER NAME: " + UrlString.substring(userIndex, UrlString.length));
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+    var groupUrl = 'allchorespage.html?';
+    var finalGroupUrl = groupUrl.concat(UrlSubString);
+    window.location.href=finalGroupUrl;
+  }
+</script>
+
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+<script>
+	function gotoLogin() {
+		window.location.href="login.html?";
+	}
+	function gotoRegister() {
+		window.location.href="register.html?";
+	}
+	function loginCheck(){
+		var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+		var authData = ref.getAuth();
+
+		if (authData) {
+			// Insert any function you want here
+		}
+		else
+		{
+			document.getElementById('main').innerHTML = "<h3><center>You are not logged in</center></h3>" + 
+			"<center><button class='btn-default btn' onclick='gotoLogin()'>Login</button></center>" +
+			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
+		}		
+	}
+</script>
+
+<script>
+  function logout(){
+  	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+	ref.unauth();
+  }
+</script>
+
+
+<!-- <body onload="loginCheck()"> -->
+<body>
+	<!-- wrapper around entire body -->
+	<hr class="topline">
+	<div id="wrapper">
+		
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+				<li><img class="title" src="photos/ChOrganizelogo.png"></li>
+
+
+
+          
+		</ul>
+
+
+				
+			</div>
+		</div>
+		
+		<hr class="bottomline">
+
+		<!-- main buttons -->
+
+		<div id="mainGroupsPage">
+
+<div>
+			<ul>
+				<!-- put a picture and a button in each 'list' item (row) -->
+<li><button class="btn-default btn" onclick="parseUrlHome()">About</button></li>
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrl()">Walkthrough</button></li>
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlCreaters()">The Creators</button></li>
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlDeploy()">Visit ChOrganize</button></li>
+
+			</ul>
+</div>
+<div>
+    <h4 style="margin-left: 30%; margin-right: 10%"></h4>
+
+    <center><h3 style="margin-left: 30%;">The Creators</h3></center>
+
+    <center><h5 style="margin-left: 40%; margin-right: 10%">James Le</h5></center>
+
+<center><p style="margin-left: 30%;">Senior majoring in computer science. I am a chill person what likes to code cool things.</p></center>
+
+
+    <img style="margin-left: 30%;width: 400px; height: 400px;" class="titlePic" src="photos/jamesphoto.jpg"> 
+
+<hr style="margin-left: 30%;">
+
+<center><h5 style="margin-left: 40%; margin-right: 10%">Dan Couturier</h5></center>
+
+<center><p style="margin-left: 30%;">Senior in Computer Science & Engineering. I enjoy long walks on the beach, exploring new cities, and living life on the edge.
+ </p></center>
+
+
+    <img style="margin-left: 30%;width: 400px; height: 400px;" class="titlePic" src="photos/danfish.jpg"> 
+
+<hr style="margin-left: 30%;">
+
+<center><h5 style="margin-left: 40%; margin-right: 10%">Ann Ho</h5></center>
+
+<center><p style="margin-left: 30%;">Senior in computer science, planning to graduate in 2016. My dream job is making things that are cool.
+ </p></center>
+
+
+    <img style="margin-left: 30%;width: 400px; height: 533px;" class="titlePic" src="photos/annphoto.jpg"> 
+
+<hr style="margin-left: 30%;">
+
+<center><h5 style="margin-left: 40%; margin-right: 10%">David Howes</h5></center>
+
+<center><p style="margin-left: 30%;">A Senior in Computer Science Engineering, and a member of the University of Michigan Fencing and Equestrian teams.
+ </p></center>
+
+
+    <img style="margin-left: 30%;width: 400px; height: 400px;" class="titlePic" src="photos/davidphoto.jpg"> 
+
+  <p><br></br><br></br></p>
+
+</div>
+
+
+
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>

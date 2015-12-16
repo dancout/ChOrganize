@@ -1,0 +1,152 @@
+
+
+<html>
+
+	<head>
+	    <title>ChOrganize</title>
+
+	    <!-- include stylesheets and bootstrap -->
+	    <meta charset="utf-8">
+	    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	     <!-- Optional theme -->
+	    <link  href="https:///bootswatch.com/paper/bootstrap.min.css" Rel="stylesheet" id="bs-theme-stylesheet">
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	   	<link rel="stylesheet" type="text/css" href="style.css">
+
+	   	<!-- firebase -->
+	   	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	   	
+	</head>
+
+<script>
+  //function goes to groupspage with user string appended to the end
+  function parseUrl() {
+    window.location.href="projwebpagewalkthr.html";
+  }
+
+  function parseUrlHome() {
+    window.location.href="projwebpagemain.html";
+  }
+
+  function parseUrlCreators() {
+    window.location.href="projwebpagecreators.html";
+  }
+
+  function parseUrlDeploy() {
+    window.location.href="https://flickering-inferno-1570.firebaseapp.com";
+  }
+
+  function gotoAllChoresPage() {
+    console.log("window location: " + window.location);
+    var UrlString = window.location.toString();
+    var userIndex = UrlString.indexOf("?") + 1;
+    console.log("USER NAME: " + UrlString.substring(userIndex, UrlString.length));
+    var UrlSubString = UrlString.substring(userIndex, UrlString.length);
+    var groupUrl = 'allchorespage.html?';
+    var finalGroupUrl = groupUrl.concat(UrlSubString);
+    window.location.href=finalGroupUrl;
+  }
+</script>
+
+<!-- For login sensitive pages! -->
+<!-- Be sure to encompass the body with a div id="body" -->
+<script>
+	function gotoLogin() {
+		window.location.href="login.html?";
+	}
+	function gotoRegister() {
+		window.location.href="register.html?";
+	}
+	function loginCheck(){
+		var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+		var authData = ref.getAuth();
+
+		if (authData) {
+			// Insert any function you want here
+		}
+		else
+		{
+			document.getElementById('main').innerHTML = "<h3><center>You are not logged in</center></h3>" + 
+			"<center><button class='btn-default btn' onclick='gotoLogin()'>Login</button></center>" +
+			"<br><center><button class='btn-default btn' onclick='gotoRegister()'>Register</button></center>"; 
+		}		
+	}
+</script>
+
+<script>
+  function logout(){
+  	var ref = new Firebase("https://flickering-inferno-1570.firebaseio.com/");
+	ref.unauth();
+  }
+</script>
+
+
+<!-- <body onload="loginCheck()"> -->
+<body>
+	<!-- wrapper around entire body -->
+	<hr class="topline">
+	<div id="wrapper">
+		
+		<!-- title bar header -->
+		<div id="header">
+			<div id="headerInner">
+				<!-- makes a horizontal list hlding title and icons -->
+
+				<ul class="nav nav-pills">
+
+				<!-- Chorganize Title -->
+				<li><img class="title" src="photos/ChOrganizelogo.png"></li>
+
+
+
+          
+		</ul>
+
+
+				
+			</div>
+		</div>
+		
+		<hr class="bottomline">
+
+		<!-- main buttons -->
+
+		<div id="mainGroupsPage">
+
+<div>
+			<ul>
+				<!-- put a picture and a button in each 'list' item (row) -->
+<li><button class="btn-default btn" onclick="parseUrlHome()">About</button></li>
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrl()">Walkthrough</button></li>
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlCreators()">The Creators</button></li>
+
+
+				<li><button style="margin-top: 10px;" class="btn-default btn" onclick="parseUrlDeploy()">Visit ChOrganize</button></li>
+			</ul>
+</div>
+<div>
+    <h4 style="margin-left: 10%; margin-right: 10%">A web application to help you organize chores, or tasks between you and your friends.</h4>
+
+    <center><h3>About Page</h3></center>
+
+    <center><h5 style="margin-left: 10%; margin-right: 10%">James Le, David Howes, Ann Ho, Dan Couturier</h5></center>
+
+    <center><p style="margin-left: 10%; margin-right: 10%">ChOrganize is a free website designed to be used for groups to organize their chores using a simple and enjoyable interface. This website would be used, for example, as a way for a group of apartment friends to delegate their weekly chores. Our website will allow users to own and be a part of multiple groups at once, each with their own chores and members. Within each of these groups, users are able to view all current chores as well as the current status of that chore, ongoing or complete. In addition, any user which is a member of that group has the ability to add new members and chores. Furthermore, chores can be clicked on in order to view more detailed information about the task. Such information includes chore name, chore description, chore due date, assignee, and group name. This creates a dynamic system in which users are able to interact with one another by creating, completing, and deleting chores. To encourage users to complete chores, and so that group members can monitor one another, statistics are given about the total number of chores completed against the chores completed by each user. Finally, there is a page called My Chores, which allows the user to view all chores that are currently assigned to them regardless of what group the chores belong to. This allows the user to receive a summary of all of their relevant data in a simple and concise manner, avoiding the arduous process of clicking through every single group. 
+</p></center>
+
+<a href="https://flickering-inferno-1570.firebaseapp.com"><p>Link to our deployed website</p></a>
+</div>
+
+
+
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>
