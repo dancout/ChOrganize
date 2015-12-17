@@ -70,7 +70,12 @@
       }
       document.getElementById('header3').innerHTML = snapshot.child("ChoreName").val();
       document.getElementById('dueDate').innerHTML = "<strong> Due Date: </strong>" + snapshot.child("StrDueDate").val();
-      document.getElementById('description').innerHTML = "<strong> Description: </strong>No description";
+      if (snapshot.child("ChoreDesc").val() == "") {
+        document.getElementById('description').innerHTML = "<strong> Description: </strong>No description";
+      }
+      else {
+        document.getElementById('description').innerHTML = "<strong> Description: </strong>" + snapshot.child("ChoreDesc").val();
+      }
     });
 
     var dataGRef = 'https://flickering-inferno-1570.firebaseio.com/Groups/';
